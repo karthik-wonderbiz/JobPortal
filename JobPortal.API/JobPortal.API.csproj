@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobPortal.Data\JobPortal.Data.csproj" />
+    <ProjectReference Include="..\JobPortal.IServices\JobPortal.IServices.csproj" />
   </ItemGroup>
 
 </Project>
