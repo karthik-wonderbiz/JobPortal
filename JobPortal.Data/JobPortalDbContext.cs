@@ -15,5 +15,6 @@ namespace JobPortal.Data
                 
         }
         public DbSet<Language>  languages { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
     }
 }
