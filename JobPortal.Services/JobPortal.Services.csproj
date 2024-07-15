@@ -9,6 +9,8 @@
   <ItemGroup>
     <ProjectReference Include="..\JobPortal.IRepository\JobPortal.IRepository.csproj" />
     <ProjectReference Include="..\JobPortal.IServices\JobPortal.IServices.csproj" />
+    <ProjectReference Include="..\JobPortral.Model\JobPortral.Model.csproj" />
+
   </ItemGroup>
 
 </Project>

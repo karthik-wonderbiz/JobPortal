@@ -6,10 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-
-    <ProjectReference Include="..\JobPortal.Model\JobPortal.Model.csproj" />
-
-  </ItemGroup>
-
 </Project>
