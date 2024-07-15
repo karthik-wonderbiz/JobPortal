@@ -12,9 +12,14 @@ var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<JobPortalDbContext>(option => option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
-//Scoped
+
+/*Country*/
+builder.Services.AddScoped<ICountryServices, CountryServices>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+
 builder.Services.AddScoped<ILanguageServices, LanguageServices>();
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
+
 
 builder.Services.AddControllers();
 
