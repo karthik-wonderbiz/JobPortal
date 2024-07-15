@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JobPortal.Data\JobPortal.Data.csproj" />
-    <ProjectReference Include="..\JobPortal.IServices\JobPortal.IServices.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobPortal.Repository\JobPortal.Repository.csproj" />
+    <ProjectReference Include="..\JobPortal.Services\JobPortal.Services.csproj" />
   </ItemGroup>
 
 </Project>
