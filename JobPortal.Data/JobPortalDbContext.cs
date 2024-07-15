@@ -15,5 +15,6 @@ namespace JobPortal.Data
                 
         }
         public DbSet<Language>  languages { get; set; }
+        public DbSet<Country> countries  { get; set; }
     }
 }
