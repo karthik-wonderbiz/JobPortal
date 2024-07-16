@@ -26,7 +26,7 @@ namespace JobPortal.API.Controllers
 
         // GET api/<GenderController>/5
         [HttpGet("{id}")]
-        public async Task<Gender> Get(int id)
+        public async Task<Gender> Get(long id)
         {
             return await _genderServices.GetGenderAsync(id);
         }
@@ -40,14 +40,14 @@ namespace JobPortal.API.Controllers
 
         // PUT api/<GenderController>/5
         [HttpPut("{id}")]
-        public async Task<Gender> Put(int id, [FromBody] Gender gender)
+        public async Task<Gender> Put(long id, [FromBody] Gender gender)
         {
             return await _genderServices.UpdateGenderAsync(id, gender);
         }
 
         // DELETE api/<GenderController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             return await _genderServices.DeleteGenderAsync(id);
         }

@@ -60,7 +60,7 @@ namespace JobPortal.Services
             oldWorkType.WorkTypeCode = workType.WorkTypeCode;
             oldWorkType.UpdatedAt = DateTime.Now;
             
-            var res = await _workTypeRepository.UpdateAsync(id, oldWorkType);
+            var res = await _workTypeRepository.UpdateAsync(oldWorkType);
             return res;
 
         }

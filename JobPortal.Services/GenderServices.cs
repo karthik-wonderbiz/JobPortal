@@ -26,20 +26,21 @@ namespace JobPortal.Services
             return await _genderRepository.CreateAsync(gender);
         }
 
-        public async Task<bool> DeleteGenderAsync(int id)
+        public async Task<bool> DeleteGenderAsync(long id)
         {
             var gender = await _genderRepository.GetAsync(id);
 
-            if (gender != null)
+            if (gender == null)
             {
-                bool row = await _genderRepository.DeleteAsync(gender);
-
-                return row;
+                throw new Exception($"No Gender Founder for id {id}");
             }
-            return false;
+
+            bool row = await _genderRepository.DeleteAsync(gender);
+
+            return row;
         }
 
-        public async Task<Gender> GetGenderAsync(int id)
+        public async Task<Gender> GetGenderAsync(long id)
         {
             return await _genderRepository.GetAsync(id);
         }
@@ -49,18 +50,22 @@ namespace JobPortal.Services
             return await _genderRepository.GetAllAsync();
         }
 
-        public async Task<Gender> UpdateGenderAsync(int id, Gender gender)
+        public async Task<Gender> UpdateGenderAsync(long id, Gender gender)
         {
             var oldGender = await _genderRepository.GetAsync(id);
 
-            if (oldGender != null)
+            if (oldGender == null)
             {
-                oldGender.GenderName = gender.GenderName;
-
-                oldGender.UpdatedAt = DateTime.Now;
+                throw new Exception($"No Gender Founder for id {id}");
             }
 
-            return oldGender;
+            oldGender.GenderName = gender.GenderName;
+
+            oldGender.UpdatedAt = DateTime.Now;
+
+            var res = await _genderRepository.UpdateAsync(oldGender);
+
+            return res;
         }
     }
 }
