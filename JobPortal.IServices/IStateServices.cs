@@ -1,4 +1,5 @@
-﻿using JobPortal.Model;
+﻿using JobPortal.Data;
+using JobPortal.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace JobPortal.IServices
 {
     public interface IStateServices
     {
-        public Task<State> GetStateByIdAsync(long id);
+        public Task<GetStateDto> GetStateByIdAsync(long id);
 
-        public Task<IEnumerable<State>> GetAllStatesAsync();
-        public Task<State> CreateStateAsync(State state);
-        public Task<State> UpdateStateAsync(long id, State state);
+        public Task<IEnumerable<GetStateDto>> GetAllStatesAsync();
+        public Task<GetStateDto> CreateStateAsync(CreateStateDto stateDto);
+        public Task<GetStateDto> UpdateStateAsync(long id, UpdateStateDto stateDto);
         public Task<bool> DeleteStateAsync(long id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using JobPortal.Model;
+﻿using JobPortal.Data;
+using JobPortal.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace JobPortal.IServices
 {
     public interface IShiftServices
     {
-        public Task<Shift> GetShiftByIdAsync(long id);
+        public Task<GetShiftDto> GetShiftByIdAsync(long id);
 
-        public Task<IEnumerable<Shift>> GetAllShiftsAsync();
-        public Task<Shift> CreateShiftAsync(Shift shift);
-        public Task<Shift> UpdateShiftAsync(long id, Shift shift);
+        public Task<IEnumerable<GetShiftDto>> GetAllShiftsAsync();
+        public Task<GetShiftDto> CreateShiftAsync(CreateShiftDto shiftDto);
+        public Task<GetShiftDto> UpdateShiftAsync(long id, UpdateShiftDto shiftDto);
         public Task<bool> DeleteShiftAsync(long id);
     }
 }
