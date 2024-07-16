@@ -12,6 +12,6 @@ namespace JobPortal.Data
     }
 
     public record CreateCountryDto([Required(ErrorMessage = "CountryName is required")] string CountryName, DateTime CreatedAt, DateTime UpdatedAt, string CountryCode = " ");
-    public record UpdateCountryDto([Required(ErrorMessage = "Id is required")] int Id, [Required(ErrorMessage = "CountryName is required")] string CountryName, bool IsActive, DateTime UpdatedAt ,string CountryCode = " ");
+    public record UpdateCountryDto([Required(ErrorMessage = "Id is required")] int Id, [Required(ErrorMessage = "CountryName is required")] string CountryName, bool IsActive, DateTime UpdatedAt, string CountryCode = " ");
     public record GetCountryDto(long Id, string CountryName, string CountryCode, bool IsActive);
 }
