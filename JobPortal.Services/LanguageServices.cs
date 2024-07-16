@@ -1,6 +1,6 @@
 ﻿using JobPortal.IRepository;
 using JobPortal.IServices;
-using JobPortral.Model;
+using JobPortal.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

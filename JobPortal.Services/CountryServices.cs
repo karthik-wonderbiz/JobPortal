@@ -20,8 +20,8 @@ namespace JobPortal.Services
 
         public async Task<Country> CreateCountryAsync(Country country)
         {
-            country.CreateAt = DateTime.Now;
-            country.UpdateAt = DateTime.Now;
+            country.CreatedAt = DateTime.Now;
+            country.UpdatedAt = DateTime.Now;
             return await _countryRepository.CreateAsync(country);
         }
 

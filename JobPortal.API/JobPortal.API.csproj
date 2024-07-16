@@ -19,6 +19,7 @@
     <ProjectReference Include="..\JobPortal.Data\JobPortal.Data.csproj" />
     <ProjectReference Include="..\JobPortal.IRepository\JobPortal.IRepository.csproj" />
     <ProjectReference Include="..\JobPortal.IServices\JobPortal.IServices.csproj" />
+    <ProjectReference Include="..\JobPortal.Model\JobPortal.Model.csproj" />
     <ProjectReference Include="..\JobPortal.Repository\JobPortal.Repository.csproj" />
     <ProjectReference Include="..\JobPortal.Services\JobPortal.Services.csproj" />
   </ItemGroup>
