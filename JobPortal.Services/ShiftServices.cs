@@ -17,12 +17,12 @@ namespace JobPortal.Services
             _repository = repository;
         }
 
-        public async Task<Shift> CreateShiftAsync(Shift Shift)
+        public async Task<Shift> CreateShiftAsync(Shift shift)
         {
-            Shift.CreatedAt = DateTime.Now;
-            Shift.UpdatedAt = DateTime.Now;
-            Shift.ShiftCode = Shift.ShiftCode.Substring(0);
-            return await _repository.CreateAsync(Shift);
+            shift.CreatedAt = DateTime.Now;
+            shift.UpdatedAt = DateTime.Now;
+            shift.ShiftCode = shift.ShiftCode != string.Empty ? shift.ShiftCode : shift.ShiftName.Substring(0,1);
+            return await _repository.CreateAsync(shift);
         }
 
         public async Task<bool> DeleteShiftAsync(long id)
@@ -45,7 +45,7 @@ namespace JobPortal.Services
             return await _repository.GetAsync(id);
         }
 
-        public async Task<Shift> UpdateShiftAsync(long id, Shift Shift)
+        public async Task<Shift> UpdateShiftAsync(long id, Shift shift)
         {
             var oldShift = await _repository.GetAsync(id);
 
@@ -53,10 +53,10 @@ namespace JobPortal.Services
             {
                 throw new Exception("Invalid");
             }
-            oldShift.ShiftName = Shift.ShiftName;
-            oldShift.ShiftCode = Shift.ShiftCode;
+            oldShift.ShiftName = shift.ShiftName;
+            oldShift.ShiftCode = shift.ShiftCode != string.Empty ? shift.ShiftCode : shift.ShiftName.Substring(0, 1);
             oldShift.UpdatedAt = DateTime.Now;
-            oldShift.IsActive = Shift.IsActive;
+            oldShift.IsActive = shift.IsActive;
 
             await _repository.UpdateAsync(oldShift);
             return oldShift;

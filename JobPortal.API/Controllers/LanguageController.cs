@@ -1,6 +1,7 @@
 ﻿using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
+using static JobPortal.DTO.LanguageDto;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,30 +20,30 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<LanguageController>
         [HttpGet]
-        public async Task<IEnumerable<Language>> Get()
+        public async Task<IEnumerable<GetLanguageDto>> Get()
         {
             return await _languageServices.GetLanguageAsync();
         }
 
         // GET api/<LanguageController>/5
         [HttpGet("{id}")]
-        public async Task<Language> Get(long id)
+        public async Task<GetLanguageDto> Get(long id)
         {
             return await _languageServices.GetLanguageById(id);
         }
 
         // POST api/<LanguageController>
         [HttpPost]
-        public async Task<Language> Post([FromBody] Language language)
+        public async Task<GetLanguageDto> Post([FromBody] CreateLanguageDto createLanguageDto)
         {
-            return await _languageServices.CreateLanguageAsync(language);
+            return await _languageServices.CreateLanguageAsync(createLanguageDto);
         }
 
         // PUT api/<LanguageController>/5
         [HttpPut("{id}")]
-        public async Task<Language> Put(long id, [FromBody] Language language)
+        public async Task<GetLanguageDto> Put(long id, [FromBody] UpdateLanguageDto updateLanguageDto)
         {
-            return await _languageServices.UpdateLanguageAsync(id, language);
+            return await _languageServices.UpdateLanguageAsync(id, updateLanguageDto);
         }
 
         // DELETE api/<LanguageController>/5

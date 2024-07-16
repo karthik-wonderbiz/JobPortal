@@ -20,9 +20,10 @@ namespace JobPortal.Services
 
         public async Task<EmploymentType> CreateEmploymentTypeAsync(EmploymentType employmentType)
         {
-            employmentType.CreatedAt = DateTime.Now;
+            employmentType.EmploymentTypeCode = employmentType.EmploymentTypeCode != string.Empty ? employmentType.EmploymentTypeCode : employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
+
             employmentType.UpdatedAt = DateTime.Now;
-            employmentType.EmploymentTypeCode = employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
+            employmentType.CreatedAt = DateTime.Now;
 
             return await _employmentTypeRepository.CreateAsync(employmentType);
         }
@@ -55,13 +56,13 @@ namespace JobPortal.Services
         {
             var empType = await _employmentTypeRepository.GetAsync(id);
 
-            if(empType == null)
+            if (empType == null)
             {
                 throw new Exception($"No EmploymentType found for id {id}");
             }
 
             empType.EmploymentTypeName = employmentType.EmploymentTypeName;
-            empType.EmploymentTypeCode = employmentType.EmploymentTypeCode;
+            empType.EmploymentTypeCode = employmentType.EmploymentTypeCode != string.Empty ? employmentType.EmploymentTypeCode : employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
 
             empType.UpdatedAt = DateTime.Now;
 
