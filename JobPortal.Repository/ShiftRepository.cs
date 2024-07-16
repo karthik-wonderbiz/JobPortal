@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Repository
 {
-    public class LanguageRepository : Repository<Language>, ILanguageRepository
+    public class ShiftRepository : Repository<Shift>, IShiftRepository
     {
-        public LanguageRepository(JobPortalDbContext dbcontext) : base(dbcontext)
+        public ShiftRepository(JobPortalDbContext dbcontext) : base(dbcontext)
         {
-
         }
     }
 }

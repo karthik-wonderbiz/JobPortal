@@ -8,17 +8,12 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model
 {
-    [Table("Gender")]
-    public class Gender
+    [Table("Genders")]
+    public class Gender : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "GenderName is required")]
         public string GenderName { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

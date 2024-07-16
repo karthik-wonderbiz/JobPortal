@@ -8,18 +8,12 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model
 {
-    [Table("Country")]
-    public class Country
+    [Table("Countries")]
+    public class Country : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
-
+        [Required]
         public string CountryName { get; set; }
 
-        public DateTime CreateAt { get; set; }
-
-        public DateTime UpdateAt { get; set; }
-
+        public bool IsActive { get; set; } = true;
     }
 }

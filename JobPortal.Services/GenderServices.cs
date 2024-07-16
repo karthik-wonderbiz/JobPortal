@@ -21,7 +21,7 @@ namespace JobPortal.Services
         public async Task<Gender> CreateGenderAsync(Gender gender)
         {
             gender.CreatedAt = DateTime.Now;
-            gender.LastUpdatedAt = DateTime.Now;
+            gender.UpdatedAt = DateTime.Now;
 
             return await _genderRepository.CreateAsync(gender);
         }
@@ -57,7 +57,7 @@ namespace JobPortal.Services
             {
                 oldGender.GenderName = gender.GenderName;
 
-                oldGender.LastUpdatedAt = DateTime.Now;
+                oldGender.UpdatedAt = DateTime.Now;
             }
 
             return oldGender;

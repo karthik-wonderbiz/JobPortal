@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobPortral.Model
+namespace JobPortal.Model
 {
-    [Table("Country")]
-    public class Country
+    [Table("Shifts")]
+    public class Shift : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id   { get; set; }
 
         [Required]
-        public string CountryName { get; set; }
+        [StringLength(100)]
+        public string ShiftName { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
 }

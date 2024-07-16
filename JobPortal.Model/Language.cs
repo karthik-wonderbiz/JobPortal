@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 namespace JobPortal.Model
 {
     [Table("Languages")]
-    public class Language
+    public class Language : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Language Name is Required")]
+        [MaxLength(50)]
         public string LanguageName { get; set; }
 
+        [Required(ErrorMessage = "Language Code is Required")]
+        [MaxLength(50)]
+        public string LanguageCode { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

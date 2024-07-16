@@ -10,16 +10,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<JobPortalDbContext>(option => option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
+builder.Services.AddDbContext<JobPortalDbContext>(option =>
+    option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
 /*Country*/
+builder.Services.AddScoped<IGenderServices, GenderServices>();
+builder.Services.AddScoped<IGenderRepository, GenderRepository>();
+
 builder.Services.AddScoped<ICountryServices, CountryServices>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 builder.Services.AddScoped<ILanguageServices, LanguageServices>();
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
 
+builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
+builder.Services.AddScoped<IShiftServices, ShiftServices>();
 
 builder.Services.AddControllers();
 

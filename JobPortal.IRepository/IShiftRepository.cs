@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.IRepository
 {
-    public interface ILanguageRepository : IRepository<Language>
+    public interface IShiftRepository : IRepository<Shift>
     {
     }
 }

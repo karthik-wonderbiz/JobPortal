@@ -1,6 +1,6 @@
 ﻿using JobPortal.IRepository;
 using JobPortal.IServices;
-using JobPortral.Model;
+using JobPortal.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,7 @@ namespace JobPortal.Services
         {
             language.CreatedAt = DateTime.Now;
             language.UpdatedAt = DateTime.Now;
+            language.LanguageCode = language.LanguageName.Substring(0, 3);
             return await _languageRepository.CreateAsync(language);
         }
 
@@ -39,7 +40,7 @@ namespace JobPortal.Services
             return await _languageRepository.GetAllAsync();
         }
 
-        public async Task<Language> GetLanguageById(int id)
+        public async Task<Language> GetLanguageById(long id)
         {
             return await _languageRepository.GetAsync(id);
         }

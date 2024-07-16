@@ -1,4 +1,4 @@
-﻿using JobPortral.Model;
+﻿using JobPortal.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,9 @@ namespace JobPortal.Data
                 
         }
         public DbSet<Language>  languages { get; set; }
+        public DbSet<Shift> shifts { get; set; }
         public DbSet<Country> countries  { get; set; }
+        public DbSet<Gender> genders { get; set; }
+
     }
 }
