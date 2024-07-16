@@ -17,12 +17,12 @@ namespace JobPortal.Services
             _repository = repository;
         }
 
-        public async Task<State> CreateStateAsync(State State)
+        public async Task<State> CreateStateAsync(State state)
         {
-            State.CreatedAt = DateTime.Now;
-            State.UpdatedAt = DateTime.Now;
-            State.StateCode = State.StateCode.Substring(0,2);
-            return await _repository.CreateAsync(State);
+            state.CreatedAt = DateTime.Now;
+            state.UpdatedAt = DateTime.Now;
+            state.StateCode = state.StateName.ToUpper().Substring(0,3);
+            return await _repository.CreateAsync(state);
         }
 
         public async Task<bool> DeleteStateAsync(long id)
@@ -45,7 +45,7 @@ namespace JobPortal.Services
             return await _repository.GetAsync(id);
         }
 
-        public async Task<State> UpdateStateAsync(long id, State State)
+        public async Task<State> UpdateStateAsync(long id, State state)
         {
             var oldState = await _repository.GetAsync(id);
 
@@ -53,10 +53,10 @@ namespace JobPortal.Services
             {
                 throw new Exception("Invalid");
             }
-            oldState.StateName = State.StateName;
-            oldState.StateCode = State.StateCode;
+            oldState.StateName = state.StateName;
+            oldState.StateCode = state.StateCode;
             oldState.UpdatedAt = DateTime.Now;
-            oldState.IsActive = State.IsActive;
+            oldState.IsActive = state.IsActive;
 
             await _repository.UpdateAsync(oldState);
             return oldState;
