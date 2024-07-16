@@ -22,10 +22,11 @@ namespace JobPortal.Services
         {
             country.CreatedAt = DateTime.Now;
             country.UpdatedAt = DateTime.Now;
+            country.CountryCode = country.CountryName.Substring(0,3);
             return await _countryRepository.CreateAsync(country);
         }
 
-        public async Task<bool> DeleteCountryAsync(int id)
+        public async Task<bool> DeleteCountryAsync(long id)
         {
             var country = await _countryRepository.GetAsync(id);
 
@@ -49,28 +50,27 @@ namespace JobPortal.Services
             return null;
         }
 
-        public Task<Country> GetCountryByIdAsync(int id)
+        public Task<Country> GetCountryByIdAsync(long id)
         {
             return _countryRepository.GetAsync(id);
         }
 
-        public async Task<Country> UpdateCountryAsync(int id, Country country)
+        public async Task<Country> UpdateCountryAsync(long id, Country country)
         {
             var oldCountry = await _countryRepository.GetAsync(id);
 
-            if(oldCountry != null)
+            if(oldCountry == null)
             {
-                oldCountry.CountryName = country.CountryName;
-
-                await _countryRepository.UpdateAsync(oldCountry);
-                return oldCountry;
-            }
-            else
-            {
-                return null;
+                throw new Exception($"Object not found for id : {id}");
             }
 
-            
+            oldCountry.CountryName = country.CountryName;
+            oldCountry.CountryCode = country.CountryCode;
+            oldCountry.UpdatedAt = DateTime.Now;
+            oldCountry.IsActive = country.IsActive;
+
+            var res = await _countryRepository.UpdateAsync(oldCountry);
+            return res;
         }
     }
 }

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobPortal.Services", "JobPo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobPortal.DTO", "JobPortal.DTO\JobPortal.DTO.csproj", "{3302AE83-BDE5-495A-AACB-E9085374A6FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobPortal.Model", "JobPortal.Model\JobPortal.Model.csproj", "{878D673A-B579-4647-B7D0-AA7C7F18C7AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobPortal.Model", "JobPortal.Model\JobPortal.Model.csproj", "{878D673A-B579-4647-B7D0-AA7C7F18C7AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
