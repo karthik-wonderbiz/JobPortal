@@ -33,8 +33,9 @@ namespace JobPortal.API.Controllers
 
         // POST api/<EmploymentTypeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<EmploymentType> Post([FromBody] EmploymentType employmentType)
         {
+            return await _empTypeServices.CreateEmploymentTypeAsync(employmentType);
         }
 
         // PUT api/<EmploymentTypeController>/5
