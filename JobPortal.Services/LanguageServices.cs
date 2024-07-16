@@ -1,4 +1,5 @@
-﻿using JobPortal.IRepository;
+﻿using JobPortal.Data;
+using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.LanguageDto;
 
 namespace JobPortal.Services
 {
@@ -18,12 +20,10 @@ namespace JobPortal.Services
             _languageRepository = languageRepository;
         }
 
-        public async Task<Language> CreateLanguageAsync(Language language)
+        public async Task<GetLanguageDto> CreateLanguageAsync(CreateLanguageDto createLanguageDto)
         {
-            language.CreatedAt = DateTime.Now;
-            language.UpdatedAt = DateTime.Now;
-            language.LanguageCode = language.LanguageName.Substring(0, 3);
-            return await _languageRepository.CreateAsync(language);
+            var language = await _languageRepository.CreateAsync(new Language() { LanguageName = createLanguageDto.LanguageName, LanguageCode = createLanguageDto.LanguageName.ToUpper().Substring(0, 3), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
+            return new GetLanguageDto(language.Id, language.LanguageName, language.LanguageCode, language.IsActive);
         }
 
         public async Task<bool> DeleteLanguageAsync(long id)
@@ -36,28 +36,37 @@ namespace JobPortal.Services
             return res;
         }
 
-        public async Task<IEnumerable<Language>> GetLanguageAsync()
+        public async Task<IEnumerable<GetLanguageDto>> GetLanguageAsync()
         {
-            return await _languageRepository.GetAllAsync();
+            var language = await _languageRepository.GetAllAsync();
+
+            var languageDto = language.Select(language => new GetLanguageDto(language.Id, language.LanguageName, language.LanguageCode, language.IsActive));
+
+            return languageDto;
         }
 
-        public async Task<Language> GetLanguageById(long id)
+        public async Task<GetLanguageDto> GetLanguageById(long id)
         {
-            return await _languageRepository.GetAsync(id);
+            var language = await _languageRepository.GetAsync(id);
+            return new GetLanguageDto(language.Id, language.LanguageName, language.LanguageCode, language.IsActive);
         }
 
-        public async Task<Language> UpdateLanguageAsync(long id, Language language)
+        public async Task<GetLanguageDto> UpdateLanguageAsync(long id, UpdateLanguageDto updateLanguageDto)
         {
             var oldLanguage = await _languageRepository.GetAsync(id);
-            if (oldLanguage == null) {
-                throw new Exception($"Object not found with id : {id}");  
+
+            if (oldLanguage == null)
+            {
+                throw new Exception($"Object not found for id : {id}");
             }
-            oldLanguage.LanguageName = language.LanguageName;
-            oldLanguage.LanguageCode = language.LanguageCode;
-            oldLanguage.IsActive = language.IsActive;
-            oldLanguage.UpdatedAt = DateTime.Now;
-            var res = await _languageRepository.UpdateAsync(oldLanguage);
-            return res;
+
+            oldLanguage.LanguageName = updateLanguageDto.LanguageName;
+            oldLanguage.LanguageCode = updateLanguageDto.LanguageName.ToUpper().Substring(0, 3);
+            oldLanguage.IsActive = updateLanguageDto.IsActive;
+
+            await _languageRepository.UpdateAsync(oldLanguage);
+
+            return new GetLanguageDto(oldLanguage.Id, oldLanguage.LanguageName, oldLanguage.LanguageCode, oldLanguage.IsActive);
         }
     }
 }
