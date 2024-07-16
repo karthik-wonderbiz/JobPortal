@@ -20,6 +20,8 @@ namespace JobPortal.Services
 
         public async Task<Gender> CreateGenderAsync(Gender gender)
         {
+            gender.GenderCode = gender.GenderCode != string.Empty ? gender.GenderCode : gender.GenderName.ToUpper().Substring(0, 1);
+
             gender.CreatedAt = DateTime.Now;
             gender.UpdatedAt = DateTime.Now;
 
@@ -60,6 +62,7 @@ namespace JobPortal.Services
             }
 
             oldGender.GenderName = gender.GenderName;
+            oldGender.GenderCode = gender.GenderCode != string.Empty ? gender.GenderCode : gender.GenderName.ToUpper().Substring(0, 1);
 
             oldGender.UpdatedAt = DateTime.Now;
 

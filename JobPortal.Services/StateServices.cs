@@ -21,7 +21,7 @@ namespace JobPortal.Services
         {
             state.CreatedAt = DateTime.Now;
             state.UpdatedAt = DateTime.Now;
-            state.StateCode = state.StateName.ToUpper().Substring(0,3);
+            state.StateCode = state.StateCode != string.Empty ? state.StateCode : state.StateName.ToUpper().Substring(0,3);
             return await _repository.CreateAsync(state);
         }
 
@@ -54,7 +54,7 @@ namespace JobPortal.Services
                 throw new Exception("Invalid");
             }
             oldState.StateName = state.StateName;
-            oldState.StateCode = state.StateCode;
+            oldState.StateCode = state.StateCode != string.Empty ? state.StateCode : state.StateName.ToUpper().Substring(0, 3);
             oldState.UpdatedAt = DateTime.Now;
             oldState.IsActive = state.IsActive;
 
