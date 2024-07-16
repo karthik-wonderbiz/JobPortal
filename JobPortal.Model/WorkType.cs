@@ -15,7 +15,6 @@ namespace JobPortal.Model
         [MaxLength(50)]
         public string WorkTypeName { get; set; }
 
-        [Required(ErrorMessage = "Work Type Code is Required")]
         [MaxLength(50)]
         public string WorkTypeCode { get; set; }
         public bool IsActive { get; set; } = true;
