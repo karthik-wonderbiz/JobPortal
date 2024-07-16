@@ -19,6 +19,9 @@ namespace JobPortal.Services
 
         public async Task<Shift> CreateShiftAsync(Shift Shift)
         {
+            Shift.CreatedAt = DateTime.Now;
+            Shift.UpdatedAt = DateTime.Now;
+            Shift.ShiftCode = Shift.ShiftCode.Substring(0);
             return await _repository.CreateAsync(Shift);
         }
 
@@ -44,16 +47,19 @@ namespace JobPortal.Services
 
         public async Task<Shift> UpdateShiftAsync(long id, Shift Shift)
         {
-            var oldshift = await _repository.GetAsync(id);
+            var oldShift = await _repository.GetAsync(id);
 
-            if (oldshift != null)
+            if (oldShift == null)
             {
-                oldshift.ShiftName = Shift.ShiftName;
-                oldshift.UpdatedAt = DateTime.Now;
-
-                await _repository.UpdateAsync(oldshift);
+                throw new Exception("Invalid");
             }
-            return oldshift;
+            oldShift.ShiftName = Shift.ShiftName;
+            oldShift.ShiftCode = Shift.ShiftCode;
+            oldShift.UpdatedAt = DateTime.Now;
+            oldShift.IsActive = Shift.IsActive;
+
+            await _repository.UpdateAsync(oldShift);
+            return oldShift;
         }
     }
 }
