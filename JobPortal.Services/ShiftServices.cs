@@ -22,7 +22,7 @@ namespace JobPortal.Services
             return await _repository.CreateAsync(Shift);
         }
 
-        public async Task<bool> DeleteShiftAsync(int id)
+        public async Task<bool> DeleteShiftAsync(long id)
         {
             var oldshift = await _repository.GetAsync(id);
             if (oldshift != null)
@@ -37,12 +37,12 @@ namespace JobPortal.Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Shift> GetShiftByIdAsync(int id)
+        public async Task<Shift> GetShiftByIdAsync(long id)
         {
             return await _repository.GetAsync(id);
         }
 
-        public async Task<Shift> UpdateShiftAsync(int id, Shift Shift)
+        public async Task<Shift> UpdateShiftAsync(long id, Shift Shift)
         {
             var oldshift = await _repository.GetAsync(id);
 
