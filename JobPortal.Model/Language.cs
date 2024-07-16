@@ -12,8 +12,12 @@ namespace JobPortal.Model
     public class Language : BaseEntity
     {
         [Required(ErrorMessage = "Language Name is Required")]
+        [MaxLength(50)]
         public string LanguageName { get; set; }
 
+        [Required(ErrorMessage = "Language Code is Required")]
+        [MaxLength(50)]
+        public string LanguageCode { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }

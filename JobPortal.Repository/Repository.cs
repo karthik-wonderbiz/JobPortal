@@ -37,7 +37,7 @@ namespace JobPortal.Repository
             return await _dbcontext.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetAsync(int id)
+        public async Task<T> GetAsync(long id)
         {
             return await _dbcontext.Set<T>().FindAsync(id);
         }
