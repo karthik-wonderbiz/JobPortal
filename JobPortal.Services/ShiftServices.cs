@@ -20,6 +20,7 @@ namespace JobPortal.Services
 
         public async Task<GetShiftDto> CreateShiftAsync(CreateShiftDto shiftDto)
         {
+
             var shift = await _repository.CreateAsync(new Shift()
             {
                 ShiftName = shiftDto.ShiftName,
@@ -28,6 +29,7 @@ namespace JobPortal.Services
                 UpdatedAt = DateTime.Now
             });
             return new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive);
+
         }
 
         public async Task<bool> DeleteShiftAsync(long id)
@@ -68,6 +70,7 @@ namespace JobPortal.Services
             oldShift.ShiftName = shiftDto.ShiftName;
             oldShift.ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 1);
             oldShift.IsActive = shiftDto.IsActive;
+
 
             await _repository.UpdateAsync(oldShift);
 

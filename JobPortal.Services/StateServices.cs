@@ -20,6 +20,7 @@ namespace JobPortal.Services
 
         public async Task<GetStateDto> CreateStateAsync(CreateStateDto stateDto)
         {
+
             var state = await _repository.CreateAsync(new State() {
                 StateName = stateDto.StateName,
                 StateCode = stateDto.StateName.ToUpper().Substring(0, 3),
@@ -62,7 +63,6 @@ namespace JobPortal.Services
             {
                 throw new Exception($"Object not found for id : {id}");
             }
-
             oldState.StateName = stateDto.StateName;
             oldState.StateCode = stateDto.StateName.ToUpper().Substring(0, 3);
             oldState.IsActive = stateDto.IsActive;
