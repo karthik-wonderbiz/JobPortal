@@ -19,6 +19,9 @@ namespace JobPortal.Services
 
         public async Task<State> CreateStateAsync(State State)
         {
+            State.CreatedAt = DateTime.Now;
+            State.UpdatedAt = DateTime.Now;
+            State.StateCode = State.StateCode.Substring(0,2);
             return await _repository.CreateAsync(State);
         }
 
@@ -46,13 +49,16 @@ namespace JobPortal.Services
         {
             var oldState = await _repository.GetAsync(id);
 
-            if (oldState != null)
+            if (oldState == null)
             {
-                oldState.StateName = State.StateName;
-                oldState.UpdatedAt = DateTime.Now;
-
-                await _repository.UpdateAsync(oldState);
+                throw new Exception("Invalid");
             }
+            oldState.StateName = State.StateName;
+            oldState.StateCode = State.StateCode;
+            oldState.UpdatedAt = DateTime.Now;
+            oldState.IsActive = State.IsActive;
+
+            await _repository.UpdateAsync(oldState);
             return oldState;
         }
     }
