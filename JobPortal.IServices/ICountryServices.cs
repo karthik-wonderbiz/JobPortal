@@ -1,4 +1,5 @@
-﻿using JobPortal.Model;
+﻿using JobPortal.Data;
+using JobPortal.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace JobPortal.IServices
 {
     public interface ICountryServices
     {
-        public Task<Country> GetCountryByIdAsync(long id);
+        public Task<GetCountryDto> GetCountryByIdAsync(long id);
 
-        public Task<IEnumerable<Country>> GetAllCountriesAsync();
-        public Task<Country> CreateCountryAsync(Country country);
-        public Task<Country> UpdateCountryAsync(long id, Country country);
+        public Task<IEnumerable<GetCountryDto>> GetAllCountriesAsync();
+        public Task<GetCountryDto> CreateCountryAsync(CreateCountryDto countryDto);
+        public Task<GetCountryDto> UpdateCountryAsync(long id, UpdateCountryDto countryDto);
         public Task<bool> DeleteCountryAsync(long id);
     }
 }

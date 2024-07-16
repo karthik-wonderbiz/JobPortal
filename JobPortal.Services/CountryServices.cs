@@ -1,4 +1,5 @@
-﻿using JobPortal.IRepository;
+﻿using JobPortal.Data;
+using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
 using System;
@@ -18,12 +19,10 @@ namespace JobPortal.Services
             _countryRepository = countryRepository;
         }
 
-        public async Task<Country> CreateCountryAsync(Country country)
+        public async Task<GetCountryDto> CreateCountryAsync(CreateCountryDto countryDto)
         {
-            country.CreatedAt = DateTime.Now;
-            country.UpdatedAt = DateTime.Now;
-            country.CountryCode = country.CountryName.Substring(0,3);
-            return await _countryRepository.CreateAsync(country);
+            var country = await _countryRepository.CreateAsync(new Country() { CountryName = countryDto.CountryName,CountryCode = countryDto.CountryName.ToUpper().Substring(0,3), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
+            return new GetCountryDto(country.Id, country.CountryName, country.CountryCode, country.IsActive);
         }
 
         public async Task<bool> DeleteCountryAsync(long id)
@@ -40,22 +39,24 @@ namespace JobPortal.Services
             }
         }
 
-        public async Task<IEnumerable<Country>> GetAllCountriesAsync()
+        public async Task<IEnumerable<GetCountryDto>> GetAllCountriesAsync()
         {
-            var isCountry = await _countryRepository.GetAllAsync();
-            if(isCountry != null)
-            {
-                return await _countryRepository.GetAllAsync();
-            }
-            return null;
+            var countries = await _countryRepository.GetAllAsync();
+
+            var countryDto = countries.Select(country => new GetCountryDto(country.Id, country.CountryName, country.CountryCode, country.IsActive));
+
+            return countryDto;
+
         }
 
-        public Task<Country> GetCountryByIdAsync(long id)
+        public async Task<GetCountryDto> GetCountryByIdAsync(long id)
         {
-            return _countryRepository.GetAsync(id);
+            var country = await _countryRepository.GetAsync(id);
+
+            return new GetCountryDto(country.Id, country.CountryName, country.CountryCode, country.IsActive);
         }
 
-        public async Task<Country> UpdateCountryAsync(long id, Country country)
+        public async Task<GetCountryDto> UpdateCountryAsync(long id, UpdateCountryDto countryDto)
         {
             var oldCountry = await _countryRepository.GetAsync(id);
 
@@ -64,13 +65,13 @@ namespace JobPortal.Services
                 throw new Exception($"Object not found for id : {id}");
             }
 
-            oldCountry.CountryName = country.CountryName;
-            oldCountry.CountryCode = country.CountryCode;
-            oldCountry.UpdatedAt = DateTime.Now;
-            oldCountry.IsActive = country.IsActive;
+            oldCountry.CountryName = countryDto.CountryName;
+            oldCountry.CountryCode = countryDto.CountryName.ToUpper().Substring(0, 3);
+            oldCountry.IsActive = countryDto.IsActive;
 
-            var res = await _countryRepository.UpdateAsync(oldCountry);
-            return res;
+            await _countryRepository.UpdateAsync(oldCountry);
+
+            return new GetCountryDto(oldCountry.Id, oldCountry.CountryName, oldCountry.CountryCode, oldCountry.IsActive);
         }
     }
 }
