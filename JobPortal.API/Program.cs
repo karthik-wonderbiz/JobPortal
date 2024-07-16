@@ -16,12 +16,14 @@ builder.Services.AddDbContext<JobPortalDbContext>(option => option.UseSqlServer(
 
 
 /*Country*/
+builder.Services.AddScoped<IGenderServices, GenderServices>();
+builder.Services.AddScoped<IGenderRepository, GenderRepository>();
+
 builder.Services.AddScoped<ICountryServices, CountryServices>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 builder.Services.AddScoped<ILanguageServices, LanguageServices>();
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
-
 
 builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
 builder.Services.AddScoped<IShiftServices, ShiftServices>();
