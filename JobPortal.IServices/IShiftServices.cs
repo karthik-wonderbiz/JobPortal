@@ -9,11 +9,11 @@ namespace JobPortal.IServices
 {
     public interface IShiftServices
     {
-        public Task<Shift> GetShiftByIdAsync(int id);
+        public Task<Shift> GetShiftByIdAsync(long id);
 
         public Task<IEnumerable<Shift>> GetAllShiftsAsync();
         public Task<Shift> CreateShiftAsync(Shift Shift);
-        public Task<Shift> UpdateShiftAsync(int id, Shift Shift);
-        public Task<bool> DeleteShiftAsync(int id);
+        public Task<Shift> UpdateShiftAsync(long id, Shift Shift);
+        public Task<bool> DeleteShiftAsync(long id);
     }
 }

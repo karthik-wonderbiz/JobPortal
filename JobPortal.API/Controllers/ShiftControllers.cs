@@ -26,7 +26,7 @@ namespace JobPortal.API.Controllers
 
         // GET api/<ShiftControllers>/5
         [HttpGet("{id}")]
-        public async Task <Shift> Get(int id)
+        public async Task <Shift> Get(long id)
         {
             return await _shiftServices.GetShiftByIdAsync(id);
         }
@@ -40,14 +40,14 @@ namespace JobPortal.API.Controllers
 
         // PUT api/<ShiftControllers>/5
         [HttpPut("{id}")]
-        public async Task<Shift> Put(int id, [FromBody] Shift Shift)
+        public async Task<Shift> Put(long id, [FromBody] Shift Shift)
         {
             return await _shiftServices.UpdateShiftAsync(id, Shift);
         }
 
         // DELETE api/<ShiftControllers>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             return await _shiftServices.DeleteShiftAsync(id);
         }

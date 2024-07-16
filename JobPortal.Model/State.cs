@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model
 {
-    [Table("Shifts")]
-    public class Shift : BaseEntity
+    [Table("States")]
+    public class State : BaseEntity
     {
         [Required]
         [StringLength(100)]
-        public string ShiftName { get; set; }
-        public string ShiftCode { get; set; }
+        public string StateName { get; set; }
+        public string StateCode { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }
