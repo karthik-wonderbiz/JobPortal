@@ -61,7 +61,7 @@ namespace JobPortal.Services
             oldWorkType.IsActive = workType.IsActive;
             oldWorkType.UpdatedAt = DateTime.Now;
             
-            var res = await _workTypeRepository.UpdateAsync(id, oldWorkType);
+            var res = await _workTypeRepository.UpdateAsync(oldWorkType);
             return res;
 
         }

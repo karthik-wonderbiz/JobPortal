@@ -42,7 +42,7 @@ namespace JobPortal.Repository
             return await _dbcontext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> UpdateAsync(long id, T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _dbcontext.Set<T>().Update(entity);
             await _dbcontext.SaveChangesAsync();

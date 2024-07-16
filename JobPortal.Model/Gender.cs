@@ -13,6 +13,7 @@ namespace JobPortal.Model
     {
         [Required(ErrorMessage = "GenderName is required")]
         public string GenderName { get; set; }
+        public string GenderCode { get; set; }
 
         public bool IsActive { get; set; } = true;
     }

@@ -9,14 +9,14 @@ namespace JobPortal.IServices
 {
     public interface IGenderServices
     {
-        public Task<IEnumerable<Gender>> GetGendersAsync();
+        Task<IEnumerable<Gender>> GetGendersAsync();
 
-        public Task<Gender> GetGenderAsync(int id);
+        Task<Gender> GetGenderAsync(long id);
 
-        public Task<Gender> CreateGenderAsync(Gender gender);
+        Task<Gender> CreateGenderAsync(Gender gender);
 
-        public Task<Gender> UpdateGenderAsync(int id, Gender gender);
+        Task<Gender> UpdateGenderAsync(long id, Gender gender);
 
-        public Task<bool> DeleteGenderAsync(int id);
+        Task<bool> DeleteGenderAsync(long id);
     }
 }

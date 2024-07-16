@@ -56,7 +56,7 @@ namespace JobPortal.Services
             oldLanguage.LanguageCode = language.LanguageCode;
             oldLanguage.IsActive = language.IsActive;
             oldLanguage.UpdatedAt = DateTime.Now;
-            var res = await _languageRepository.UpdateAsync(id,oldLanguage);
+            var res = await _languageRepository.UpdateAsync(oldLanguage);
             return res;
         }
     }
