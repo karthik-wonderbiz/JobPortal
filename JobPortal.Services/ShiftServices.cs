@@ -1,4 +1,5 @@
-﻿using JobPortal.IRepository;
+﻿using JobPortal.Data;
+using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
 using System;
@@ -17,49 +18,60 @@ namespace JobPortal.Services
             _repository = repository;
         }
 
-        public async Task<Shift> CreateShiftAsync(Shift shift)
+        public async Task<GetShiftDto> CreateShiftAsync(CreateShiftDto shiftDto)
         {
-            shift.CreatedAt = DateTime.Now;
-            shift.UpdatedAt = DateTime.Now;
-            shift.ShiftCode = shift.ShiftName.Substring(0,1);
-            return await _repository.CreateAsync(shift);
+            var shift = await _repository.CreateAsync(new Shift()
+            {
+                ShiftName = shiftDto.ShiftName,
+                ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 1),
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            });
+            return new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive);
         }
 
         public async Task<bool> DeleteShiftAsync(long id)
         {
-            var oldshift = await _repository.GetAsync(id);
-            if (oldshift != null)
+            var oldShift = await _repository.GetAsync(id);
+            if (oldShift != null)
             {
-                return await _repository.DeleteAsync(oldshift);
+                return await _repository.DeleteAsync(oldShift);
             }
             return false;
         }
 
-        public async Task<IEnumerable<Shift>> GetAllShiftsAsync()
+        public async Task<IEnumerable<GetShiftDto>> GetAllShiftsAsync()
         {
-            return await _repository.GetAllAsync();
+            var shifts = await _repository.GetAllAsync();
+
+            var shiftDto = shifts.Select(shift => new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive));
+
+            return shiftDto;
         }
 
-        public async Task<Shift> GetShiftByIdAsync(long id)
+        public async Task<GetShiftDto> GetShiftByIdAsync(long id)
         {
-            return await _repository.GetAsync(id);
+            var shift = await _repository.GetAsync(id);
+
+            return new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive);
         }
 
-        public async Task<Shift> UpdateShiftAsync(long id, Shift shift)
+        public async Task<GetShiftDto> UpdateShiftAsync(long id, UpdateShiftDto shiftDto)
         {
             var oldShift = await _repository.GetAsync(id);
 
             if (oldShift == null)
             {
-                throw new Exception("Invalid");
+                throw new Exception($"Object not found for id : {id}");
             }
-            oldShift.ShiftName = shift.ShiftName;
-            oldShift.ShiftCode = shift.ShiftCode;
-            oldShift.UpdatedAt = DateTime.Now;
-            oldShift.IsActive = shift.IsActive;
+
+            oldShift.ShiftName = shiftDto.ShiftName;
+            oldShift.ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 1);
+            oldShift.IsActive = shiftDto.IsActive;
 
             await _repository.UpdateAsync(oldShift);
-            return oldShift;
+
+            return new GetShiftDto(oldShift.Id, oldShift.ShiftName, oldShift.ShiftCode, oldShift.IsActive);
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using JobPortal.IServices;
+﻿using JobPortal.Data;
+using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Metrics;
-using System.Numerics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,42 +9,44 @@ namespace JobPortal.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShiftControllers : ControllerBase
+    public class ShiftController : ControllerBase
     {
         private readonly IShiftServices _shiftServices;
-        public ShiftControllers(IShiftServices shiftServices)
+
+        public ShiftController(IShiftServices shiftServices)
         {
             _shiftServices = shiftServices;
         }
-        // GET: api/<ShiftControllers>
+
+        // GET: api/<ShiftController>
         [HttpGet]
-        public async Task <IEnumerable<Shift>> Get()
+        public async Task<IEnumerable<GetShiftDto>> Get()
         {
             return await _shiftServices.GetAllShiftsAsync();
         }
 
-        // GET api/<ShiftControllers>/5
+        // GET api/<ShiftController>/5
         [HttpGet("{id}")]
-        public async Task <Shift> Get(long id)
+        public async Task<GetShiftDto> Get(long id)
         {
             return await _shiftServices.GetShiftByIdAsync(id);
         }
 
-        // POST api/<ShiftControllers>
+        // POST api/<ShiftController>
         [HttpPost]
-        public async Task<Shift> Post([FromBody] Shift Shift)
+        public async Task<GetShiftDto> Post([FromBody] CreateShiftDto shiftDto)
         {
-            return await _shiftServices.CreateShiftAsync(Shift);
+            return await _shiftServices.CreateShiftAsync(shiftDto);
         }
 
-        // PUT api/<ShiftControllers>/5
+        // PUT api/<ShiftController>/5
         [HttpPut("{id}")]
-        public async Task<Shift> Put(long id, [FromBody] Shift Shift)
+        public async Task<GetShiftDto> Put(long id, [FromBody] UpdateShiftDto shiftDto)
         {
-            return await _shiftServices.UpdateShiftAsync(id, Shift);
+            return await _shiftServices.UpdateShiftAsync(id, shiftDto);
         }
 
-        // DELETE api/<ShiftControllers>/5
+        // DELETE api/<ShiftController>/5
         [HttpDelete("{id}")]
         public async Task<bool> Delete(long id)
         {

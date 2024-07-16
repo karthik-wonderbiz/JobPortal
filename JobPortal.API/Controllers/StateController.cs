@@ -1,4 +1,5 @@
-﻿using JobPortal.IServices;
+﻿using JobPortal.Data;
+using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,46 +9,48 @@ namespace JobPortal.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StateControllers : ControllerBase
+    public class StateController : ControllerBase
     {
-        private readonly IStateServices _StateServices;
-        public StateControllers(IStateServices StateServices)
+        private readonly IStateServices _stateServices;
+
+        public StateController(IStateServices stateServices)
         {
-            _StateServices = StateServices;
+            _stateServices = stateServices;
         }
-        // GET: api/<StateControllers>
+
+        // GET: api/<StateController>
         [HttpGet]
-        public async Task<IEnumerable<State>> Get()
+        public async Task<IEnumerable<GetStateDto>> Get()
         {
-            return await _StateServices.GetAllStatesAsync();
+            return await _stateServices.GetAllStatesAsync();
         }
 
-        // GET api/<StateControllers>/5
+        // GET api/<StateController>/5
         [HttpGet("{id}")]
-        public async Task<State> Get(long id)
+        public async Task<GetStateDto> Get(long id)
         {
-            return await _StateServices.GetStateByIdAsync(id);
+            return await _stateServices.GetStateByIdAsync(id);
         }
 
-        // POST api/<StateControllers>
+        // POST api/<StateController>
         [HttpPost]
-        public async Task<State> Post([FromBody] State state)
+        public async Task<GetStateDto> Post([FromBody] CreateStateDto stateDto)
         {
-            return await _StateServices.CreateStateAsync(state);
+            return await _stateServices.CreateStateAsync(stateDto);
         }
 
-        // PUT api/<StateControllers>/5
+        // PUT api/<StateController>/5
         [HttpPut("{id}")]
-        public async Task<State> Put(long id, [FromBody] State state)
+        public async Task<GetStateDto> Put(long id, [FromBody] UpdateStateDto stateDto)
         {
-            return await _StateServices.UpdateStateAsync(id, state);
+            return await _stateServices.UpdateStateAsync(id, stateDto);
         }
 
-        // DELETE api/<StateControllers>/5
+        // DELETE api/<StateController>/5
         [HttpDelete("{id}")]
         public async Task<bool> Delete(long id)
         {
-            return await _StateServices.DeleteStateAsync(id);
+            return await _stateServices.DeleteStateAsync(id);
         }
     }
 }
