@@ -27,6 +27,18 @@ builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
 builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
 builder.Services.AddScoped<IShiftServices, ShiftServices>();
 
+builder.Services.AddScoped<IStateRepository, StateRepository>();
+builder.Services.AddScoped<IStateServices, StateServices>();
+
+builder.Services.AddScoped<IWorkTypeRepository, WorkTypeRepository>();
+builder.Services.AddScoped<IWorkTypeServices, WorkTypeServices>();
+
+builder.Services.AddScoped<IEmploymentTypeRepository, EmploymentTypeRepository>();
+builder.Services.AddScoped<IEmploymentTypeServices, EmploymentTypeServices>();
+
+builder.Services.AddScoped<ITrainInfoRepository, TrainInfoRepository>();
+builder.Services.AddScoped<ITrainInfoServices, TrainInfoServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model
 {
-    [Table("Countries")]
-    public class Country : BaseEntity
+    [Table("TrainInfos")]
+    public class TrainInfo : BaseEntity
     {
         [Required]
-        public string CountryName { get; set; }
+        public string TrainInfoName { get; set; }
 
-        public string CountryCode { get; set; }
+        public string TrainInfoCode { get; set; }
 
         public bool IsActive { get; set; } = true;
     }

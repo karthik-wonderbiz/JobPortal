@@ -26,7 +26,7 @@ namespace JobPortal.API.Controllers
 
         // GET api/<CountryController>/5
         [HttpGet("{id}")]
-        public async Task <Country> Get(int id)
+        public async Task <Country> Get(long id)
         {
             return await _countryServices.GetCountryByIdAsync(id);
         }
@@ -40,14 +40,14 @@ namespace JobPortal.API.Controllers
 
         // PUT api/<CountryController>/5
         [HttpPut("{id}")]
-        public async Task<Country> Put(int id, [FromBody] Country country)
+        public async Task<Country> Put(long id, [FromBody] Country country)
         {
             return await _countryServices.UpdateCountryAsync(id, country);
         }
 
         // DELETE api/<CountryController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             return await _countryServices.DeleteCountryAsync(id);
         }

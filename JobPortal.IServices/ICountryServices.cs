@@ -9,11 +9,11 @@ namespace JobPortal.IServices
 {
     public interface ICountryServices
     {
-        public Task<Country> GetCountryByIdAsync(int id);
+        public Task<Country> GetCountryByIdAsync(long id);
 
         public Task<IEnumerable<Country>> GetAllCountriesAsync();
         public Task<Country> CreateCountryAsync(Country country);
-        public Task<Country> UpdateCountryAsync(int id, Country country);
-        public Task<bool> DeleteCountryAsync(int id);
+        public Task<Country> UpdateCountryAsync(long id, Country country);
+        public Task<bool> DeleteCountryAsync(long id);
     }
 }
