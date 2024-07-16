@@ -67,6 +67,7 @@ namespace JobPortal.Services
             await _languageRepository.UpdateAsync(oldLanguage);
 
             return new GetLanguageDto(oldLanguage.Id, oldLanguage.LanguageName, oldLanguage.LanguageCode, oldLanguage.IsActive);
+
         }
     }
 }

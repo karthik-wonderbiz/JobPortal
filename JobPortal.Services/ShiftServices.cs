@@ -21,7 +21,7 @@ namespace JobPortal.Services
         {
             shift.CreatedAt = DateTime.Now;
             shift.UpdatedAt = DateTime.Now;
-            shift.ShiftCode = shift.ShiftName.Substring(0,1);
+            shift.ShiftCode = shift.ShiftCode != string.Empty ? shift.ShiftCode : shift.ShiftName.Substring(0,1);
             return await _repository.CreateAsync(shift);
         }
 
@@ -54,7 +54,7 @@ namespace JobPortal.Services
                 throw new Exception("Invalid");
             }
             oldShift.ShiftName = shift.ShiftName;
-            oldShift.ShiftCode = shift.ShiftCode;
+            oldShift.ShiftCode = shift.ShiftCode != string.Empty ? shift.ShiftCode : shift.ShiftName.Substring(0, 1);
             oldShift.UpdatedAt = DateTime.Now;
             oldShift.IsActive = shift.IsActive;
 
