@@ -26,13 +26,14 @@ namespace JobPortal.Services
             return await _languageRepository.CreateAsync(language);
         }
 
-        public async Task<bool> DeleteLanguageAsync(int id)
+        public async Task<bool> DeleteLanguageAsync(long id)
         {
             var oldLanguage = await _languageRepository.GetAsync(id);
-            if (oldLanguage != null) {
-                return await _languageRepository.DeleteAsync(oldLanguage);
+            if (oldLanguage == null) {
+                throw new Exception($"No Language is found for id : {id}");
             }
-            return false;
+            var res = await _languageRepository.DeleteAsync(oldLanguage);
+            return res;
         }
 
         public async Task<IEnumerable<Language>> GetLanguageAsync()
@@ -45,16 +46,17 @@ namespace JobPortal.Services
             return await _languageRepository.GetAsync(id);
         }
 
-        public async Task<Language> UpdateLanguageAsync(int id, Language language)
+        public async Task<Language> UpdateLanguageAsync(long id, Language language)
         {
             var oldLanguage = await _languageRepository.GetAsync(id);
-            if (oldLanguage != null) {
-                oldLanguage.LanguageName = language.LanguageName;
-                oldLanguage.UpdatedAt = DateTime.Now;
-
-                return await _languageRepository.UpdateAsync(oldLanguage);
+            if (oldLanguage == null) {
+                throw new Exception($"Object not found with id : {id}");  
             }
-            return oldLanguage;
+            oldLanguage.LanguageName = language.LanguageName;
+            oldLanguage.LanguageCode = language.LanguageCode;
+            oldLanguage.UpdatedAt = DateTime.Now;
+            var res = await _languageRepository.UpdateAsync(id,oldLanguage);
+            return res;
         }
     }
 }
