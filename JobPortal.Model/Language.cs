@@ -16,7 +16,7 @@ namespace JobPortal.Model
         public string LanguageName { get; set; }
 
         [MaxLength(50)]
-        public string LanguageCode { get; set; }
+        public string LanguageCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
     }
 }

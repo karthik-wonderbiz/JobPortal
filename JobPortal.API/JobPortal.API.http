@@ -1,4 +1,4 @@
-@JobPortal.API_HostAddress = http://localhost:5044Add
+@JobPortal.API_HostAddress = http://localhost:5044
 
 GET {{JobPortal.API_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -14,5 +14,9 @@ GET {{JobPortal.API_HostAddress}}/api/language
 ###
 
 GET {{JobPortal.API_HostAddress}}/api/language
+
+###
+
+GET {{JobPortal.API_HostAddress}}/api/employmenttype
 
 ###

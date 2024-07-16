@@ -14,7 +14,7 @@ namespace JobPortal.Model
         [Required]
         [StringLength(100)]
         public string ShiftName { get; set; }
-        public string ShiftCode { get; set; }
+        public string ShiftCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
     }
 }

@@ -16,7 +16,7 @@ namespace JobPortal.Model
         public string WorkTypeName { get; set; }
 
         [MaxLength(50)]
-        public string WorkTypeCode { get; set; }
+        public string WorkTypeCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
 
     }
