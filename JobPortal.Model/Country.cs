@@ -11,7 +11,7 @@ namespace JobPortal.Model
     [Table("Countries")]
     public class Country : BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage = "CountryName is required")]
         public string CountryName { get; set; }
 
         public string CountryCode { get; set; } = string.Empty;

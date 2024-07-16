@@ -1,4 +1,5 @@
-﻿using JobPortal.IServices;
+﻿using JobPortal.Data;
+using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,30 +20,30 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<CountryController>
         [HttpGet]
-        public async Task<IEnumerable<Country>> Get()
+        public async Task<IEnumerable<GetCountryDto>> Get()
         {
             return await _countryServices.GetAllCountriesAsync();
         }
 
         // GET api/<CountryController>/5
         [HttpGet("{id}")]
-        public async Task <Country> Get(long id)
+        public async Task <GetCountryDto> Get(long id)
         {
             return await _countryServices.GetCountryByIdAsync(id);
         }
 
         // POST api/<CountryController>
         [HttpPost]
-        public async Task<Country> Post([FromBody] Country country)
+        public async Task<GetCountryDto> Post([FromBody] CreateCountryDto countryDto)
         {
-            return await _countryServices.CreateCountryAsync(country);
+            return await _countryServices.CreateCountryAsync(countryDto);
         }
 
         // PUT api/<CountryController>/5
         [HttpPut("{id}")]
-        public async Task<Country> Put(long id, [FromBody] Country country)
+        public async Task<GetCountryDto> Put(long id, [FromBody] UpdateCountryDto countryDto)
         {
-            return await _countryServices.UpdateCountryAsync(id, country);
+            return await _countryServices.UpdateCountryAsync(id, countryDto);
         }
 
         // DELETE api/<CountryController>/5
