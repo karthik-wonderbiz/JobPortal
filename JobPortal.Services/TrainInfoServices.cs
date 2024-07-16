@@ -1,4 +1,5 @@
-﻿using JobPortal.IRepository;
+﻿using JobPortal.Data;
+using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
 using System;
@@ -19,12 +20,10 @@ namespace JobPortal.Services
             _trainInfoRepository = trainInfoRepository;
         }
 
-        public async Task<TrainInfo> CreateTrainInfoAsync(TrainInfo trainInfo)
+        public async Task<GetTrainInfoDto> CreateTrainInfoAsync(CreateTrainInfoDto trainInfoDto)
         {
-            trainInfo.CreatedAt = DateTime.Now;
-            trainInfo.UpdatedAt = DateTime.Now;
-            trainInfo.TrainInfoCode = trainInfo.TrainInfoCode != string.Empty ? trainInfo.TrainInfoCode : trainInfo.TrainInfoName.Substring(0, 3);
-            return await _trainInfoRepository.CreateAsync(trainInfo);
+            var traininfo = await _trainInfoRepository.CreateAsync(new TrainInfo() { TrainInfoName = trainInfoDto.TrainInfoName, TrainInfoCode = trainInfoDto.TrainInfoName.ToUpper().Substring(0, 3), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
+            return new GetTrainInfoDto(traininfo.Id, traininfo.TrainInfoName, traininfo.TrainInfoCode, traininfo.IsActive);
         }
 
         public async Task<bool> DeleteTrainInfoAsync(long id)
@@ -41,22 +40,23 @@ namespace JobPortal.Services
             }
         }
 
-        public async Task<IEnumerable<TrainInfo>> GetAllTrainInfosAsync()
+        public async Task<IEnumerable<GetTrainInfoDto>> GetAllTrainInfosAsync()
         {
-            var IsTrainT = await _trainInfoRepository.GetAllAsync();
-            if (IsTrainT != null)
-            {
-                return await _trainInfoRepository.GetAllAsync();
-            }
-            return null;
+            var trainInfos = await _trainInfoRepository.GetAllAsync();
+
+            var trainInfoDto = trainInfos.Select(trainInfo => new GetTrainInfoDto(trainInfo.Id, trainInfo.TrainInfoName, trainInfo.TrainInfoCode, trainInfo.IsActive));
+
+            return trainInfoDto;
         }
 
-        public async Task<TrainInfo> GetTrainInfoByIdAsync(long id)
+        public async Task<GetTrainInfoDto> GetTrainInfoByIdAsync(long id)
         {
-            return await _trainInfoRepository.GetAsync(id);
+            var trainInfo = await _trainInfoRepository.GetAsync(id);
+
+            return new GetTrainInfoDto(trainInfo.Id, trainInfo.TrainInfoName, trainInfo.TrainInfoCode, trainInfo.IsActive);
         }
 
-        public async Task<TrainInfo> UpdateTrainInfoAsync(long id, TrainInfo trainInfo)
+        public async Task<GetTrainInfoDto> UpdateTrainInfoAsync(long id, UpdateTrainInfoDto trainInfoDto)
         {
             var oldTrainInfo = await _trainInfoRepository.GetAsync(id);
 
@@ -64,13 +64,12 @@ namespace JobPortal.Services
             {
                 throw new Exception($"Object not found for id : {id}");
             }
-            oldTrainInfo.TrainInfoName = trainInfo.TrainInfoName;
-            oldTrainInfo.TrainInfoCode = trainInfo.TrainInfoCode != string.Empty ? trainInfo.TrainInfoCode : trainInfo.TrainInfoName.Substring(0, 3);
-            oldTrainInfo.UpdatedAt = DateTime.Now;
-            oldTrainInfo.IsActive = trainInfo.IsActive;
+            oldTrainInfo.TrainInfoName = trainInfoDto.TrainInfoName;
+            oldTrainInfo.TrainInfoCode = trainInfoDto.TrainInfoCode;
+            oldTrainInfo.IsActive = trainInfoDto.IsActive;
 
-            var res = await _trainInfoRepository.UpdateAsync(oldTrainInfo);
-            return res;
+            await _trainInfoRepository.UpdateAsync(oldTrainInfo);
+            return new GetTrainInfoDto(oldTrainInfo.Id, oldTrainInfo.TrainInfoName, oldTrainInfo.TrainInfoCode, oldTrainInfo.IsActive);
         }
     }
 }

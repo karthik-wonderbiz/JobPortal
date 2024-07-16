@@ -1,4 +1,5 @@
-﻿using JobPortal.IServices;
+﻿using JobPortal.Data;
+using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,30 +22,30 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<TrainInfoController>
         [HttpGet]
-        public async Task<IEnumerable<TrainInfo>> Get()
+        public async Task<IEnumerable<GetTrainInfoDto>> Get()
         {
             return await _trainInfoServices.GetAllTrainInfosAsync();
         }
 
         // GET api/<TrainInfoController>/5
         [HttpGet("{id}")]
-        public async Task<TrainInfo> Get(long id)
+        public async Task<GetTrainInfoDto> Get(long id)
         {
             return await _trainInfoServices.GetTrainInfoByIdAsync(id);
         }
 
         // POST api/<TrainInfoController>
         [HttpPost]
-        public async Task<TrainInfo> Post([FromBody] TrainInfo trainInfo)
+        public async Task<GetTrainInfoDto> Post([FromBody] CreateTrainInfoDto trainInfoDto)
         {
-            return await _trainInfoServices.CreateTrainInfoAsync(trainInfo);
+            return await _trainInfoServices.CreateTrainInfoAsync(trainInfoDto);
         }
 
         // PUT api/<TrainInfoController>/5
         [HttpPut("{id}")]
-        public async Task<TrainInfo> Put(long id, [FromBody] TrainInfo trainInfo)
+        public async Task<GetTrainInfoDto> Put(long id, [FromBody] UpdateTrainInfoDto trainInfoDto)
         {
-            return await _trainInfoServices.UpdateTrainInfoAsync(id, trainInfo);
+            return await _trainInfoServices.UpdateTrainInfoAsync(id, trainInfoDto);
         }
 
         // DELETE api/<TrainInfoController>/5
