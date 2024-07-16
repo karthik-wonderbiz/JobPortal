@@ -12,7 +12,7 @@ namespace JobPortal.IServices
         public Task<IEnumerable<Language>> GetLanguageAsync();
         public Task<Language> GetLanguageById(long id);
         public Task<Language> CreateLanguageAsync(Language language);
-        public Task<Language> UpdateLanguageAsync(int id, Language language);
-        public Task<bool> DeleteLanguageAsync(int id);
+        public Task<Language> UpdateLanguageAsync(long id, Language language);
+        public Task<bool> DeleteLanguageAsync(long id);
     }
 }

@@ -15,7 +15,6 @@ namespace JobPortal.Model
         [MaxLength(50)]
         public string LanguageName { get; set; }
 
-        [Required(ErrorMessage = "Language Code is Required")]
         [MaxLength(50)]
         public string LanguageCode { get; set; }
         public bool IsActive { get; set; } = true;

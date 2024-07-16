@@ -26,7 +26,7 @@ namespace JobPortal.API.Controllers
 
         // GET api/<LanguageController>/5
         [HttpGet("{id}")]
-        public async Task<Language> Get(int id)
+        public async Task<Language> Get(long id)
         {
             return await _languageServices.GetLanguageById(id);
         }
@@ -40,14 +40,14 @@ namespace JobPortal.API.Controllers
 
         // PUT api/<LanguageController>/5
         [HttpPut("{id}")]
-        public async Task<Language> Put(int id, [FromBody] Language language)
+        public async Task<Language> Put(long id, [FromBody] Language language)
         {
             return await _languageServices.UpdateLanguageAsync(id, language);
         }
 
         // DELETE api/<LanguageController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             return await _languageServices.DeleteLanguageAsync(id);
         }
