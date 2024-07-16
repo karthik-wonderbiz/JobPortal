@@ -23,7 +23,7 @@ namespace JobPortal.Services
         {
             trainInfo.CreatedAt = DateTime.Now;
             trainInfo.UpdatedAt = DateTime.Now;
-            trainInfo.TrainInfoCode = trainInfo.TrainInfoName.Substring(0, 3);
+            trainInfo.TrainInfoCode = trainInfo.TrainInfoCode != string.Empty ? trainInfo.TrainInfoCode : trainInfo.TrainInfoName.Substring(0, 3);
             return await _trainInfoRepository.CreateAsync(trainInfo);
         }
 
@@ -65,7 +65,7 @@ namespace JobPortal.Services
                 throw new Exception($"Object not found for id : {id}");
             }
             oldTrainInfo.TrainInfoName = trainInfo.TrainInfoName;
-            oldTrainInfo.TrainInfoCode = trainInfo.TrainInfoCode;
+            oldTrainInfo.TrainInfoCode = trainInfo.TrainInfoCode != string.Empty ? trainInfo.TrainInfoCode : trainInfo.TrainInfoName.Substring(0, 3);
             oldTrainInfo.UpdatedAt = DateTime.Now;
             oldTrainInfo.IsActive = trainInfo.IsActive;
 

@@ -22,7 +22,7 @@ namespace JobPortal.Services
         {
             workType.CreatedAt = DateTime.Now;
             workType.UpdatedAt = DateTime.Now;
-            workType.WorkTypeCode = workType.WorkTypeName.Substring(0, 3);
+            workType.WorkTypeCode = workType.WorkTypeCode != string.Empty ? workType.WorkTypeCode : workType.WorkTypeName.Substring(0, 3);
             return await _workTypeRepository.CreateAsync(workType);
         }
 
@@ -57,7 +57,7 @@ namespace JobPortal.Services
                 throw new Exception($"Object not found for id : {id}");
             }
             oldWorkType.WorkTypeName = workType.WorkTypeName; 
-            oldWorkType.WorkTypeCode = workType.WorkTypeCode;
+            oldWorkType.WorkTypeCode = workType.WorkTypeCode != string.Empty ? workType.WorkTypeCode : workType.WorkTypeName.Substring(0, 3);
             oldWorkType.IsActive = workType.IsActive;
             oldWorkType.UpdatedAt = DateTime.Now;
             
