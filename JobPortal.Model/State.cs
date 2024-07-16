@@ -14,7 +14,7 @@ namespace JobPortal.Model
         [Required]
         [StringLength(100)]
         public string StateName { get; set; }
-        public string StateCode { get; set; }
+        public string StateCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
     }
 }

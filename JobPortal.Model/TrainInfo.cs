@@ -14,7 +14,7 @@ namespace JobPortal.Model
         [Required]
         public string TrainInfoName { get; set; }
 
-        public string TrainInfoCode { get; set; }
+        public string TrainInfoCode { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
     }

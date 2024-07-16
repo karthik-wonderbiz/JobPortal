@@ -14,7 +14,7 @@ namespace JobPortal.Model
         [Required]
         public string CountryName { get; set; }
 
-        public string CountryCode { get; set; }
+        public string CountryCode { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
     }

@@ -14,7 +14,7 @@ namespace JobPortal.Model
         [Required]
         public string EmploymentTypeName { get; set; }
 
-        public string EmploymentTypeCode { get; set; }
+        public string EmploymentTypeCode { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
     }
