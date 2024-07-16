@@ -12,8 +12,8 @@ namespace JobPortal.IServices
         public Task<State> GetStateByIdAsync(long id);
 
         public Task<IEnumerable<State>> GetAllStatesAsync();
-        public Task<State> CreateStateAsync(State State);
-        public Task<State> UpdateStateAsync(long id, State State);
+        public Task<State> CreateStateAsync(State state);
+        public Task<State> UpdateStateAsync(long id, State state);
         public Task<bool> DeleteStateAsync(long id);
     }
 }

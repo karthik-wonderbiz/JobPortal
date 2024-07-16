@@ -31,16 +31,16 @@ namespace JobPortal.API.Controllers
 
         // POST api/<StateControllers>
         [HttpPost]
-        public async Task<State> Post([FromBody] State State)
+        public async Task<State> Post([FromBody] State state)
         {
-            return await _StateServices.CreateStateAsync(State);
+            return await _StateServices.CreateStateAsync(state);
         }
 
         // PUT api/<StateControllers>/5
         [HttpPut("{id}")]
-        public async Task<State> Put(long id, [FromBody] State State)
+        public async Task<State> Put(long id, [FromBody] State state)
         {
-            return await _StateServices.UpdateStateAsync(id, State);
+            return await _StateServices.UpdateStateAsync(id, state);
         }
 
         // DELETE api/<StateControllers>/5
