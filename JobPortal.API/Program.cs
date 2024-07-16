@@ -11,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<JobPortalDbContext>(option => option.UseSqlServer(connectionString));
-builder.Services.AddDbContext<JobPortalDbContext>(option => option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
-
+builder.Services.AddDbContext<JobPortalDbContext>(option =>
+    option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
 /*Country*/
 builder.Services.AddScoped<IGenderServices, GenderServices>();
