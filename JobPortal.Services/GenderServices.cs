@@ -45,7 +45,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Gender already exists.");
                 }
                 throw;
             }
@@ -63,7 +63,7 @@ namespace JobPortal.Services
 
                 if (gender == null)
                 {
-                    throw new Exception($"No Gender Found with id: {id}");
+                    throw new Exception($"No Gender Found with id : {id}");
                 }
 
                 var genderDto = new GetGenderDto(
@@ -110,7 +110,7 @@ namespace JobPortal.Services
 
                 if (oldGender == null)
                 {
-                    throw new Exception($"No Gender Found for id: {id}");
+                    throw new Exception($"No Gender Found for id : {id}");
                 }
 
                 oldGender.GenderName = genderDto.GenderName;
@@ -133,7 +133,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Gender already exists.");
                 }
                 throw;
             }

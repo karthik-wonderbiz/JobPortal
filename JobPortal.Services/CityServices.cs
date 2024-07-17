@@ -1,61 +1,70 @@
 ﻿using JobPortal.Data;
+using JobPortal.DTO;
 using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JobPortal.Services
 {
     public class CityServices : ICityServices
     {
-        private readonly ICityRepository _repository;
-        public CityServices(ICityRepository repository)
+        private readonly ICityRepository _cityRepository;
+
+        public CityServices(ICityRepository cityRepository)
         {
-            _repository = repository;
+            _cityRepository = cityRepository;
         }
 
         public async Task<GetCityDto> CreateCityAsync(CreateCityDto cityDto)
         {
-
             try
             {
-                var city = await _repository.CreateAsync(new City()
+                var city = await _cityRepository.CreateAsync(new City()
                 {
                     CityName = cityDto.CityName,
                     CityCode = cityDto.CityName.ToUpper().Substring(0, 3),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
-                var createCityObject = new GetCityDto(city.Id, city.CityName, city.CityCode, city.IsActive);
-                return createCityObject;
+
+                var createdCity = new GetCityDto(city.Id, city.CityName, city.CityCode, city.IsActive);
+                return createdCity;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This city already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
 
         public async Task<bool> DeleteCityAsync(long id)
         {
             try
             {
-                var oldCity = await _repository.GetAsync(id);
-                if (oldCity == null)
+                var city = await _cityRepository.GetAsync(id);
+                if (city == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
+                    throw new Exception($"City not found for id : {id}");
                 }
-                var deleteCityObject = await _repository.DeleteAsync(oldCity);
-                return deleteCityObject;
+
+                var deleted = await _cityRepository.DeleteAsync(city);
+                return deleted;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -64,15 +73,19 @@ namespace JobPortal.Services
         {
             try
             {
-                var cities = await _repository.GetAllAsync();
+                var cities = await _cityRepository.GetAllAsync();
 
-                var getAllCityObject = cities.Select(city => new GetCityDto(city.Id, city.CityName, city.CityCode, city.IsActive));
+                var cityDtos = cities.Select(city => new GetCityDto(
+                    city.Id,
+                    city.CityName,
+                    city.CityCode,
+                    city.IsActive
+                ));
 
-                return getAllCityObject;
+                return cityDtos.ToList();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -81,18 +94,17 @@ namespace JobPortal.Services
         {
             try
             {
-                var city = await _repository.GetAsync(id);
+                var city = await _cityRepository.GetAsync(id);
                 if (city == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
-
+                    throw new Exception($"City not found for id : {id}");
                 }
-                var getCityObject = new GetCityDto(city.Id, city.CityName, city.CityCode, city.IsActive);
-                return getCityObject;
+
+                var cityDto = new GetCityDto(city.Id, city.CityName, city.CityCode, city.IsActive);
+                return cityDto;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -101,26 +113,33 @@ namespace JobPortal.Services
         {
             try
             {
-                var oldCity = await _repository.GetAsync(id);
-
+                var oldCity = await _cityRepository.GetAsync(id);
                 if (oldCity == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
-
+                    throw new Exception($"City not found for id : {id}");
                 }
+
                 oldCity.CityName = cityDto.CityName;
                 oldCity.CityCode = cityDto.CityName.ToUpper().Substring(0, 3);
                 oldCity.IsActive = cityDto.IsActive;
+                oldCity.UpdatedAt = DateTime.Now;
 
-                await _repository.UpdateAsync(oldCity);
+                await _cityRepository.UpdateAsync(oldCity);
 
-                var updateCityObject = new GetCityDto(oldCity.Id, oldCity.CityName, oldCity.CityCode, oldCity.IsActive);
-                return updateCityObject;
-
+                var updatedCity = new GetCityDto(oldCity.Id, oldCity.CityName, oldCity.CityCode, oldCity.IsActive);
+                return updatedCity;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This city already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

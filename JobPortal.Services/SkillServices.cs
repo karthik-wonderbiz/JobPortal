@@ -2,10 +2,10 @@
 using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JobPortal.Services
@@ -26,20 +26,30 @@ namespace JobPortal.Services
                 var skill = await _skillRepository.CreateAsync(new Skill()
                 {
                     SkillName = skillDto.SkillName,
+                    SkillExperience = skillDto.SkillExperience,
                     SkillCode = skillDto.SkillName.ToUpper().Substring(0, 1),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
 
-                var res = new GetSkillDto(
+                var createdSkill = new GetSkillDto(
                     skill.Id,
                     skill.SkillName,
                     skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
-                    );
+                );
 
-                return res;
+                return createdSkill;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This skill already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
@@ -52,10 +62,9 @@ namespace JobPortal.Services
             try
             {
                 var skill = await _skillRepository.GetAsync(id);
-
                 if (skill == null)
                 {
-                    throw new Exception($"No Skill Found with id  {id}");
+                    throw new Exception($"Skill not found for id : {id}");
                 }
 
                 var skillDto = new GetSkillDto(
@@ -64,13 +73,12 @@ namespace JobPortal.Services
                     skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
-                    );
+                );
 
                 return skillDto;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -81,15 +89,15 @@ namespace JobPortal.Services
             {
                 var skills = await _skillRepository.GetAllAsync();
 
-                var skillsDto = skills.Select(skill => new GetSkillDto(
+                var skillDtos = skills.Select(skill => new GetSkillDto(
                     skill.Id,
                     skill.SkillName,
                     skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
-                    ));
+                ));
 
-                return skillsDto.ToList();
+                return skillDtos.ToList();
             }
             catch (Exception)
             {
@@ -102,32 +110,39 @@ namespace JobPortal.Services
             try
             {
                 var oldSkill = await _skillRepository.GetAsync(id);
-
                 if (oldSkill == null)
                 {
-                    throw new Exception($"No Skill Found for id {id}");
+                    throw new Exception($"Skill not found for id : {id}");
                 }
 
                 oldSkill.SkillName = skillDto.SkillName;
-                oldSkill.SkillCode = skillDto.SkillCode != string.Empty ? skillDto.SkillCode : skillDto.SkillName.ToUpper().Substring(0, 1);
-
+                oldSkill.SkillExperience = skillDto.SkillExperience;
+                oldSkill.SkillCode = !string.IsNullOrEmpty(skillDto.SkillCode) ? skillDto.SkillCode : skillDto.SkillName.ToUpper().Substring(0, 1);
                 oldSkill.UpdatedAt = DateTime.Now;
 
-                var skill = await _skillRepository.UpdateAsync(oldSkill);
+                await _skillRepository.UpdateAsync(oldSkill);
 
-                var newSkillDto = new GetSkillDto(
-                    skill.Id,
-                    skill.SkillName,
-                    skill.SkillExperience,
-                    skill.SkillCode,
-                    skill.IsActive
-                    );
+                var updatedSkill = new GetSkillDto(
+                    oldSkill.Id,
+                    oldSkill.SkillName,
+                    oldSkill.SkillExperience,
+                    oldSkill.SkillCode,
+                    oldSkill.IsActive
+                );
 
-                return newSkillDto;
+                return updatedSkill;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This skill already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -137,15 +152,13 @@ namespace JobPortal.Services
             try
             {
                 var skill = await _skillRepository.GetAsync(id);
-
                 if (skill == null)
                 {
-                    throw new Exception($"No Skill Found for id {id}");
+                    throw new Exception($"Skill not found for id : {id}");
                 }
 
-                bool row = await _skillRepository.DeleteAsync(skill);
-
-                return row;
+                var deleted = await _skillRepository.DeleteAsync(skill);
+                return deleted;
             }
             catch (Exception)
             {

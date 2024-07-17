@@ -14,7 +14,6 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<JobPortalDbContext>(option =>
     option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
-/*Country*/
 builder.Services.AddScoped<IGenderServices, GenderServices>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
@@ -38,6 +37,18 @@ builder.Services.AddScoped<IEmploymentTypeServices, EmploymentTypeServices>();
 
 builder.Services.AddScoped<ITrainInfoRepository, TrainInfoRepository>();
 builder.Services.AddScoped<ITrainInfoServices, TrainInfoServices>();
+
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityServices, CityServices>();
+
+builder.Services.AddScoped<IUrlNameRepository, UrlNameRepository>();
+builder.Services.AddScoped<IUrlNameServices, UrlNameServices>();
+
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<ISkillServices, SkillServices>();
+
+builder.Services.AddScoped<IDesignationRepository, DesignationRepository>();
+builder.Services.AddScoped<IDesignationServices, DesignationServices>();
 
 builder.Services.AddControllers();
 

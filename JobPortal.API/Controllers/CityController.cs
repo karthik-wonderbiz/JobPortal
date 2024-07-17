@@ -1,9 +1,10 @@
 ﻿using JobPortal.Data;
+using JobPortal.DTO;
 using JobPortal.IServices;
-using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,17 +21,16 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<CityController>
         [HttpGet]
-        public async Task<IEnumerable<GetCityDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetCityDto>>> Get()
         {
             try
             {
-                var getAllCityObject = await _cityServices.GetAllCitiesAsync();
-                return getAllCityObject;
+                var cities = await _cityServices.GetAllCitiesAsync();
+                return Ok(cities);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -40,29 +40,27 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var getCityObject = await _cityServices.GetCityByIdAsync(id);
-                return getCityObject;
+                var city = await _cityServices.GetCityByIdAsync(id);
+                return Ok(city);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, ex.Message);
             }
         }
 
         // POST api/<CityController>
         [HttpPost]
-        public async Task<GetCityDto> Post([FromBody] CreateCityDto cityDto)
+        public async Task<ActionResult<GetCityDto>> Post([FromBody] CreateCityDto cityDto)
         {
             try
             {
-                var createCityObject = await _cityServices.CreateCityAsync(cityDto);
-                return createCityObject;
+                var createdCity = await _cityServices.CreateCityAsync(cityDto);
+                return CreatedAtAction(nameof(Get), new { id = createdCity.Id }, createdCity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -72,12 +70,11 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var updateCityObject = await _cityServices.UpdateCityAsync(id, cityDto);
-                return updateCityObject;
+                var updatedCity = await _cityServices.UpdateCityAsync(id, cityDto);
+                return Ok(updatedCity);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, ex.Message);
             }
         }
@@ -88,12 +85,11 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var deleteCityObject = await _cityServices.DeleteCityAsync(id);
-                return deleteCityObject;
+                var deleted = await _cityServices.DeleteCityAsync(id);
+                return Ok(deleted);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, ex.Message);
             }
         }

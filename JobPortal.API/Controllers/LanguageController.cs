@@ -24,7 +24,7 @@ public class LanguageController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -39,7 +39,7 @@ public class LanguageController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -58,7 +58,7 @@ public class LanguageController : ControllerBase
             {
                 return Conflict(ex.Message);
             }
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -77,7 +77,7 @@ public class LanguageController : ControllerBase
             {
                 return Conflict(ex.Message);
             }
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 
@@ -92,7 +92,7 @@ public class LanguageController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 }

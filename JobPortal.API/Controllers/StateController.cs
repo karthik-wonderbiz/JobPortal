@@ -30,7 +30,7 @@ namespace JobPortal.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -45,7 +45,7 @@ namespace JobPortal.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace JobPortal.API.Controllers
                 {
                     return Conflict(ex.Message);
                 }
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -83,7 +83,7 @@ namespace JobPortal.API.Controllers
                 {
                     return Conflict(ex.Message);
                 }
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -98,7 +98,7 @@ namespace JobPortal.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
         }
     }

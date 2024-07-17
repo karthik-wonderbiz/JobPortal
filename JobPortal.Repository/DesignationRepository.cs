@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Repository
 {
-    public class UrlNameRepository : Repository<UrlName>, IUrlNameRepository
+    public class DesignationRepository : Repository<Designation>, IDesignationRepository
     {
-        public UrlNameRepository(JobPortalDbContext dbcontext) : base(dbcontext)
+        public DesignationRepository(JobPortalDbContext dbcontext) : base(dbcontext)
         {
-
         }
     }
 }

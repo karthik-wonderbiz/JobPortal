@@ -1,9 +1,9 @@
 ﻿using JobPortal.DTO;
 using JobPortal.IServices;
-using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,16 +20,16 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<SkillController>
         [HttpGet]
-        public async Task<IEnumerable<GetSkillDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetSkillDto>>> Get()
         {
             try
             {
-                var res = await _skillServices.GetSkillsAsync();
-                return res;
+                var skills = await _skillServices.GetSkillsAsync();
+                return Ok(skills);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -39,8 +39,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _skillServices.GetSkillAsync(id);
-                return res;
+                var skill = await _skillServices.GetSkillAsync(id);
+                return Ok(skill);
             }
             catch (Exception ex)
             {
@@ -54,8 +54,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _skillServices.CreateSkillAsync(skillDto);
-                return res;
+                var createdSkill = await _skillServices.CreateSkillAsync(skillDto);
+                return CreatedAtAction(nameof(Get), new { id = createdSkill.Id }, createdSkill);
             }
             catch (Exception ex)
             {
@@ -69,8 +69,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _skillServices.UpdateSkillAsync(id, skillDto);
-                return res;
+                var updatedSkill = await _skillServices.UpdateSkillAsync(id, skillDto);
+                return Ok(updatedSkill);
             }
             catch (Exception ex)
             {
@@ -84,8 +84,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _skillServices.DeleteSkillAsync(id);
-                return res;
+                var deleted = await _skillServices.DeleteSkillAsync(id);
+                return Ok(deleted);
             }
             catch (Exception ex)
             {
