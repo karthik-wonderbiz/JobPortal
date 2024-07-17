@@ -1,4 +1,5 @@
-﻿using JobPortal.IServices;
+﻿using JobPortal.DTO;
+using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,37 +20,77 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<EmploymentTypeController>
         [HttpGet]
-        public async Task<IEnumerable<EmploymentType>> Get()
+        public async Task<IEnumerable<GetEmploymentTypeDto>> Get()
         {
-            return await _empTypeServices.GetEmploymentTypesAsync();
+            try
+            {
+                var res = await _empTypeServices.GetEmploymentTypesAsync();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // GET api/<EmploymentTypeController>/5
         [HttpGet("{id}")]
-        public async Task<EmploymentType> Get(int id)
+        public async Task<ActionResult<GetEmploymentTypeDto>> Get(int id)
         {
-            return await _empTypeServices.GetEmploymentTypeAsync(id);
+            try
+            {
+                var res = await _empTypeServices.GetEmploymentTypeAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<EmploymentTypeController>
         [HttpPost]
-        public async Task<EmploymentType> Post([FromBody] EmploymentType employmentType)
+        public async Task<ActionResult<GetEmploymentTypeDto>> Post([FromBody] CreateEmploymentTypeDto employmentTypeDto)
         {
-            return await _empTypeServices.CreateEmploymentTypeAsync(employmentType);
+            try
+            {
+                var res = await _empTypeServices.CreateEmploymentTypeAsync(employmentTypeDto);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // PUT api/<EmploymentTypeController>/5
         [HttpPut("{id}")]
-        public async Task<EmploymentType> Put(int id, [FromBody] EmploymentType employmentType)
+        public async Task<ActionResult<GetEmploymentTypeDto>> Put(int id, [FromBody] UpdateEmploymentTypeDto employmentTypeDto)
         {
-            return await _empTypeServices.UpdateEmploymentTypeAsync(id, employmentType);
+            try
+            {
+                var res = await _empTypeServices.UpdateEmploymentTypeAsync(id, employmentTypeDto);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE api/<EmploymentTypeController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            return await _empTypeServices.DeleteEmploymentTypeAsync(id);
+            try
+            {
+                var res = await _empTypeServices.DeleteEmploymentTypeAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
