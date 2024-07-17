@@ -1,4 +1,5 @@
-﻿using JobPortal.IRepository;
+﻿using JobPortal.DTO;
+using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
 using System;
@@ -18,57 +19,135 @@ namespace JobPortal.Services
             _employmentTypeRepository = employmentTypeRepository;
         }
 
-        public async Task<EmploymentType> CreateEmploymentTypeAsync(EmploymentType employmentType)
+        public async Task<GetEmploymentTypeDto> CreateEmploymentTypeAsync(CreateEmploymentTypeDto employmentTypeDto)
         {
-            employmentType.EmploymentTypeCode = employmentType.EmploymentTypeCode != string.Empty ? employmentType.EmploymentTypeCode : employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
+            try
+            {
+                //employmentType.EmploymentTypeCode = employmentType.EmploymentTypeCode != string.Empty ? employmentType.EmploymentTypeCode : employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
 
-            employmentType.UpdatedAt = DateTime.Now;
-            employmentType.CreatedAt = DateTime.Now;
+                //employmentType.UpdatedAt = DateTime.Now;
+                //employmentType.CreatedAt = DateTime.Now;
 
-            return await _employmentTypeRepository.CreateAsync(employmentType);
+                //return await _employmentTypeRepository.CreateAsync(employmentType);
+
+                var empType = await _employmentTypeRepository.CreateAsync(new EmploymentType() { 
+                    EmploymentTypeName = employmentTypeDto.EmploymentTypeName, 
+                    EmploymentTypeCode = string.Empty, 
+                    CreatedAt = DateTime.Now, 
+                    UpdatedAt = DateTime.Now 
+                });
+
+                var res = new GetEmploymentTypeDto(
+                    empType.Id, 
+                    empType.EmploymentTypeName, 
+                    empType.EmploymentTypeCode, 
+                    empType.IsActive
+                    );
+
+                return res;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<GetEmploymentTypeDto> GetEmploymentTypeAsync(long id)
+        {
+            try
+            {
+                var empType = await _employmentTypeRepository.GetAsync(id);
+
+                var empTypeDto = new GetEmploymentTypeDto(
+                    empType.Id,
+                    empType.EmploymentTypeName,
+                    empType.EmploymentTypeCode,
+                    empType.IsActive
+                    );
+
+                return empTypeDto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<GetEmploymentTypeDto>> GetEmploymentTypesAsync()
+        {
+            try
+            {
+                var empTypes = await _employmentTypeRepository.GetAllAsync();
+
+                var empTypeDto = empTypes.Select(empType =>  new GetEmploymentTypeDto(
+                    empType.Id,
+                    empType.EmploymentTypeName,
+                    empType.EmploymentTypeCode,
+                    empType.IsActive
+                    ));
+
+                return empTypeDto.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<GetEmploymentTypeDto> UpdateEmploymentTypeAsync(long id, UpdateEmploymentTypeDto employmentTypeDto)
+        {
+            try
+            {
+                var oldEmpType = await _employmentTypeRepository.GetAsync(id);
+
+                if (oldEmpType == null)
+                {
+                    throw new Exception($"No Employment Type found for id {id}");
+                }
+
+                oldEmpType.EmploymentTypeName = employmentTypeDto.EmploymentTypeName;
+                oldEmpType.EmploymentTypeCode = employmentTypeDto.EmploymentTypeCode != string.Empty ? employmentTypeDto.EmploymentTypeCode : employmentTypeDto.EmploymentTypeName.ToUpper().Substring(0, 2);
+
+                oldEmpType.UpdatedAt = DateTime.Now;
+
+                var empType = await _employmentTypeRepository.UpdateAsync(oldEmpType);
+
+                var newEmpTypeDto = new GetEmploymentTypeDto(
+                    empType.Id,
+                    empType.EmploymentTypeName,
+                    empType.EmploymentTypeCode,
+                    empType.IsActive
+                    );
+
+                return newEmpTypeDto;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<bool> DeleteEmploymentTypeAsync(long id)
         {
-            var empType = await _employmentTypeRepository.GetAsync(id);
-
-            if (empType == null)
+            try
             {
-                throw new Exception($"No EmploymentType found for id {id}");
+                var empType = await _employmentTypeRepository.GetAsync(id);
+
+                if (empType == null)
+                {
+                    throw new Exception($"No Employment Type Found for id {id}");
+                }
+
+                bool row = await _employmentTypeRepository.DeleteAsync(empType);
+
+                return row;
             }
-
-            bool row = await _employmentTypeRepository.DeleteAsync(empType);
-
-            return row;
-        }
-
-        public async Task<EmploymentType> GetEmploymentTypeAsync(long id)
-        {
-            return await _employmentTypeRepository.GetAsync(id);
-        }
-
-        public async Task<IEnumerable<EmploymentType>> GetEmploymentTypesAsync()
-        {
-            return await _employmentTypeRepository.GetAllAsync();
-        }
-
-        public async Task<EmploymentType> UpdateEmploymentTypeAsync(long id, EmploymentType employmentType)
-        {
-            var empType = await _employmentTypeRepository.GetAsync(id);
-
-            if (empType == null)
+            catch (Exception)
             {
-                throw new Exception($"No EmploymentType found for id {id}");
+                throw;
             }
-
-            empType.EmploymentTypeName = employmentType.EmploymentTypeName;
-            empType.EmploymentTypeCode = employmentType.EmploymentTypeCode != string.Empty ? employmentType.EmploymentTypeCode : employmentType.EmploymentTypeName.ToUpper().Substring(0, 2);
-
-            empType.UpdatedAt = DateTime.Now;
-
-            await _employmentTypeRepository.UpdateAsync(empType);
-
-            return empType;
         }
     }
 }
