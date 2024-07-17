@@ -50,7 +50,8 @@ namespace JobPortal.Repository
         {
             try
             {
-                return await _dbcontext.Set<T>().ToListAsync();
+                var res = await _dbcontext.Set<T>().ToListAsync();
+                return res;
             }
             catch (Exception)
             {
@@ -62,7 +63,8 @@ namespace JobPortal.Repository
         {
             try
             {
-                return await _dbcontext.Set<T>().FindAsync(id);
+                var res = await _dbcontext.Set<T>().FindAsync(id);
+                return res;
             }
             catch (Exception)
             {
