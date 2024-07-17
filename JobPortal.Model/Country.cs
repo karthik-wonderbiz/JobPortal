@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 namespace JobPortal.Model
 {
     [Table("Countries")]
+    [Index(nameof(CountryName), IsUnique = true)]
     public class Country : BaseEntity
     {
-        [Required(ErrorMessage = "CountryName is required")]
-        public string CountryName { get; set; }
+        [Required(ErrorMessage = "Country Name is required")]
+        [StringLength(100)]
+        public string CountryName { get; set; } = string.Empty;
 
         public string CountryCode { get; set; } = string.Empty;
 
