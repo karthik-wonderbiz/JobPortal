@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.WorkTypeDto;
 
 namespace JobPortal.Services
 {
@@ -18,12 +19,18 @@ namespace JobPortal.Services
             _workTypeRepository = workTypeRepository;
         }
 
-        public async Task<WorkType> CreateWorkTypeAsync(WorkType workType)
+        public async Task<GetWorkTypeDto> CreateWorkTypeAsync(CreateWorkTypeDto createWorkTypeDto)
         {
-            workType.CreatedAt = DateTime.Now;
-            workType.UpdatedAt = DateTime.Now;
-            workType.WorkTypeCode = workType.WorkTypeCode != string.Empty ? workType.WorkTypeCode : workType.WorkTypeName.Substring(0, 3);
-            return await _workTypeRepository.CreateAsync(workType);
+            try
+            {
+                var workType = await _workTypeRepository.CreateAsync(new WorkType() { WorkTypeName = createWorkTypeDto.WorkTypeName, WorkTypeCode = createWorkTypeDto.WorkTypeName.ToUpper().Substring(0, 3), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
+                var res = new GetWorkTypeDto(workType.Id, workType.WorkTypeName, workType.WorkTypeCode, workType.IsActive);
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> DeleteWorkTypeAsync(long id)
@@ -37,32 +44,55 @@ namespace JobPortal.Services
             return res;
         }
 
-        public async Task<IEnumerable<WorkType>> GetWorkTypeAsync()
+        public async Task<IEnumerable<GetWorkTypeDto>> GetWorkTypeAsync()
         {
-            var res = await _workTypeRepository.GetAllAsync();
-            return res;
+            var workType = await _workTypeRepository.GetAllAsync();
+            var workTypeDto = workType.Select(workType => new GetWorkTypeDto(workType.Id, workType.WorkTypeName, workType.WorkTypeCode, workType.IsActive));
+            return workTypeDto;
         }
 
-        public async Task<WorkType> GetWorkTypeById(long id)
+        public async Task<GetWorkTypeDto> GetWorkTypeById(long id)
         {
-            var res = await _workTypeRepository.GetAsync(id);
-            return res;
-        }
-
-        public async Task<WorkType> UpdateWorkTypeAsync(long id, WorkType workType)
-        {
-            var oldWorkType = await _workTypeRepository.GetAsync(id);
-            if(oldWorkType == null)
+            try
             {
-                throw new Exception($"Object not found for id : {id}");
+                var workType = await _workTypeRepository.GetAsync(id);
+                if (workType == null)
+                {
+                    throw new Exception($"Object not found for id : {id}");
+                }
+                var res = new GetWorkTypeDto(workType.Id, workType.WorkTypeName, workType.WorkTypeCode, workType.IsActive);
+                return res;
             }
-            oldWorkType.WorkTypeName = workType.WorkTypeName; 
-            oldWorkType.WorkTypeCode = workType.WorkTypeCode != string.Empty ? workType.WorkTypeCode : workType.WorkTypeName.Substring(0, 3);
-            oldWorkType.IsActive = workType.IsActive;
-            oldWorkType.UpdatedAt = DateTime.Now;
-            
-            var res = await _workTypeRepository.UpdateAsync(oldWorkType);
-            return res;
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<GetWorkTypeDto> UpdateWorkTypeAsync(long id, UpdateWorkTypeDto updateWorkTypeDto)
+        {
+            try
+            {
+                var oldWorkType = await _workTypeRepository.GetAsync(id);
+
+                if (oldWorkType == null)
+                {
+                    throw new Exception($"Object not found for id : {id}");
+                }
+
+                oldWorkType.WorkTypeName = updateWorkTypeDto.WorkTypeName;
+                oldWorkType.WorkTypeCode = updateWorkTypeDto.WorkTypeName.ToUpper().Substring(0, 3);
+                oldWorkType.IsActive = updateWorkTypeDto.IsActive;
+
+                await _workTypeRepository.UpdateAsync(oldWorkType);
+
+                var res = new GetWorkTypeDto(oldWorkType.Id, oldWorkType.WorkTypeName, oldWorkType.WorkTypeCode, oldWorkType.IsActive);
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
     }
