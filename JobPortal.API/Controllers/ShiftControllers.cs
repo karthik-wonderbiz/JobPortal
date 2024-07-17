@@ -2,8 +2,8 @@
 using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,17 +20,16 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<ShiftController>
         [HttpGet]
-        public async Task<IEnumerable<GetShiftDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetShiftDto>>> Get()
         {
             try
             {
                 var getAllShiftObject = await _shiftServices.GetAllShiftsAsync();
-                return getAllShiftObject;
+                return Ok(getAllShiftObject);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -41,28 +40,30 @@ namespace JobPortal.API.Controllers
             try
             {
                 var getShiftObject = await _shiftServices.GetShiftByIdAsync(id);
-                return getShiftObject;
+                return Ok(getShiftObject);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         // POST api/<ShiftController>
         [HttpPost]
-        public async Task<GetShiftDto> Post([FromBody] CreateShiftDto shiftDto)
+        public async Task<ActionResult<GetShiftDto>> Post([FromBody] CreateShiftDto shiftDto)
         {
             try
             {
                 var createShiftObject = await _shiftServices.CreateShiftAsync(shiftDto);
-                return createShiftObject;
+                return CreatedAtAction(nameof(Get), new { id = createShiftObject.Id }, createShiftObject);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -73,12 +74,15 @@ namespace JobPortal.API.Controllers
             try
             {
                 var updateShiftObject = await _shiftServices.UpdateShiftAsync(id, shiftDto);
-                return updateShiftObject;
+                return Ok(updateShiftObject);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -89,12 +93,11 @@ namespace JobPortal.API.Controllers
             try
             {
                 var deleteShiftObject = await _shiftServices.DeleteShiftAsync(id);
-                return deleteShiftObject;
+                return Ok(deleteShiftObject);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

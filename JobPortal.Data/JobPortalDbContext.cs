@@ -23,6 +23,9 @@ namespace JobPortal.Data
         public DbSet<TrainInfo> trainInfos { get; set; }
         public DbSet<State> states { get; set; }
         public DbSet<EmploymentType> employmentTypes { get; set; }
+        public DbSet<Skill> skills { get; set; }
+        public DbSet<City> cities { get; set; }
+        public DbSet<UrlName> urlNames { get; set; }
 
     }
 }

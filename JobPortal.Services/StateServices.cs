@@ -1,61 +1,70 @@
 ﻿using JobPortal.Data;
+using JobPortal.DTO;
 using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JobPortal.Services
 {
     public class StateServices : IStateServices
     {
-        private readonly IStateRepository _repository;
-        public StateServices(IStateRepository repository)
+        private readonly IStateRepository _stateRepository;
+
+        public StateServices(IStateRepository stateRepository)
         {
-            _repository = repository;
+            _stateRepository = stateRepository;
         }
 
         public async Task<GetStateDto> CreateStateAsync(CreateStateDto stateDto)
         {
-
             try
             {
-                var state = await _repository.CreateAsync(new State()
+                var state = await _stateRepository.CreateAsync(new State()
                 {
                     StateName = stateDto.StateName,
                     StateCode = stateDto.StateName.ToUpper().Substring(0, 3),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
-                var createStateObject = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
-                return createStateObject;
+
+                var res = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+                return res;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This input already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
 
         public async Task<bool> DeleteStateAsync(long id)
         {
             try
             {
-                var oldState = await _repository.GetAsync(id);
+                var oldState = await _stateRepository.GetAsync(id);
                 if (oldState == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
+                    throw new Exception($"No State found for id : {id}");
                 }
-                var deleteStateObject = await _repository.DeleteAsync(oldState);
-                return deleteStateObject;
+
+                var res = await _stateRepository.DeleteAsync(oldState);
+                return res;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -64,15 +73,19 @@ namespace JobPortal.Services
         {
             try
             {
-                var states = await _repository.GetAllAsync();
+                var states = await _stateRepository.GetAllAsync();
 
-                var getAllStateObject = states.Select(state => new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive));
-                                
-                return getAllStateObject;
+                var stateDto = states.Select(state => new GetStateDto(
+                    state.Id,
+                    state.StateName,
+                    state.StateCode,
+                    state.IsActive
+                ));
+
+                return stateDto.ToList();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -81,18 +94,17 @@ namespace JobPortal.Services
         {
             try
             {
-                var state = await _repository.GetAsync(id);
+                var state = await _stateRepository.GetAsync(id);
                 if (state == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
-                    
+                    throw new Exception($"No State found for id : {id}");
                 }
-                var getStateObject = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
-                return getStateObject;
+
+                var res = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+                return res;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -101,26 +113,33 @@ namespace JobPortal.Services
         {
             try
             {
-                var oldState = await _repository.GetAsync(id);
-
+                var oldState = await _stateRepository.GetAsync(id);
                 if (oldState == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
-                    
+                    throw new Exception($"No State found for id : {id}");
                 }
+
                 oldState.StateName = stateDto.StateName;
                 oldState.StateCode = stateDto.StateName.ToUpper().Substring(0, 3);
                 oldState.IsActive = stateDto.IsActive;
+                oldState.UpdatedAt = DateTime.Now;
 
-                await _repository.UpdateAsync(oldState);
+                await _stateRepository.UpdateAsync(oldState);
 
-                var updateStateObject = new GetStateDto(oldState.Id, oldState.StateName, oldState.StateCode, oldState.IsActive);
-                return updateStateObject;
-
+                var res = new GetStateDto(oldState.Id, oldState.StateName, oldState.StateCode, oldState.IsActive);
+                return res;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This input already exists.");
+                }
+                throw;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
