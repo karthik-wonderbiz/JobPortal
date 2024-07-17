@@ -26,7 +26,7 @@ namespace JobPortal.Services
                 var shift = await _repository.CreateAsync(new Shift()
                 {
                     ShiftName = shiftDto.ShiftName,
-                    ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 3),
+                    ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 1),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
@@ -109,7 +109,7 @@ namespace JobPortal.Services
 
                 }
                 oldShift.ShiftName = shiftDto.ShiftName;
-                oldShift.ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 3);
+                oldShift.ShiftCode = shiftDto.ShiftName.ToUpper().Substring(0, 1);
                 oldShift.IsActive = shiftDto.IsActive;
 
                 await _repository.UpdateAsync(oldShift);
