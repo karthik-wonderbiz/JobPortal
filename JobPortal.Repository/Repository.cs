@@ -20,33 +20,68 @@ namespace JobPortal.Repository
 
         public async Task<T> CreateAsync(T entity)
         {
-            await _dbcontext.Set<T>().AddAsync(entity);
-            await _dbcontext.SaveChangesAsync();
-            return entity;
+            try
+            {
+                await _dbcontext.Set<T>().AddAsync(entity);
+                await _dbcontext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> DeleteAsync(T entity)
         {
-            _dbcontext.Remove(entity);
-            var row = await _dbcontext.SaveChangesAsync();
-            return row > 0;
+            try
+            {
+                _dbcontext.Remove(entity);
+                var row = await _dbcontext.SaveChangesAsync();
+                return row > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbcontext.Set<T>().ToListAsync();
+            try
+            {
+                return await _dbcontext.Set<T>().ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<T> GetAsync(long id)
         {
-            return await _dbcontext.Set<T>().FindAsync(id);
+            try
+            {
+                return await _dbcontext.Set<T>().FindAsync(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<T> UpdateAsync(T entity)
         {
-            _dbcontext.Set<T>().Update(entity);
-            await _dbcontext.SaveChangesAsync();
-            return entity;
+            try
+            {
+                _dbcontext.Set<T>().Update(entity);
+                await _dbcontext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
