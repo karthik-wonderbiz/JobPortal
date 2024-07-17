@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 namespace JobPortal.Model
 {
     [Table("WorkTypes")]
+    [Index(nameof(WorkTypeName), IsUnique = true)]
     public class WorkType : BaseEntity
     {
         [Required(ErrorMessage = "Work Type Name is Required")]
         [MaxLength(50)]
-        public string WorkTypeName { get; set; }
+        public string WorkTypeName { get; set; } = string.Empty;
 
         [MaxLength(50)]
         public string WorkTypeCode { get; set; } = string.Empty;

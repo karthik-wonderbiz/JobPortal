@@ -24,35 +24,64 @@ namespace JobPortal.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<GetTrainInfoDto>> Get()
         {
-            return await _trainInfoServices.GetAllTrainInfosAsync();
+            var traininfosData = await _trainInfoServices.GetAllTrainInfosAsync();
+            return traininfosData;
         }
 
         // GET api/<TrainInfoController>/5
         [HttpGet("{id}")]
-        public async Task<GetTrainInfoDto> Get(long id)
+        public async Task <ActionResult<GetTrainInfoDto>> Get(long id)
         {
-            return await _trainInfoServices.GetTrainInfoByIdAsync(id);
+            try {
+            var traininfoData = await _trainInfoServices.GetTrainInfoByIdAsync(id);
+            return traininfoData;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // POST api/<TrainInfoController>
         [HttpPost]
-        public async Task<GetTrainInfoDto> Post([FromBody] CreateTrainInfoDto trainInfoDto)
+        public async Task<ActionResult<GetTrainInfoDto>> Post([FromBody] CreateTrainInfoDto trainInfoDto)
         {
-            return await _trainInfoServices.CreateTrainInfoAsync(trainInfoDto);
+            try { 
+            var createdTrainInfo = await _trainInfoServices.CreateTrainInfoAsync(trainInfoDto);
+            return createdTrainInfo;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // PUT api/<TrainInfoController>/5
         [HttpPut("{id}")]
-        public async Task<GetTrainInfoDto> Put(long id, [FromBody] UpdateTrainInfoDto trainInfoDto)
+        public async Task<ActionResult<GetTrainInfoDto>> Put(long id, [FromBody] UpdateTrainInfoDto trainInfoDto)
         {
-            return await _trainInfoServices.UpdateTrainInfoAsync(id, trainInfoDto);
+            try { 
+            var updatedTrainInfo = await _trainInfoServices.UpdateTrainInfoAsync(id, trainInfoDto);
+            return updatedTrainInfo;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // DELETE api/<TrainInfoController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(long id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
-            return await _trainInfoServices.DeleteTrainInfoAsync(id);
+            try { 
+            var deletedTrainInfo = await _trainInfoServices.DeleteTrainInfoAsync(id);
+            return deletedTrainInfo;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
