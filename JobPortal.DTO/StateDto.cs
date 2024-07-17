@@ -12,14 +12,14 @@ namespace JobPortal.Data
     }
 
     public record CreateStateDto(
-        [Required(ErrorMessage = "StateName is required")] string StateName, 
+        [Required(ErrorMessage = "State Name is required")] string StateName, 
         DateTime CreatedAt, 
         DateTime UpdatedAt, 
         string StateCode = " "
         );
     public record UpdateStateDto(
         [Required(ErrorMessage = "Id is required")] long Id, 
-        [Required(ErrorMessage = "StateName is required")] string StateName, 
+        [Required(ErrorMessage = "State Name is required")] string StateName, 
         bool IsActive, 
         DateTime UpdatedAt, 
         string StateCode = " "
