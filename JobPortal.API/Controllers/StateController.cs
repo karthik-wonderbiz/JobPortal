@@ -22,35 +22,80 @@ namespace JobPortal.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<GetStateDto>> Get()
         {
-            return await _stateServices.GetAllStatesAsync();
+            try
+            {
+                var getAllStateObject = await _stateServices.GetAllStatesAsync();
+                return getAllStateObject;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET api/<StateController>/5
         [HttpGet("{id}")]
-        public async Task<GetStateDto> Get(long id)
+        public async Task<ActionResult<GetStateDto>> Get(long id)
         {
-            return await _stateServices.GetStateByIdAsync(id);
+            try
+            {
+                var getStateObject = await _stateServices.GetStateByIdAsync(id);
+                return getStateObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<StateController>
         [HttpPost]
         public async Task<GetStateDto> Post([FromBody] CreateStateDto stateDto)
         {
-            return await _stateServices.CreateStateAsync(stateDto);
+            try
+            {
+                var createStateObject = await _stateServices.CreateStateAsync(stateDto);
+                return createStateObject;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT api/<StateController>/5
         [HttpPut("{id}")]
-        public async Task<GetStateDto> Put(long id, [FromBody] UpdateStateDto stateDto)
+        public async Task<ActionResult<GetStateDto>> Put(long id, [FromBody] UpdateStateDto stateDto)
         {
-            return await _stateServices.UpdateStateAsync(id, stateDto);
+            try
+            {
+                var updateStateObject = await _stateServices.UpdateStateAsync(id, stateDto);
+                return updateStateObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE api/<StateController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(long id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
-            return await _stateServices.DeleteStateAsync(id);
+            try
+            {
+                var deleteStateObject = await _stateServices.DeleteStateAsync(id);
+                return deleteStateObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

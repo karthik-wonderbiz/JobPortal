@@ -22,35 +22,80 @@ namespace JobPortal.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<GetShiftDto>> Get()
         {
-            return await _shiftServices.GetAllShiftsAsync();
+            try
+            {
+                var getAllShiftObject = await _shiftServices.GetAllShiftsAsync();
+                return getAllShiftObject;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET api/<ShiftController>/5
         [HttpGet("{id}")]
-        public async Task<GetShiftDto> Get(long id)
+        public async Task<ActionResult<GetShiftDto>> Get(long id)
         {
-            return await _shiftServices.GetShiftByIdAsync(id);
+            try
+            {
+                var getShiftObject = await _shiftServices.GetShiftByIdAsync(id);
+                return getShiftObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<ShiftController>
         [HttpPost]
         public async Task<GetShiftDto> Post([FromBody] CreateShiftDto shiftDto)
         {
-            return await _shiftServices.CreateShiftAsync(shiftDto);
+            try
+            {
+                var createShiftObject = await _shiftServices.CreateShiftAsync(shiftDto);
+                return createShiftObject;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT api/<ShiftController>/5
         [HttpPut("{id}")]
-        public async Task<GetShiftDto> Put(long id, [FromBody] UpdateShiftDto shiftDto)
+        public async Task<ActionResult<GetShiftDto>> Put(long id, [FromBody] UpdateShiftDto shiftDto)
         {
-            return await _shiftServices.UpdateShiftAsync(id, shiftDto);
+            try
+            {
+                var updateShiftObject = await _shiftServices.UpdateShiftAsync(id, shiftDto);
+                return updateShiftObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE api/<ShiftController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(long id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
-            return await _shiftServices.DeleteShiftAsync(id);
+            try
+            {
+                var deleteShiftObject = await _shiftServices.DeleteShiftAsync(id);
+                return deleteShiftObject;
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

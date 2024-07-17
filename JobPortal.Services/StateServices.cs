@@ -21,55 +21,108 @@ namespace JobPortal.Services
         public async Task<GetStateDto> CreateStateAsync(CreateStateDto stateDto)
         {
 
-            var state = await _repository.CreateAsync(new State() {
-                StateName = stateDto.StateName,
-                StateCode = stateDto.StateName.ToUpper().Substring(0, 3),
-                CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now 
-            });
-            return new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+            try
+            {
+                var state = await _repository.CreateAsync(new State()
+                {
+                    StateName = stateDto.StateName,
+                    StateCode = stateDto.StateName.ToUpper().Substring(0, 3),
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                });
+                var createStateObject = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+                return createStateObject;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         public async Task<bool> DeleteStateAsync(long id)
         {
-            var oldState = await _repository.GetAsync(id);
-            if (oldState != null)
+            try
             {
-                return await _repository.DeleteAsync(oldState);
+                var oldState = await _repository.GetAsync(id);
+                if (oldState == null)
+                {
+                    throw new Exception($"Object not found for id : {id}");
+                }
+                var deleteStateObject = await _repository.DeleteAsync(oldState);
+                return deleteStateObject;
             }
-            return false;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<IEnumerable<GetStateDto>> GetAllStatesAsync()
         {
-            var states = await _repository.GetAllAsync();
+            try
+            {
+                var states = await _repository.GetAllAsync();
 
-            var stateDto = states.Select(state => new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive));
+                var getAllStateObject = states.Select(state => new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive));
+                                
+                return getAllStateObject;
+            }
+            catch (Exception)
+            {
 
-            return stateDto;
+                throw;
+            }
         }
 
         public async Task<GetStateDto> GetStateByIdAsync(long id)
         {
-            var state = await _repository.GetAsync(id);
+            try
+            {
+                var state = await _repository.GetAsync(id);
+                if (state == null)
+                {
+                    throw new Exception($"Object not found for id : {id}");
+                    
+                }
+                var getStateObject = new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+                return getStateObject;
+            }
+            catch (Exception)
+            {
 
-            return new GetStateDto(state.Id, state.StateName, state.StateCode, state.IsActive);
+                throw;
+            }
         }
 
         public async Task<GetStateDto> UpdateStateAsync(long id, UpdateStateDto stateDto)
         {
-            var oldState = await _repository.GetAsync(id);
-
-            if (oldState == null)
+            try
             {
-                throw new Exception($"Object not found for id : {id}");
+                var oldState = await _repository.GetAsync(id);
+
+                if (oldState == null)
+                {
+                    throw new Exception($"Object not found for id : {id}");
+                    
+                }
+                oldState.StateName = stateDto.StateName;
+                oldState.StateCode = stateDto.StateName.ToUpper().Substring(0, 3);
+                oldState.IsActive = stateDto.IsActive;
+
+                await _repository.UpdateAsync(oldState);
+
+                var updateStateObject = new GetStateDto(oldState.Id, oldState.StateName, oldState.StateCode, oldState.IsActive);
+                return updateStateObject;
+
             }
-            oldState.StateName = stateDto.StateName;
-            oldState.StateCode = stateDto.StateName.ToUpper().Substring(0, 3);
-            oldState.IsActive = stateDto.IsActive;
+            catch (Exception)
+            {
 
-            await _repository.UpdateAsync(oldState);
-
-            return new GetStateDto(oldState.Id, oldState.StateName, oldState.StateCode, oldState.IsActive);
+                throw;
+            }
         }
     }
 }

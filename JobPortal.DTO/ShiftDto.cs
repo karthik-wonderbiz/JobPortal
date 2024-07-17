@@ -12,14 +12,14 @@ namespace JobPortal.Data
     }
 
     public record CreateShiftDto(
-        [Required(ErrorMessage = "ShiftName is required")] string ShiftName, 
+        [Required(ErrorMessage = "Shift Name is required")] string ShiftName, 
         DateTime CreatedAt, 
         DateTime UpdatedAt, 
         string ShiftCode = " "
         );
     public record UpdateShiftDto(
         [Required(ErrorMessage = "Id is required")] long Id, 
-        [Required(ErrorMessage = "ShiftName is required")] string ShiftName, 
+        [Required(ErrorMessage = "Shift Name is required")] string ShiftName, 
         bool IsActive, 
         DateTime UpdatedAt, 
         string ShiftCode = " "
