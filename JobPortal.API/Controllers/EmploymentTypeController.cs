@@ -1,9 +1,9 @@
 ﻿using JobPortal.DTO;
 using JobPortal.IServices;
-using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,31 +20,31 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<EmploymentTypeController>
         [HttpGet]
-        public async Task<IEnumerable<GetEmploymentTypeDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetEmploymentTypeDto>>> Get()
         {
             try
             {
                 var res = await _empTypeServices.GetEmploymentTypesAsync();
-                return res;
+                return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         // GET api/<EmploymentTypeController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetEmploymentTypeDto>> Get(int id)
+        public async Task<ActionResult<GetEmploymentTypeDto>> Get(long id)
         {
             try
             {
                 var res = await _empTypeServices.GetEmploymentTypeAsync(id);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
@@ -55,41 +55,49 @@ namespace JobPortal.API.Controllers
             try
             {
                 var res = await _empTypeServices.CreateEmploymentTypeAsync(employmentTypeDto);
-                return res;
+                return CreatedAtAction(nameof(Get), new { id = res.Id }, res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         // PUT api/<EmploymentTypeController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<GetEmploymentTypeDto>> Put(int id, [FromBody] UpdateEmploymentTypeDto employmentTypeDto)
+        public async Task<ActionResult<GetEmploymentTypeDto>> Put(long id, [FromBody] UpdateEmploymentTypeDto employmentTypeDto)
         {
             try
             {
                 var res = await _empTypeServices.UpdateEmploymentTypeAsync(id, employmentTypeDto);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return NotFound(ex.Message);
             }
         }
 
         // DELETE api/<EmploymentTypeController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
             try
             {
                 var res = await _empTypeServices.DeleteEmploymentTypeAsync(id);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound(ex.Message);
             }
         }
     }

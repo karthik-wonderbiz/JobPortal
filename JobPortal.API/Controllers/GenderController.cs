@@ -1,9 +1,9 @@
 ﻿using JobPortal.DTO;
 using JobPortal.IServices;
-using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,16 +20,16 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<GenderController>
         [HttpGet]
-        public async Task<IEnumerable<GetGenderDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetGenderDto>>> Get()
         {
             try
             {
                 var res = await _genderServices.GetGendersAsync();
-                return res;
+                return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -40,11 +40,11 @@ namespace JobPortal.API.Controllers
             try
             {
                 var res = await _genderServices.GetGenderAsync(id);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
@@ -55,11 +55,15 @@ namespace JobPortal.API.Controllers
             try
             {
                 var res = await _genderServices.CreateGenderAsync(genderDto);
-                return res;
+                return CreatedAtAction(nameof(Get), new { id = res.Id }, res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -70,11 +74,15 @@ namespace JobPortal.API.Controllers
             try
             {
                 var res = await _genderServices.UpdateGenderAsync(id, genderDto);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return NotFound(ex.Message);
             }
         }
 
@@ -85,11 +93,11 @@ namespace JobPortal.API.Controllers
             try
             {
                 var res = await _genderServices.DeleteGenderAsync(id);
-                return res;
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound(ex.Message);
             }
         }
     }

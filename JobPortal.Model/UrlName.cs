@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace JobPortal.Model
 {
     [Table("UrlNames")]
-    [Index(nameof(UrlName), IsUnique = true)]
+    [Index(nameof(URLName), IsUnique = true)]
     public class UrlName : BaseEntity
     {
         [Required(ErrorMessage = "URL Name is Required")]
