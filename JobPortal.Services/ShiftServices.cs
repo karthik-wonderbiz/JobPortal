@@ -38,7 +38,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Shift already exists.");
                 }
 
                 throw;
@@ -56,7 +56,7 @@ namespace JobPortal.Services
                 var oldShift = await _repository.GetAsync(id);
                 if (oldShift == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
+                    throw new Exception($"Shift not found for id : {id}");
                 }
                 var deleteShiftObject = await _repository.DeleteAsync(oldShift);
                 return deleteShiftObject;
@@ -90,7 +90,7 @@ namespace JobPortal.Services
                 var shift = await _repository.GetAsync(id);
                 if (shift == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
+                    throw new Exception($"Shift not found for id : {id}");
 
                 }
                 var getShiftObject = new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive);
@@ -110,7 +110,7 @@ namespace JobPortal.Services
 
                 if (oldShift == null)
                 {
-                    throw new Exception($"Object not found for id : {id}");
+                    throw new Exception($"Shift not found for id : {id}");
 
                 }
                 oldShift.ShiftName = shiftDto.ShiftName;
@@ -128,7 +128,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Shift already exists.");
                 }
 
                 throw;

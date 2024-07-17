@@ -45,7 +45,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Employment Type already exists.");
                 }
                 throw;
             }
@@ -63,7 +63,7 @@ namespace JobPortal.Services
 
                 if (empType == null)
                 {
-                    throw new Exception($"No Employment type Found with id: {id}");
+                    throw new Exception($"No Employment type Found with id : {id}");
                 }
 
                 var empTypeDto = new GetEmploymentTypeDto(
@@ -110,7 +110,7 @@ namespace JobPortal.Services
 
                 if (oldEmpType == null)
                 {
-                    throw new Exception($"No Employment Type found for id: {id}");
+                    throw new Exception($"No Employment Type found for id : {id}");
                 }
 
                 oldEmpType.EmploymentTypeName = employmentTypeDto.EmploymentTypeName;
@@ -134,7 +134,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Employment Type already exists.");
                 }
                 throw;
             }

@@ -38,7 +38,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This country already exists.");
                 }
                 throw;
             }
@@ -56,7 +56,7 @@ namespace JobPortal.Services
 
                 if (country == null)
                 {
-                    throw new Exception($"Country not found for id: {id}");
+                    throw new Exception($"Country not found for id : {id}");
                 }
                 var deletedCountryData = await _countryRepository.DeleteAsync(country);
                 return deletedCountryData;
@@ -89,7 +89,7 @@ namespace JobPortal.Services
 
                 if (country == null)
                 {
-                    throw new Exception($"Country not found for id: {id}");
+                    throw new Exception($"Country not found for id : {id}");
                 }
 
                 var countryData = new GetCountryDto(country.Id, country.CountryName, country.CountryCode, country.IsActive);
@@ -109,7 +109,7 @@ namespace JobPortal.Services
 
                 if (oldCountry == null)
                 {
-                    throw new Exception($"Country not found for id: {id}");
+                    throw new Exception($"Country not found for id : {id}");
                 }
 
                 oldCountry.CountryName = countryDto.CountryName;
@@ -126,7 +126,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This country already exists.");
                 }
                 throw;
             }

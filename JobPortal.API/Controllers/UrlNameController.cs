@@ -1,10 +1,10 @@
-﻿using JobPortal.IServices;
-using JobPortal.Services;
+﻿using JobPortal.DTO;
+using JobPortal.IServices;
 using Microsoft.AspNetCore.Mvc;
-using static JobPortal.DTO.LanguageDto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using static JobPortal.DTO.UrlNameDto;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JobPortal.API.Controllers
 {
@@ -13,6 +13,7 @@ namespace JobPortal.API.Controllers
     public class UrlNameController : ControllerBase
     {
         private readonly IUrlNameServices _urlNameServices;
+
         public UrlNameController(IUrlNameServices urlNameServices)
         {
             _urlNameServices = urlNameServices;
@@ -20,10 +21,17 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<UrlNameController>
         [HttpGet]
-        public async Task<IEnumerable<GetUrlNameDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetUrlNameDto>>> Get()
         {
-            var res = await _urlNameServices.GetUrlNameAsync();
-            return res;
+            try
+            {
+                var urlNames = await _urlNameServices.GetUrlNameAsync();
+                return Ok(urlNames);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // GET api/<UrlNameController>/5
@@ -32,8 +40,12 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _urlNameServices.GetUrlNameById(id);
-                return res;
+                var urlName = await _urlNameServices.GetUrlNameById(id);
+                if (urlName == null)
+                {
+                    return NotFound();
+                }
+                return Ok(urlName);
             }
             catch (Exception ex)
             {
@@ -47,8 +59,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _urlNameServices.CreateUrlNameAsync(createUrlNameDto);
-                return res;
+                var createdUrlName = await _urlNameServices.CreateUrlNameAsync(createUrlNameDto);
+                return CreatedAtAction(nameof(Get), new { id = createdUrlName.Id }, createdUrlName);
             }
             catch (Exception ex)
             {
@@ -62,8 +74,8 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var res = await _urlNameServices.UpdateUrlNameAsync(id, updateUrlNameDto);
-                return res;
+                var updatedUrlName = await _urlNameServices.UpdateUrlNameAsync(id, updateUrlNameDto);
+                return Ok(updatedUrlName);
             }
             catch (Exception ex)
             {
@@ -75,8 +87,15 @@ namespace JobPortal.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(long id)
         {
-            var res = await _urlNameServices.DeleteUrlNameAsync(id);
-            return res;
+            try
+            {
+                var deleted = await _urlNameServices.DeleteUrlNameAsync(id);
+                return Ok(deleted);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Language already exists.");
                 }
                 throw;
             }
@@ -134,7 +134,7 @@ namespace JobPortal.Services
                 if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
                     ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
                 {
-                    throw new Exception("This input already exists.");
+                    throw new Exception("This Language already exists.");
                 }
                 throw;
             }
