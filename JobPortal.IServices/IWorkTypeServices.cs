@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.WorkTypeDto;
 
 namespace JobPortal.IServices
 {
     public interface IWorkTypeServices
     {
-        public Task<IEnumerable<WorkType>> GetWorkTypeAsync();
-        public Task<WorkType> GetWorkTypeById(long id);
-        public Task<WorkType> CreateWorkTypeAsync(WorkType workType);
-        public Task<WorkType> UpdateWorkTypeAsync(long id, WorkType workType);
+        public Task<IEnumerable<GetWorkTypeDto>> GetWorkTypeAsync();
+        public Task<GetWorkTypeDto> GetWorkTypeById(long id);
+        public Task<GetWorkTypeDto> CreateWorkTypeAsync(CreateWorkTypeDto createWorkTypeDto);
+        public Task<GetWorkTypeDto> UpdateWorkTypeAsync(long id, UpdateWorkTypeDto updateWorkTypeDto);
         public Task<bool> DeleteWorkTypeAsync(long id);
     }
 }

@@ -22,35 +22,61 @@ namespace JobPortal.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<GetLanguageDto>> Get()
         {
-            return await _languageServices.GetLanguageAsync();
+            var res = await _languageServices.GetLanguageAsync();
+            return res;
         }
 
         // GET api/<LanguageController>/5
         [HttpGet("{id}")]
-        public async Task<GetLanguageDto> Get(long id)
+        public async Task<ActionResult<GetLanguageDto>> Get(long id)
         {
-            return await _languageServices.GetLanguageById(id);
+            try
+            {
+                var res = await _languageServices.GetLanguageById(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+               return StatusCode(500, ex.Message);   
+            }
         }
 
         // POST api/<LanguageController>
         [HttpPost]
-        public async Task<GetLanguageDto> Post([FromBody] CreateLanguageDto createLanguageDto)
+        public async Task<ActionResult<GetLanguageDto>> Post([FromBody] CreateLanguageDto createLanguageDto)
         {
-            return await _languageServices.CreateLanguageAsync(createLanguageDto);
+            try
+            {
+                var res = await _languageServices.CreateLanguageAsync(createLanguageDto);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // PUT api/<LanguageController>/5
         [HttpPut("{id}")]
-        public async Task<GetLanguageDto> Put(long id, [FromBody] UpdateLanguageDto updateLanguageDto)
+        public async Task<ActionResult<GetLanguageDto>> Put(long id, [FromBody] UpdateLanguageDto updateLanguageDto)
         {
-            return await _languageServices.UpdateLanguageAsync(id, updateLanguageDto);
+            try
+            {
+                var res = await _languageServices.UpdateLanguageAsync(id, updateLanguageDto);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE api/<LanguageController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(long id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
-            return await _languageServices.DeleteLanguageAsync(id);
+            var res =  await _languageServices.DeleteLanguageAsync(id);
+            return res;
         }
     }
 }
