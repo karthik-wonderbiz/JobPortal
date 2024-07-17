@@ -2,6 +2,7 @@
 using JobPortal.IRepository;
 using JobPortal.IServices;
 using JobPortal.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,6 @@ namespace JobPortal.Services
 
         public async Task<GetShiftDto> CreateShiftAsync(CreateShiftDto shiftDto)
         {
-
             try
             {
                 var shift = await _repository.CreateAsync(new Shift()
@@ -33,12 +33,20 @@ namespace JobPortal.Services
                 var createShiftObject = new GetShiftDto(shift.Id, shift.ShiftName, shift.ShiftCode, shift.IsActive);
                 return createShiftObject;
             }
-            catch (Exception)
+            catch (DbUpdateException ex)
             {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This input already exists.");
+                }
 
                 throw;
             }
-
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> DeleteShiftAsync(long id)
@@ -55,7 +63,6 @@ namespace JobPortal.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -72,7 +79,6 @@ namespace JobPortal.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -92,7 +98,6 @@ namespace JobPortal.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -118,9 +123,18 @@ namespace JobPortal.Services
                 return updateShiftObject;
 
             }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
+                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
+                {
+                    throw new Exception("This input already exists.");
+                }
+
+                throw;
+            }
             catch (Exception)
             {
-
                 throw;
             }
         }

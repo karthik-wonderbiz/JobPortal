@@ -2,8 +2,8 @@
 using JobPortal.IServices;
 using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,20 +20,27 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<CountryController>
         [HttpGet]
-        public async Task<IEnumerable<GetCountryDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetCountryDto>>> Get()
         {
-            var countriesData = await _countryServices.GetAllCountriesAsync();
-            return countriesData;
+            try
+            {
+                var countriesData = await _countryServices.GetAllCountriesAsync();
+                return Ok(countriesData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // GET api/<CountryController>/5
         [HttpGet("{id}")]
-        public async Task <ActionResult<GetCountryDto>>  Get(long id)
+        public async Task<ActionResult<GetCountryDto>> Get(long id)
         {
             try
             {
                 var countryData = await _countryServices.GetCountryByIdAsync(id);
-                return countryData;
+                return Ok(countryData);
             }
             catch (Exception ex)
             {
@@ -43,23 +50,38 @@ namespace JobPortal.API.Controllers
 
         // POST api/<CountryController>
         [HttpPost]
-        public async Task<GetCountryDto> Post([FromBody] CreateCountryDto countryDto)
+        public async Task<ActionResult<GetCountryDto>> Post([FromBody] CreateCountryDto countryDto)
         {
-            var createdCountry = await _countryServices.CreateCountryAsync(countryDto);
-            return createdCountry;
+            try
+            {
+                var createdCountry = await _countryServices.CreateCountryAsync(countryDto);
+                return CreatedAtAction(nameof(Get), new { id = createdCountry.Id }, createdCountry);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // PUT api/<CountryController>/5
         [HttpPut("{id}")]
-        public async Task <ActionResult<GetCountryDto>>  Put(long id, [FromBody] UpdateCountryDto countryDto)
+        public async Task<ActionResult<GetCountryDto>> Put(long id, [FromBody] UpdateCountryDto countryDto)
         {
             try
             {
                 var updatedCountry = await _countryServices.UpdateCountryAsync(id, countryDto);
-                return updatedCountry;
+                return Ok(updatedCountry);
             }
             catch (Exception ex)
             {
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
                 return NotFound(ex.Message);
             }
         }
@@ -71,7 +93,7 @@ namespace JobPortal.API.Controllers
             try
             {
                 var deletedCountry = await _countryServices.DeleteCountryAsync(id);
-                return deletedCountry;
+                return Ok(deletedCountry);
             }
             catch (Exception ex)
             {

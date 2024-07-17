@@ -1,9 +1,10 @@
-﻿using JobPortal.IServices;
-using JobPortal.Model;
+﻿using JobPortal.DTO;
+using JobPortal.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using static JobPortal.DTO.WorkTypeDto;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JobPortal.API.Controllers
 {
@@ -18,37 +19,44 @@ namespace JobPortal.API.Controllers
             _workTypeServices = workTypeServices;
         }
 
-        // GET: api/<WorkTypeController>
+        // GET: api/worktype
         [HttpGet]
-        public async Task<IEnumerable<GetWorkTypeDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetWorkTypeDto>>> GetAllWorkTypes()
         {
-            var res = await _workTypeServices.GetWorkTypeAsync();
-            return res;
+            try
+            {
+                var workTypes = await _workTypeServices.GetWorkTypeAsync();
+                return Ok(workTypes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        // GET api/<WorkTypeController>/5
+        // GET api/worktype/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetWorkTypeDto>> Get(long id)
+        public async Task<ActionResult<GetWorkTypeDto>> GetWorkTypeById(long id)
         {
             try
             {
-                var res = await _workTypeServices.GetWorkTypeById(id);
-                return res;
+                var workType = await _workTypeServices.GetWorkTypeById(id);
+                return Ok(workType);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound(ex.Message);
             }
         }
 
-        // POST api/<WorkTypeController>
+        // POST api/worktype
         [HttpPost]
-        public async Task<ActionResult<GetWorkTypeDto>> Post([FromBody] CreateWorkTypeDto createWorkTypeDto)
+        public async Task<ActionResult<GetWorkTypeDto>> CreateWorkType([FromBody] CreateWorkTypeDto createWorkTypeDto)
         {
             try
             {
-                var res = await _workTypeServices.CreateWorkTypeAsync(createWorkTypeDto);
-                return res;
+                var createdWorkType = await _workTypeServices.CreateWorkTypeAsync(createWorkTypeDto);
+                return CreatedAtAction(nameof(GetWorkTypeById), new { id = createdWorkType.Id }, createdWorkType);
             }
             catch (Exception ex)
             {
@@ -56,14 +64,14 @@ namespace JobPortal.API.Controllers
             }
         }
 
-        // PUT api/<WorkTypeController>/5
+        // PUT api/worktype/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<GetWorkTypeDto>> Put(long id, [FromBody] UpdateWorkTypeDto updateWorkTypeDto)
+        public async Task<ActionResult<GetWorkTypeDto>> UpdateWorkType(long id, [FromBody] UpdateWorkTypeDto updateWorkTypeDto)
         {
             try
             {
-                var res = await _workTypeServices.UpdateWorkTypeAsync(id, updateWorkTypeDto);
-                return res;
+                var updatedWorkType = await _workTypeServices.UpdateWorkTypeAsync(id, updateWorkTypeDto);
+                return Ok(updatedWorkType);
             }
             catch (Exception ex)
             {
@@ -71,14 +79,14 @@ namespace JobPortal.API.Controllers
             }
         }
 
-        // DELETE api/<WorkTypeController>/5
+        // DELETE api/worktype/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(long id)
+        public async Task<ActionResult<bool>> DeleteWorkType(long id)
         {
             try
             {
-                var res = await _workTypeServices.DeleteWorkTypeAsync(id);
-                return res;
+                var deleted = await _workTypeServices.DeleteWorkTypeAsync(id);
+                return Ok(deleted);
             }
             catch (Exception ex)
             {

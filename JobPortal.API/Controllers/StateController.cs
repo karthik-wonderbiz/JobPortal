@@ -1,9 +1,10 @@
 ﻿using JobPortal.Data;
+using JobPortal.DTO;
 using JobPortal.IServices;
-using JobPortal.Model;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobPortal.API.Controllers
 {
@@ -20,17 +21,16 @@ namespace JobPortal.API.Controllers
 
         // GET: api/<StateController>
         [HttpGet]
-        public async Task<IEnumerable<GetStateDto>> Get()
+        public async Task<ActionResult<IEnumerable<GetStateDto>>> Get()
         {
             try
             {
-                var getAllStateObject = await _stateServices.GetAllStatesAsync();
-                return getAllStateObject;
+                var res = await _stateServices.GetAllStatesAsync();
+                return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -40,29 +40,31 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var getStateObject = await _stateServices.GetStateByIdAsync(id);
-                return getStateObject;
+                var res = await _stateServices.GetStateByIdAsync(id);
+                return Ok(res);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         // POST api/<StateController>
         [HttpPost]
-        public async Task<GetStateDto> Post([FromBody] CreateStateDto stateDto)
+        public async Task<ActionResult<GetStateDto>> Post([FromBody] CreateStateDto stateDto)
         {
             try
             {
-                var createStateObject = await _stateServices.CreateStateAsync(stateDto);
-                return createStateObject;
+                var res = await _stateServices.CreateStateAsync(stateDto);
+                return CreatedAtAction(nameof(Get), new { id = res.Id }, res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -72,13 +74,16 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var updateStateObject = await _stateServices.UpdateStateAsync(id, stateDto);
-                return updateStateObject;
+                var res = await _stateServices.UpdateStateAsync(id, stateDto);
+                return Ok(res);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                if (ex.Message == "This input already exists.")
+                {
+                    return Conflict(ex.Message);
+                }
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -88,13 +93,12 @@ namespace JobPortal.API.Controllers
         {
             try
             {
-                var deleteStateObject = await _stateServices.DeleteStateAsync(id);
-                return deleteStateObject;
+                var res = await _stateServices.DeleteStateAsync(id);
+                return Ok(res);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }
