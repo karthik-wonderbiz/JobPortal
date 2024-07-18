@@ -13,7 +13,26 @@ public class LanguageInfoRepository : Repository<LanguageInfo>, ILanguageInfoRep
         _dbContext = dbContext;
     }
 
+   
     public async Task<IEnumerable<LanguageInfo>> GetLanguageInfoByUserId(long userId)
+    {
+        try
+        {
+            var languageInfos = await _dbContext.languageInfos
+                .Include(li => li.User)
+                .Include(li => li.Language)
+                .Where(li => li.UserId == userId)
+                .ToListAsync();
+
+            return languageInfos;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<LanguageInfo>> GetAllAsync()
     {
         try
         {
@@ -24,9 +43,26 @@ public class LanguageInfoRepository : Repository<LanguageInfo>, ILanguageInfoRep
 
             return languageInfos;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw new Exception("Failed to retrieve language info by user id.", ex);
+            throw;
+        }
+    }
+
+    public async Task<LanguageInfo> GetAsync(long id)
+    {
+        try
+        {
+            var skillInfo = await _dbContext.languageInfos
+                .Include(li => li.User)
+                .Include(li => li.Language)
+                .FirstOrDefaultAsync(li => li.Id == id); ;
+
+            return skillInfo;
+        }
+        catch (Exception)
+        {
+            throw;
         }
     }
 }
