@@ -23,7 +23,7 @@ namespace JobPortal.DTO
         );
         public record UpdateUrlNameDto(
             [Required(ErrorMessage = "Id is required")] long Id,
-            [Required(ErrorMessage = "UrlNameName is required")] string UrlName,
+            [Required(ErrorMessage = "Url Name is required")] string UrlName,
             bool IsActive,
             DateTime UpdatedAt,
             string UrlCode = " "

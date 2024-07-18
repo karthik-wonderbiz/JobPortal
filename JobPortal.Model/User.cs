@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Employee;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,9 +25,10 @@ namespace JobPortal.Model
 
         [Required(ErrorMessage = "Contact is required")]
         public long Contact { get; set; } 
-
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Publication> Publications { get; set; }
+        public ICollection<Publication> Publications { get; set; }
+        public ICollection<LanguageInfo> LanguageInfos { get; set; }
+
     }
 }
