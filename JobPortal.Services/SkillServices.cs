@@ -26,7 +26,6 @@ namespace JobPortal.Services
                 var skill = await _skillRepository.CreateAsync(new Skill()
                 {
                     SkillName = skillDto.SkillName,
-                    SkillExperience = skillDto.SkillExperience,
                     SkillCode = skillDto.SkillName.ToUpper().Substring(0, 1),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
@@ -35,7 +34,6 @@ namespace JobPortal.Services
                 var createdSkill = new GetSkillDto(
                     skill.Id,
                     skill.SkillName,
-                    skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
                 );
@@ -70,7 +68,6 @@ namespace JobPortal.Services
                 var skillDto = new GetSkillDto(
                     skill.Id,
                     skill.SkillName,
-                    skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
                 );
@@ -92,12 +89,11 @@ namespace JobPortal.Services
                 var skillDtos = skills.Select(skill => new GetSkillDto(
                     skill.Id,
                     skill.SkillName,
-                    skill.SkillExperience,
                     skill.SkillCode,
                     skill.IsActive
                 ));
 
-                return skillDtos.ToList();
+                return skillDtos;
             }
             catch (Exception)
             {
@@ -116,7 +112,6 @@ namespace JobPortal.Services
                 }
 
                 oldSkill.SkillName = skillDto.SkillName;
-                oldSkill.SkillExperience = skillDto.SkillExperience;
                 oldSkill.SkillCode = !string.IsNullOrEmpty(skillDto.SkillCode) ? skillDto.SkillCode : skillDto.SkillName.ToUpper().Substring(0, 1);
                 oldSkill.UpdatedAt = DateTime.Now;
 
@@ -125,7 +120,6 @@ namespace JobPortal.Services
                 var updatedSkill = new GetSkillDto(
                     oldSkill.Id,
                     oldSkill.SkillName,
-                    oldSkill.SkillExperience,
                     oldSkill.SkillCode,
                     oldSkill.IsActive
                 );

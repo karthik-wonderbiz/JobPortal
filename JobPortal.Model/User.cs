@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Employee;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,5 +27,7 @@ namespace JobPortal.Model
         public long Contact { get; set; } 
 
         public bool IsActive { get; set; } = true;
+        public ICollection<SkillInfo> SkillInfos { get; set; }
+        public ICollection<LocationInfo> LocationInfos { get; set; }
     }
 }
