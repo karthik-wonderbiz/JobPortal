@@ -4,6 +4,7 @@ using JobPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.API.Migrations
 {
     [DbContext(typeof(JobPortalDbContext))]
-    partial class JobPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240718082221_AddedPublicationTable")]
+    partial class AddedPublicationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,146 +149,6 @@ namespace JobPortal.API.Migrations
                         .IsUnique();
 
                     b.ToTable("Designations");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Employee.LanguageInfo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("LanguageId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LanguageInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Employee.LocationInfo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CountryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("StateId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TrainInfoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ZipCode")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("StateId");
-
-                    b.HasIndex("TrainInfoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LocationInfo");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Employee.SkillInfo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SkillExperience")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SkillId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SkillId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SkillInfo");
                 });
 
             modelBuilder.Entity("JobPortal.Model.EmploymentType", b =>
@@ -578,6 +441,9 @@ namespace JobPortal.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SkillExperience")
+                        .HasColumnType("int");
+
                     b.Property<string>("SkillName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -816,87 +682,6 @@ namespace JobPortal.API.Migrations
                     b.ToTable("WorkTypes");
                 });
 
-            modelBuilder.Entity("JobPortal.Model.Employee.LanguageInfo", b =>
-                {
-                    b.HasOne("JobPortal.Model.Language", "Language")
-                        .WithMany("languageInfos")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.User", "User")
-                        .WithMany("LanguageInfos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Employee.LocationInfo", b =>
-                {
-                    b.HasOne("JobPortal.Model.City", "City")
-                        .WithMany("LocationInfos")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Country", "Country")
-                        .WithMany("LocationInfos")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.State", "State")
-                        .WithMany("LocationInfos")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.TrainInfo", "TrainInfo")
-                        .WithMany("LocationInfos")
-                        .HasForeignKey("TrainInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.User", "User")
-                        .WithMany("LocationInfos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("State");
-
-                    b.Navigation("TrainInfo");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Employee.SkillInfo", b =>
-                {
-                    b.HasOne("JobPortal.Model.Skill", "Skill")
-                        .WithMany("SkillInfos")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.User", "User")
-                        .WithMany("SkillInfos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Skill");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("JobPortal.Model.Publication", b =>
                 {
                     b.HasOne("JobPortal.Model.User", "User")
@@ -908,45 +693,9 @@ namespace JobPortal.API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobPortal.Model.City", b =>
-                {
-                    b.Navigation("LocationInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Country", b =>
-                {
-                    b.Navigation("LocationInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Language", b =>
-                {
-                    b.Navigation("languageInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Skill", b =>
-                {
-                    b.Navigation("SkillInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.State", b =>
-                {
-                    b.Navigation("LocationInfos");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.TrainInfo", b =>
-                {
-                    b.Navigation("LocationInfos");
-                });
-
             modelBuilder.Entity("JobPortal.Model.User", b =>
                 {
-                    b.Navigation("LanguageInfos");
-
-                    b.Navigation("LocationInfos");
-
                     b.Navigation("Publications");
-
-                    b.Navigation("SkillInfos");
                 });
 #pragma warning restore 612, 618
         }

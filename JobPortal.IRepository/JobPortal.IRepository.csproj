@@ -8,13 +8,19 @@
 
   <ItemGroup>
 
+    <ProjectReference Include="..\JobPortal.DTO\JobPortal.DTO.csproj" />
+
     <ProjectReference Include="..\JobPortal.Model\JobPortal.Model.csproj" />
 
 
   </ItemGroup>
 
   <ItemGroup>
+
     <Folder Include="Employee\" />
+
+    <Folder Include="Company\" />
+
   </ItemGroup>
 
 </Project>

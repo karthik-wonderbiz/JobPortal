@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Employee;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,5 +19,6 @@ namespace JobPortal.Model
         public string CityName { get; set; } = string.Empty;
         public string CityCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+        public ICollection<LocationInfo> LocationInfos { get; set; }
     }
 }
