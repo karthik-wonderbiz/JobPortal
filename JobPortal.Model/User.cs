@@ -26,5 +26,7 @@ namespace JobPortal.Model
         public long Contact { get; set; } 
 
         public bool IsActive { get; set; } = true;
+
+        public virtual ICollection<Publication> Publications { get; set; }
     }
 }
