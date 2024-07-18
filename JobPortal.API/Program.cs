@@ -63,6 +63,9 @@ builder.Services.AddScoped<IPublicationServices, PublicationServices>();
 builder.Services.AddScoped<ILanguageInfoRepository, LanguageInfoRepository>();
 builder.Services.AddScoped<ILanguageInfoServices, LanguageInfoServices>();
 
+builder.Services.AddScoped<ISkillInfoRepository, SkillInfoRepository>();
+builder.Services.AddScoped<ISkillInfoServices, SkillInfoServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

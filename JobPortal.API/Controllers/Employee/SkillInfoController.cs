@@ -51,7 +51,7 @@ namespace JobPortal.API.Controllers
         }
 
         // GET api/<SkillInfoController>/5
-        [HttpGet("user/{id}")]
+        [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<GetSkillInfoDto>>> GetByUserId(long userId)
         {
             try

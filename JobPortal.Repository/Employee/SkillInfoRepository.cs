@@ -38,5 +38,39 @@ namespace JobPortal.Repository.Employee
                 throw;
             }
         }
+
+        public async Task<IEnumerable<SkillInfo>> GetAllAsync()
+        {
+            try
+            {
+                var skillInfos = await _dbcontext.skillInfos
+                    .Include(li => li.User)
+                    .Include(li => li.Skill)
+                    .ToListAsync();
+
+                return skillInfos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<SkillInfo> GetAsync(long id)
+        {
+            try
+            {
+                var skillInfo = await _dbcontext.skillInfos
+                    .Include(li => li.User)
+                    .Include(li => li.Skill)
+                    .FirstOrDefaultAsync(li => li.Id == id); ;
+
+                return skillInfo;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
