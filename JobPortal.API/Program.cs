@@ -50,6 +50,9 @@ builder.Services.AddScoped<ISkillServices, SkillServices>();
 builder.Services.AddScoped<IDesignationRepository, DesignationRepository>();
 builder.Services.AddScoped<IDesignationServices, DesignationServices>();
 
+builder.Services.AddScoped<IQualificationRepository, QualificationRepository>();
+builder.Services.AddScoped<IQualificationServices, QualificationServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

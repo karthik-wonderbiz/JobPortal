@@ -12,13 +12,12 @@ namespace JobPortal.Data
     {
         public JobPortalDbContext(DbContextOptions options) : base(options)
         {
-                
         }
+
         public DbSet<Language>  languages { get; set; }
         public DbSet<Shift> shifts { get; set; }
         public DbSet<Country> countries  { get; set; }
         public DbSet<Gender> genders { get; set; }
-
         public DbSet<WorkType> workTypes { get; set; }
         public DbSet<TrainInfo> trainInfos { get; set; }
         public DbSet<State> states { get; set; }
@@ -26,8 +25,8 @@ namespace JobPortal.Data
         public DbSet<Skill> skills { get; set; }
         public DbSet<City> cities { get; set; }
         public DbSet<UrlName> urlNames { get; set; }
-
         public DbSet<Designation> designations { get; set; }
+        public DbSet<Qualification> qualifications { get; set; }
 
     }
 }
