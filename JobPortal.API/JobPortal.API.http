@@ -20,3 +20,7 @@ GET {{JobPortal.API_HostAddress}}/api/language
 GET {{JobPortal.API_HostAddress}}/api/employmenttype
 
 ###
+
+GET {{JobPortal.API_HostAddress}}/api/publication
+
+###

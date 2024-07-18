@@ -1,8 +1,12 @@
 using JobPortal.Data;
 using JobPortal.IRepository;
+using JobPortal.IRepository.Employee;
 using JobPortal.IServices;
+using JobPortal.IServices.Employee;
 using JobPortal.Repository;
+using JobPortal.Repository.Employee;
 using JobPortal.Services;
+using JobPortal.Services.Employee;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,8 +57,8 @@ builder.Services.AddScoped<ISkillServices, SkillServices>();
 builder.Services.AddScoped<IDesignationRepository, DesignationRepository>();
 builder.Services.AddScoped<IDesignationServices, DesignationServices>();
 
-builder.Services.AddScoped<IQualificationRepository, QualificationRepository>();
-builder.Services.AddScoped<IQualificationServices, QualificationServices>();
+builder.Services.AddScoped<IPublicationRepository, PublicationRepository>();
+builder.Services.AddScoped<IPublicationServices, PublicationServices>();
 
 builder.Services.AddControllers();
 
