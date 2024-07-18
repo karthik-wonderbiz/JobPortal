@@ -26,9 +26,10 @@ namespace JobPortal.Model
         [Required(ErrorMessage = "Contact is required")]
         public long Contact { get; set; } 
         public bool IsActive { get; set; } = true;
-
+        
+        public ICollection<SkillInfo> SkillInfos { get; set; }
+        public ICollection<LocationInfo> LocationInfos { get; set; }
         public ICollection<Publication> Publications { get; set; }
         public ICollection<LanguageInfo> LanguageInfos { get; set; }
-
     }
 }

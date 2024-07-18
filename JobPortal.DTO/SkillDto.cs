@@ -13,7 +13,6 @@ namespace JobPortal.DTO
 
     public record CreateSkillDto(
         [Required(ErrorMessage = "Skill Name is required")] string SkillName,
-        [Required(ErrorMessage = "Skill Experience is required")] int SkillExperience,
         DateTime CreatedAt,
         DateTime UpdatedAt,
         string SkillCode = ""
@@ -21,7 +20,6 @@ namespace JobPortal.DTO
 
     public record UpdateSkillDto(
         [Required(ErrorMessage = "Skill Name is required")] string SkillName,
-        [Required(ErrorMessage = "Skill Experience is required")] int SkillExperience,
         bool IsActive,
         DateTime UpdatedAt,
         string SkillCode = ""
@@ -30,7 +28,6 @@ namespace JobPortal.DTO
     public record GetSkillDto(
         long Id,
         string SkillName,
-        int SkillExperience,
         string SkillCode,
         bool IsActive
         );

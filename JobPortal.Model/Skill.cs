@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Employee;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,11 +17,10 @@ namespace JobPortal.Model
         [Required(ErrorMessage = "Skill Name is Required")]
         public string SkillName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Skill Experience is Required")]
-        public int SkillExperience { get; set; } = 0;
-
         public string SkillCode { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
+
+        public ICollection<SkillInfo> SkillInfos { get; set; }
     }
 }
