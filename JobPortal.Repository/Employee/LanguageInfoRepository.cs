@@ -20,7 +20,6 @@ public class LanguageInfoRepository : Repository<LanguageInfo>, ILanguageInfoRep
             var languageInfos = await _dbContext.languageInfos
                 .Include(li => li.User)
                 .Include(li => li.Language)
-                .Where(li => li.UserId == userId)
                 .ToListAsync();
 
             return languageInfos;

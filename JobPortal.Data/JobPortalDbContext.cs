@@ -30,7 +30,6 @@ namespace JobPortal.Data
         public DbSet<Qualification> qualifications { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<LanguageInfo> languageInfos { get; set; }
-
         public DbSet<Publication> publications { get; set; }
 
     }

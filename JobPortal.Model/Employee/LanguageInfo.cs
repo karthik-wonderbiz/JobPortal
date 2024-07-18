@@ -13,13 +13,13 @@ namespace JobPortal.Model.Employee
     {
         public virtual Language Language { get; set; }
 
-        [ForeignKey("Languages"),Required(ErrorMessage = "Language Id is Required")]
-        public long LanguageId { get; set; }
+        [ForeignKey("Languages"), Required(ErrorMessage = "Language Id is Required")]
+        public long LanguageId { get; set; } = 0;
 
-        public virtual User User { get; set; }  
+        public virtual User User { get; set; }
 
-        [ForeignKey("Users"),Required(ErrorMessage = "User Id is Required")]
-        public long UserId { get; set; }
+        [ForeignKey("Users"), Required(ErrorMessage = "User Id is Required")]
+        public long UserId { get; set; } = 0;
 
 
     }
