@@ -11,4 +11,9 @@
     <ProjectReference Include="..\JobPortal.IRepository\JobPortal.IRepository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Company\" />
+    <Folder Include="Employee\" />
+  </ItemGroup>
+
 </Project>

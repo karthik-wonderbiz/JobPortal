@@ -27,6 +27,7 @@ namespace JobPortal.Data
         public DbSet<UrlName> urlNames { get; set; }
         public DbSet<Designation> designations { get; set; }
         public DbSet<Qualification> qualifications { get; set; }
+        public DbSet<User> users { get; set; }
 
     }
 }

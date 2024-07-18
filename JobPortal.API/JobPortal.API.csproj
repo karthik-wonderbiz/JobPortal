@@ -26,4 +26,9 @@
     <ProjectReference Include="..\JobPortal.Services\JobPortal.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Company\" />
+    <Folder Include="Controllers\Employee\" />
+  </ItemGroup>
+
 </Project>

@@ -14,6 +14,9 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<JobPortalDbContext>(option =>
     option.UseSqlServer(connectionString, b => b.MigrationsAssembly("JobPortal.API")));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+
 builder.Services.AddScoped<IGenderServices, GenderServices>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
