@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Employee;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,5 +21,6 @@ namespace JobPortal.Model
         [MaxLength(50)]
         public string LanguageCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+        public ICollection<LanguageInfo> languageInfos { get; set; }
     }
 }
