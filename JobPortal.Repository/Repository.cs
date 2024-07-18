@@ -1,5 +1,6 @@
 ﻿using JobPortal.Data;
 using JobPortal.IRepository;
+using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

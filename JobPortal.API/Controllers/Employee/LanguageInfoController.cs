@@ -51,7 +51,7 @@ namespace JobPortal.API.Controllers
         }
 
         // GET api/<LanguageInfoController>/5
-        [HttpGet("user/{id}")]
+        [HttpGet("user/{userId}")]
         public async Task<ActionResult<GetLanguageInfoDto>> GetByUserId(long userId)
         {
             try
