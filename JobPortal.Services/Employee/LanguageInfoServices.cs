@@ -1,4 +1,5 @@
-﻿using JobPortal.DTO;
+﻿using JobPortal.Data;
+using JobPortal.DTO;
 using JobPortal.DTO.Employee;
 using JobPortal.IRepository.Employee;
 using JobPortal.IServices.Employee;
@@ -70,13 +71,9 @@ namespace JobPortal.Services.Employee
         {
             try
             {
-                var languageInfo = await _languageInfoRepository.GetAllAsync();
-
-                var languageDto = languageInfo.Select(languageInfo => new GetLanguageInfoDto(
-                    languageInfo.Id, languageInfo.User.Email, languageInfo.Language.LanguageName
-                ));
-
-                return languageDto.ToList();
+                var languageInfos = await _languageInfoRepository.GetAllAsync();
+                var languageInfoDto = languageInfos.Select(languageInfo => new GetLanguageInfoDto(languageInfo.Id, languageInfo.Language.LanguageName, languageInfo.User.Email));
+                return languageInfoDto;
             }
             catch (Exception)
             {

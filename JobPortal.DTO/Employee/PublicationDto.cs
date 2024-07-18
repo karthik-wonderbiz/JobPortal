@@ -18,7 +18,7 @@ namespace JobPortal.Data
         DateTime UpdatedAt);
 
     public record UpdatePublicationDto(
-        [Required(ErrorMessage = "Id is required")] string Id,
+        [Required(ErrorMessage = "Id is required")] long Id,
         [Required(ErrorMessage = "Publication Title is required")] string PublicationTitle,
         [Required(ErrorMessage = "Publisher is required")] string PublisherName,
         [Required(ErrorMessage = "Publication Date is required")] DateTime PublishDate,

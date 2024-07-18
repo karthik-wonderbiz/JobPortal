@@ -60,6 +60,9 @@ builder.Services.AddScoped<IDesignationServices, DesignationServices>();
 builder.Services.AddScoped<IPublicationRepository, PublicationRepository>();
 builder.Services.AddScoped<IPublicationServices, PublicationServices>();
 
+builder.Services.AddScoped<ILanguageInfoRepository, LanguageInfoRepository>();
+builder.Services.AddScoped<ILanguageInfoServices, LanguageInfoServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
