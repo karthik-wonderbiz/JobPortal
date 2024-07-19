@@ -27,5 +27,7 @@ namespace JobPortal.Model.Company
         [Required(ErrorMessage = "Recruiter Email is required!")]
         [StringLength(100)]
         public string RecruiterEmail { get; set; } = string.Empty;
+
+        public ICollection<JobPost> JobPosts { get; set; }
     }
 }

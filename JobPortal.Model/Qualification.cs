@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobPortal.Model.Company;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,5 +21,7 @@ namespace JobPortal.Model
         [MaxLength(50)]
         public string QualificationCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+
+        public ICollection<JobPost> JobPosts { get; set; }
     }
 }

@@ -55,13 +55,13 @@ namespace JobPortal.DTO.Company
         long MaxSalary,
         int NoticePeriod,
         int Vacancy,
-        DateTime ApplicationStartDate,
         DateTime ApplicationEndDate,
         bool IsActive,
         DateTime CreatedAt,
         DateTime UpdatedAt
         );
     public record GetJobPostDto(
+        long Id,
         string CompanyName,
         string CompanyLogo,
         string RecruiterName,
