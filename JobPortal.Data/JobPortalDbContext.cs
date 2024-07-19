@@ -42,5 +42,7 @@ namespace JobPortal.Data
         public DbSet<Project> projects { get; set; }
         public DbSet<PersonalInfo> personalInfos { get; set; }
 
+        public DbSet<JobPost> jobPosts { get; set; }
+
     }
 }

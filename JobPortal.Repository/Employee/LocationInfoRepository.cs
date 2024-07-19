@@ -70,7 +70,7 @@ namespace JobPortal.Repository.Employee
                     .Include(li => li.State)
                     .Include(li => li.Country)
                     .Include(li => li.TrainLine)
-                    .FirstOrDefaultAsync(li => li.Id == id); ;
+                    .FirstOrDefaultAsync(li => li.Id == id);
 
                 return locationInfo;
             }
