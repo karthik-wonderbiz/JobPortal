@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Company.CompanyInfoDto;
 
 namespace JobPortal.Services.Company
 {
@@ -37,7 +38,12 @@ namespace JobPortal.Services.Company
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
+                var companyInfo = await _companyInfoRepository.GetAsync(contactPerson.CompanyId);
 
+                if (companyInfo == null)
+                {
+                    throw new Exception("Invalid Company");
+                }
                 var res = new GetContactPersonDto(contactPerson.Id, contactPerson.ContactPersonName, contactPerson.ContactPersonPhone, contactPerson.ContactPersonEmail);
                 return res;
             }
@@ -96,6 +102,24 @@ namespace JobPortal.Services.Company
             }
         }
 
+        public async Task<GetContactPersonDto> GetContactPersonByCompanyIdAsync(long companyId)
+        {
+            try
+            {
+                var contactPersons = await _contactPersonRepository.GetContactPersonByCompanyId(companyId);
+
+                var contactPersonDto = new GetContactPersonDto(
+                    contactPersons.Id, contactPersons.ContactPersonName, contactPersons.ContactPersonPhone, contactPersons.ContactPersonEmail
+                    );
+
+                return contactPersonDto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<GetContactPersonDto> GetContactPersonByIdAsync(long id)
         {
             try
@@ -131,6 +155,13 @@ namespace JobPortal.Services.Company
                 oldContactPerson.UpdatedAt = DateTime.Now;
 
                 await _contactPersonRepository.UpdateAsync(oldContactPerson);
+
+                var companyInfo = await _companyInfoRepository.GetAsync(oldContactPerson.CompanyId);
+
+                if (companyInfo == null)
+                {
+                    throw new Exception("Invalid Company");
+                }
 
                 var res = new GetContactPersonDto(oldContactPerson.Id, oldContactPerson.ContactPersonName, oldContactPerson.ContactPersonPhone, oldContactPerson.ContactPersonEmail);
                 return res;
