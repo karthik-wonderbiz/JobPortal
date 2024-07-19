@@ -95,6 +95,11 @@ builder.Services.AddScoped<IContactPersonServices, ContactPersonServices>();
 builder.Services.AddScoped<IWorkExperienceInfoRepository, WorkExperienceInfoRepository>();
 builder.Services.AddScoped<IWorkExperienceInfoServices, WorkExperienceInfoServices>();
 
+builder.Services.AddScoped<ICertificationInfoRepository, CertificationInfoRepository>();
+builder.Services.AddScoped<ICertificationInfoServices, CertificationInfoServices>();
+
+builder.Services.AddScoped<IPersonalInfoRepository, PersonalInfoRepository>();
+builder.Services.AddScoped<IPersonalInfoServices, PersonalInfoServices>();
 
 builder.Services.AddControllers();
 
