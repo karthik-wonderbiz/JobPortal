@@ -24,6 +24,6 @@ namespace JobPortal.Model
 
         public ICollection<SkillInfo> SkillInfos { get; set; }
 
-        public ICollection<JobPost> JobPosts { get; set; }
+        /*public ICollection<JobPost> JobPosts { get; set; }*/
     }
 }

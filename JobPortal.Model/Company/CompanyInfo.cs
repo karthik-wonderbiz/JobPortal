@@ -36,6 +36,5 @@ namespace JobPortal.Model.Company
         public string WorkingDays { get; set; } = string.Empty;
         public string OpenHours { get; set; } = string.Empty;
 
-        public ICollection<JobPost> JobPosts { get; set; }
     }
 }

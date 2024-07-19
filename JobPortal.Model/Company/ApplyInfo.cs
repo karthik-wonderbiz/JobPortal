@@ -11,10 +11,10 @@ namespace JobPortal.Model.Company
     [Table("ApplyInfos")]
     public class ApplyInfo : BaseEntity
     {
-        public virtual JobPost JobPost { get; set; }
+        /*public virtual JobPost JobPost { get; set; }
 
         [ForeignKey("JobPosts"), Required(ErrorMessage = "JobPost Id is Required")]
-        public long JobPostId { get; set; } = 0;
+        public long JobPostId { get; set; } = 0;*/
 
         public virtual User User { get; set; }
 

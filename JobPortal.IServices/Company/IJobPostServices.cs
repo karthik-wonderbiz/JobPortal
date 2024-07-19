@@ -13,8 +13,8 @@ namespace JobPortal.IServices.Company
         public Task<GetJobPostDto> GetJobPostByIdAsync(long id);
 
         public Task<IEnumerable<GetJobPostDto>> GetAllJobPostsAsync();
-        public Task<GetJobPostDto> CreateJobPostAsync(CreateJobPostDto JobPostDto);
-        public Task<GetJobPostDto> UpdateJobPostAsync(long id, UpdateJobPostDto JobPostDto);
+        public Task<GetJobPostDto> CreateJobPostAsync(CreateJobPostDto jobPostDto);
+        public Task<GetJobPostDto> UpdateJobPostAsync(long id, UpdateJobPostDto jobPostDto);
         public Task<bool> DeleteJobPostAsync(long id);
         public Task<IEnumerable<GetJobPostDto>> GetJobPostByCompanyId(long companyId);
     }
