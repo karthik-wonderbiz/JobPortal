@@ -66,6 +66,9 @@ builder.Services.AddScoped<ILanguageInfoServices, LanguageInfoServices>();
 builder.Services.AddScoped<ISkillInfoRepository, SkillInfoRepository>();
 builder.Services.AddScoped<ISkillInfoServices, SkillInfoServices>();
 
+builder.Services.AddScoped<ILocationInfoRepository, LocationInfoRepository>();
+builder.Services.AddScoped<ILocationInfoServices, LocationInfoServices>();
+
 builder.Services.AddScoped<IQualificationRepository, QualificationRepository>();
 builder.Services.AddScoped<IQualificationServices, QualificationServices>();
 
