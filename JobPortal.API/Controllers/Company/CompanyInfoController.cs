@@ -1,8 +1,11 @@
-﻿using JobPortal.Data;
-using JobPortal.DTO.Company;
+﻿using JobPortal.DTO.Company;
 using JobPortal.IServices;
 using JobPortal.IServices.Company;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using static JobPortal.DTO.Company.CompanyInfoDto;
 
 namespace JobPortal.API.Controllers.Company
 {
@@ -48,12 +51,12 @@ namespace JobPortal.API.Controllers.Company
         }
 
         // GET api/<CompanyInfoController>/user/5
-        [HttpGet("user/{Id}")]
-        public async Task<ActionResult<GetCompanyInfoDto>> GetByUser(long UserId)
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<GetCompanyInfoDto>> GetCompanyInfoByUserId(long userId)
         {
             try
             {
-                var companyInfo = await _companyInfoServices.GetCompanyInfoByUserIdAsync(UserId);
+                var companyInfo = await _companyInfoServices.GetCompanyInfoByUserIdAsync(userId);
                 return Ok(companyInfo);
             }
             catch (Exception ex)
