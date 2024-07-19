@@ -96,7 +96,7 @@ namespace JobPortal.Services.Employee
 
                 if (personalInfo == null)
                 {
-                    throw new Exception($"Skill Info not found for id : {id}");
+                    throw new Exception($"Personal Info not found for id : {id}");
                 }
 
                 var personalInfoDto = new GetPersonalInfoDto(
