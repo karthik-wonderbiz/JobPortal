@@ -70,7 +70,7 @@ namespace JobPortal.API.Controllers.Employee
             try
             {
                 var projectInfo = await _projectServices.CreateProjectAsync(createProjectDto);
-                return CreatedAtAction(nameof(Get), new { id = projectInfo.Id }, createProjectDto);
+                return CreatedAtAction(nameof(Get), new { id = projectInfo.Id }, projectInfo);
             }
             catch (Exception ex)
             {
