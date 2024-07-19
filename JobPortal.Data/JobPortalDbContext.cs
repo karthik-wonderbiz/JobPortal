@@ -21,7 +21,7 @@ namespace JobPortal.Data
         public DbSet<Country> countries  { get; set; }
         public DbSet<Gender> genders { get; set; }
         public DbSet<WorkType> workTypes { get; set; }
-        public DbSet<TrainInfo> trainInfos { get; set; }
+        public DbSet<TrainLine> trainLines { get; set; }
         public DbSet<State> states { get; set; }
         public DbSet<EmploymentType> employmentTypes { get; set; }
         public DbSet<Skill> skills { get; set; }
@@ -33,7 +33,7 @@ namespace JobPortal.Data
         public DbSet<SkillInfo> skillInfos { get; set; }
         public DbSet<LanguageInfo> languageInfos { get; set; }
         public DbSet<Publication> publications { get; set; }
-        public DbSet<CompanyInfo> companyInfos { get; set; }
+        public DbSet<CompanyInfo> companies { get; set; }
         public DbSet<LocationInfo> locationInfos { get; set; }
         public DbSet<Education> educations { get; set; }
         public DbSet<Project> projects { get; set; }

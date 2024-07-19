@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Repository
 {
-    public class TrainInfoRepository : Repository<TrainInfo>, ITrainInfoRepository
+    public class TrainLineRepository : Repository<TrainLine>, ITrainLineRepository
     {
-        public TrainInfoRepository(JobPortalDbContext dbcontext) : base(dbcontext)
+        public TrainLineRepository(JobPortalDbContext dbcontext) : base(dbcontext)
         {
         }
     }

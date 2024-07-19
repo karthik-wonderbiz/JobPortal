@@ -14,18 +14,18 @@ namespace JobPortal.Repository.Employee
 {
     public class SkillInfoRepository : Repository<SkillInfo>, ISkillInfoRepository
     {
-        private readonly JobPortalDbContext _dbcontext;
+        private readonly JobPortalDbContext _dbContext;
 
         public SkillInfoRepository(JobPortalDbContext dbcontext) : base(dbcontext)
         {
-            _dbcontext = dbcontext;
+            _dbContext = dbcontext;
         }
 
         public async Task<IEnumerable<SkillInfo>> GetByUserId(long userId)
         {
             try
             {
-                var skillInfos = await _dbcontext.skillInfos
+                var skillInfos = await _dbContext.skillInfos
                     .Include(li => li.User)
                     .Include(li => li.Skill)
                     .Where(li => li.UserId == userId)
@@ -43,7 +43,7 @@ namespace JobPortal.Repository.Employee
         {
             try
             {
-                var skillInfos = await _dbcontext.skillInfos
+                var skillInfos = await _dbContext.skillInfos
                     .Include(li => li.User)
                     .Include(li => li.Skill)
                     .ToListAsync();
@@ -60,7 +60,7 @@ namespace JobPortal.Repository.Employee
         {
             try
             {
-                var skillInfo = await _dbcontext.skillInfos
+                var skillInfo = await _dbContext.skillInfos
                     .Include(li => li.User)
                     .Include(li => li.Skill)
                     .FirstOrDefaultAsync(li => li.Id == id); ;

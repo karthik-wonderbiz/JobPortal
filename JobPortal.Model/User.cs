@@ -1,4 +1,5 @@
-﻿using JobPortal.Model.Employee;
+﻿using JobPortal.Model.Company;
+using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,5 +31,6 @@ namespace JobPortal.Model
         public ICollection<LocationInfo> LocationInfos { get; set; }
         public ICollection<Publication> Publications { get; set; }
         public ICollection<LanguageInfo> LanguageInfos { get; set; }
+        public ICollection<CompanyInfo> CompanyInfos { get; set; }
     }
 }

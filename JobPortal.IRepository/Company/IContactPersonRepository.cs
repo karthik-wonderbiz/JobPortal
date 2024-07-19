@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.IRepository.Company
 {
-    public interface ICompanyInfoRepository : IRepository<CompanyInfo>
+    public interface IContactPersonRepository : IRepository<ContactPerson>
     {
-        Task<CompanyInfo> GetCompanyInfoByUserId(long userId);
     }
 }
