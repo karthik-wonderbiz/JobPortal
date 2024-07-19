@@ -24,11 +24,11 @@ namespace JobPortal.Model.Employee
 
         [Required(ErrorMessage = "First Name is Required")]
         [MaxLength(50)]
-        public string FirstName = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last Name is Required")]
         [MaxLength(50)]
-        public string LastName = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
     }
 }
