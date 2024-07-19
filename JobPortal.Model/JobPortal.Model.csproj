@@ -11,9 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-
+    <Folder Include="Employee\" />
     <Folder Include="Company\" />
-
   </ItemGroup>
 
 </Project>

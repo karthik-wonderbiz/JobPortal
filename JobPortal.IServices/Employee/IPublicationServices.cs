@@ -12,8 +12,8 @@ namespace JobPortal.IServices.Employee
         public Task<GetPublicationDto> GetPublicationByIdAsync(long id);
 
         public Task<IEnumerable<GetPublicationDto>> GetAllPublicationsAsync();
-        public Task<GetPublicationDto> CreatePublicationAsync(CreatePublicationDto publicationDto);
-        public Task<GetPublicationDto> UpdatePublicationAsync(long id, UpdatePublicationDto publicationDto);
+        public Task<GetPublicationDto> CreatePublicationAsync(CreatePublicationDto PublicationDto);
+        public Task<GetPublicationDto> UpdatePublicationAsync(long id, UpdatePublicationDto PublicationDto);
         public Task<bool> DeletePublicationAsync(long id);
         public Task<IEnumerable<GetPublicationDto>> GetPublicationByUserId(long UserId);
     }
