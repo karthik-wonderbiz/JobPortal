@@ -47,7 +47,5 @@ namespace JobPortal.Data
         public DbSet<ApplyInfo> applyInfos { get; set; }
 
         public DbSet<PersonalInfo> personalInfos { get; set; }
-
-        public DbSet<JobPost> jobPosts { get; set; }
     }
 }

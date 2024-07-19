@@ -22,7 +22,5 @@ namespace JobPortal.Model
         public string WorkTypeCode { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
 
-        public ICollection<JobPost> JobPosts { get; set; }
-
     }
 }

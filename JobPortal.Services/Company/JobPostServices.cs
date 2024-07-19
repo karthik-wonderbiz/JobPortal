@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Employee.LocationInfoDto;
 
 namespace JobPortal.Services.Company
 {
@@ -81,7 +82,7 @@ namespace JobPortal.Services.Company
                     NoticePeriod = jobPostDto.NoticePeriod,
                     Vacancy = jobPostDto.Vacancy,
                     ApplicationStartDate = DateTime.Now,
-                    ApplicationEndDate = jobPostDto.ApplicationEndDate, 
+                    ApplicationEndDate = jobPostDto.ApplicationEndDate,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
@@ -92,7 +93,7 @@ namespace JobPortal.Services.Company
                 var trainLineInfo = await _trainLineRepository.GetAsync(jobPost.TrainLineId);
                 var languageInfo = await _languageRepository.GetAsync(jobPost.LanguageId);
                 var shiftInfo = await _shiftRepository.GetAsync(jobPost.ShiftId);
-                var workTypeinfo = await _workTypeRepository.GetAsync(jobPost.WorkTypeId); 
+                var workTypeinfo = await _workTypeRepository.GetAsync(jobPost.WorkTypeId);
                 var employmentTypeInfo = await _employmentTypeRepository.GetAsync(jobPost.EmploymentTypeId);
                 var qualificationInfo = await _qualificationRepository.GetAsync(jobPost.QualificationId);
 
@@ -247,14 +248,133 @@ namespace JobPortal.Services.Company
             }
         }
 
-        public Task<GetJobPostDto> UpdateJobPostAsync(long id, UpdateJobPostDto JobPostDto)
+        public async Task<GetJobPostDto> UpdateJobPostAsync(long id, UpdateJobPostDto jobPostDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var oldJobPostInfo = await _jobPostRepository.GetAsync(id);
+                if (oldJobPostInfo == null)
+                {
+                    throw new Exception($"Job Post not found for id : {id}");
+                }
+
+                oldJobPostInfo.CompanyId = jobPostDto.CompanyId;
+                oldJobPostInfo.RecruiterId = jobPostDto.RecruiterId;
+                oldJobPostInfo.DesignationId = jobPostDto.DesignationId;
+                oldJobPostInfo.SkillId = jobPostDto.SkillId;
+                oldJobPostInfo.TrainLineId = jobPostDto.TrainLineId;
+                oldJobPostInfo.LanguageId = jobPostDto.LanguageId;
+                oldJobPostInfo.ShiftId = jobPostDto.ShiftId;
+                oldJobPostInfo.WorkTypeId = jobPostDto.WorkTypeId;
+                oldJobPostInfo.EmploymentTypeId = jobPostDto.EmploymentTypeId;
+                oldJobPostInfo.QualificationId = jobPostDto.QualificationId;
+                oldJobPostInfo.Bond = jobPostDto.Bond;
+                oldJobPostInfo.JobDescription = jobPostDto.JobDescription;
+                oldJobPostInfo.MinExperience = jobPostDto.MinExperience;
+                oldJobPostInfo.MaxExperience = jobPostDto.MaxExperience;
+                oldJobPostInfo.MinSalary = jobPostDto.MinSalary;
+                oldJobPostInfo.MaxSalary = jobPostDto.MaxSalary;
+                oldJobPostInfo.NoticePeriod = jobPostDto.NoticePeriod;
+                oldJobPostInfo.Vacancy = jobPostDto.Vacancy;
+                oldJobPostInfo.ApplicationEndDate = jobPostDto.ApplicationEndDate;
+                oldJobPostInfo.UpdatedAt = DateTime.Now;
+
+                await _jobPostRepository.UpdateAsync(oldJobPostInfo);
+
+                var companyInfo = await _companyInfoRepository.GetAsync(jobPostDto.CompanyId);
+                var recruiterInfo = await _recruiterRepository.GetAsync(jobPostDto.RecruiterId);
+                var designationInfo = await _designationRepository.GetAsync(jobPostDto.DesignationId);
+                var skillInfo = await _skillRepository.GetAsync(jobPostDto.SkillId);
+                var trainLineInfo = await _trainLineRepository.GetAsync(jobPostDto.TrainLineId);
+                var languageInfo = await _languageRepository.GetAsync(jobPostDto.LanguageId);
+                var shiftInfo = await _shiftRepository.GetAsync(jobPostDto.ShiftId);
+                var workTypeinfo = await _workTypeRepository.GetAsync(jobPostDto.WorkTypeId);
+                var employmentTypeInfo = await _employmentTypeRepository.GetAsync(jobPostDto.EmploymentTypeId);
+                var qualificationInfo = await _qualificationRepository.GetAsync(jobPostDto.QualificationId);
+
+                if (companyInfo != null || recruiterInfo != null || designationInfo != null || skillInfo != null || trainLineInfo != null ||
+                    languageInfo != null || shiftInfo != null || workTypeinfo != null || employmentTypeInfo != null || qualificationInfo != null)
+                {
+                    var updatedJobPostData = new GetJobPostDto(
+                        oldJobPostInfo.Id,
+                        companyInfo.CompanyName,
+                        companyInfo.CompanyLogo,
+                        recruiterInfo.RecruiterName,
+                        recruiterInfo.RecruiterPhone,
+                        recruiterInfo.RecruiterEmail,
+                        designationInfo.DesignationName,
+                        skillInfo.SkillName,
+                        trainLineInfo.TrainLineName,
+                        languageInfo.LanguageName,
+                        shiftInfo.ShiftName,
+                        workTypeinfo.WorkTypeName,
+                        employmentTypeInfo.EmploymentTypeName,
+                        qualificationInfo.QualificationName,
+                        oldJobPostInfo.Bond,
+                        oldJobPostInfo.JobDescription,
+                        oldJobPostInfo.MinExperience,
+                        oldJobPostInfo.MaxExperience,
+                        oldJobPostInfo.MinSalary,
+                        oldJobPostInfo.MaxSalary,
+                        oldJobPostInfo.NoticePeriod,
+                        oldJobPostInfo.Vacancy,
+                        oldJobPostInfo.ApplicationStartDate,
+                        oldJobPostInfo.ApplicationEndDate,
+                        oldJobPostInfo.IsActive
+                        );
+                    return updatedJobPostData;
+                }
+                else
+                {
+                    throw new Exception("Invalid User");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<IEnumerable<GetJobPostDto>> GetJobPostByCompanyId(long companyId)
+        public async Task<IEnumerable<GetJobPostDto>> GetJobPostByCompanyId(long companyId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var jobPostInfos = await _jobPostRepository.GetJobPostByUserId(companyId);
+
+                var jobPostInfoDtos = jobPostInfos.Select(jobPost => new GetJobPostDto(
+                    jobPost.Id,
+                    jobPost.CompanyInfo.CompanyName,
+                    jobPost.CompanyInfo.CompanyLogo,
+                    jobPost.Recruiter.RecruiterName,
+                    jobPost.Recruiter.RecruiterPhone,
+                    jobPost.Recruiter.RecruiterEmail,
+                    jobPost.Designation.DesignationName,
+                    jobPost.Skill.SkillName,
+                    jobPost.TrainLine.TrainLineName,
+                    jobPost.Language.LanguageName,
+                    jobPost.Shift.ShiftName,
+                    jobPost.WorkType.WorkTypeName,
+                    jobPost.EmploymentType.EmploymentTypeName,
+                    jobPost.Qualification.QualificationName,
+                    jobPost.Bond,
+                    jobPost.JobDescription,
+                    jobPost.MinExperience,
+                    jobPost.MaxExperience,
+                    jobPost.MinSalary,
+                    jobPost.MaxSalary,
+                    jobPost.NoticePeriod,
+                    jobPost.Vacancy,
+                    jobPost.ApplicationStartDate,
+                    jobPost.ApplicationEndDate,
+                    jobPost.IsActive
+                ));
+
+                return jobPostInfoDtos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 

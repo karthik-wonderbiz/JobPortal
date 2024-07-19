@@ -31,8 +31,4 @@
     <ProjectReference Include="..\JobPortal.Services\JobPortal.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Company\" />
-  </ItemGroup>
-
 </Project>

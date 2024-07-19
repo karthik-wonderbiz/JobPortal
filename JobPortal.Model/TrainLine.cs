@@ -23,6 +23,6 @@ namespace JobPortal.Model
 
         public bool IsActive { get; set; } = true;
         public ICollection<LocationInfo> LocationInfos { get; set; }
-        public ICollection<JobPost> JobPosts { get; set; }
+        /*public ICollection<JobPost> JobPosts { get; set; }*/
     }
 }
