@@ -12,7 +12,6 @@ namespace JobPortal.Model
 {
     [Table("Users")]
     [Index(nameof(Email), IsUnique = true)]
-    [Index(nameof(Password), IsUnique = true)]
     public class User : BaseEntity
     {
         [Required(ErrorMessage = "Email is required")]

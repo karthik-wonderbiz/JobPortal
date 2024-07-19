@@ -4,6 +4,7 @@ using JobPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.API.Migrations
 {
     [DbContext(typeof(JobPortalDbContext))]
-    partial class JobPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240719034316_AddedLocationInfoTable")]
+    partial class AddedLocationInfoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,7 +328,7 @@ namespace JobPortal.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LocationInfo");
+                    b.ToTable("locationInfos");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Employee.SkillInfo", b =>
