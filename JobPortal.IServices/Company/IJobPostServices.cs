@@ -1,4 +1,4 @@
-﻿using JobPortal.Data;
+﻿
 using JobPortal.DTO.Company;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,6 @@ namespace JobPortal.IServices.Company
         public Task<GetJobPostDto> CreateJobPostAsync(CreateJobPostDto JobPostDto);
         public Task<GetJobPostDto> UpdateJobPostAsync(long id, UpdateJobPostDto JobPostDto);
         public Task<bool> DeleteJobPostAsync(long id);
-        public Task<IEnumerable<GetJobPostDto>> GetJobPostByUserId(long UserId);
+        public Task<IEnumerable<GetJobPostDto>> GetJobPostByCompanyId(long companyId);
     }
 }

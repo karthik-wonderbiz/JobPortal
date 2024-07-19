@@ -1,7 +1,7 @@
-﻿using JobPortal.Data;
+﻿
+using JobPortal.Data;
 using JobPortal.IRepository.Employee;
 using JobPortal.Model;
-using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

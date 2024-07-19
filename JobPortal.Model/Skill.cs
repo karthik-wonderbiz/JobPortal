@@ -1,4 +1,5 @@
-﻿using JobPortal.Model.Employee;
+﻿using JobPortal.Model.Company;
+using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace JobPortal.Model
         public bool IsActive { get; set; } = true;
 
         public ICollection<SkillInfo> SkillInfos { get; set; }
+
+        public ICollection<JobPost> JobPosts { get; set; }
     }
 }

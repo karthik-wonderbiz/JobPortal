@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
 namespace JobPortal.Model.Company
 {
     [Table("JobPosts")]
-    public class JobPost
+    public class JobPost : BaseEntity
     {
         [Required(ErrorMessage = "CompanyId is required")]
         [ForeignKey("Companies")]

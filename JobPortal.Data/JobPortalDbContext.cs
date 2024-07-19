@@ -48,6 +48,6 @@ namespace JobPortal.Data
 
         public DbSet<PersonalInfo> personalInfos { get; set; }
 
-
+        public DbSet<JobPost> jobPosts { get; set; }
     }
 }
