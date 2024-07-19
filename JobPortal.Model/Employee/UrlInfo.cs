@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model.Employee
 {
-    public class UrlInfo
+    public class UrlInfo : BaseEntity
     {
         public virtual User User { get; set; }
         [ForeignKey("Users"), Required(ErrorMessage = "User Id is Required")]
