@@ -185,7 +185,7 @@ namespace JobPortal.Services.Employee
                 var oldeducation = await _educationRepository.GetAsync(id);
                 if (oldeducation == null)
                 {
-                    throw new Exception($"Skill not found for id : {id}");
+                    throw new Exception($"Education Details not found for id : {id}");
                 }
 
                 oldeducation.UserId = updateEducationDto.UserId;
