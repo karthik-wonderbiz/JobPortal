@@ -27,6 +27,7 @@ namespace JobPortal.Repository.Company
                     .Include(li => li.User)
                     .FirstOrDefaultAsync(li => li.UserId == UserId);
                 return company;
+
             }
             catch (Exception ex)
             {
