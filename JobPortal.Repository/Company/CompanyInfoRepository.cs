@@ -1,4 +1,4 @@
-﻿using JobPortal.Data;
+using JobPortal.Data;
 using JobPortal.IRepository;
 using JobPortal.IRepository.Company;
 using JobPortal.Model.Company;

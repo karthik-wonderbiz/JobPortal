@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model.Employee
 {
+    [Table("LocationInfo")]
     public class LocationInfo : BaseEntity
     {
         public virtual User User { get; set; }
