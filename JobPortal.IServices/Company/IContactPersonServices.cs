@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Company.CompanyInfoDto;
 
 namespace JobPortal.IServices.Company
 {
@@ -15,5 +16,6 @@ namespace JobPortal.IServices.Company
         public Task<GetContactPersonDto> CreateContactPersonAsync(CreateContactPersonDto contactPersonDto);
         public Task<GetContactPersonDto> UpdateContactPersonAsync(long id, UpdateContactPersonDto contactPersonDto);
         public Task<bool> DeleteContactPersonAsync(long id);
+        public Task<GetContactPersonDto> GetContactPersonByCompanyIdAsync(long companyId);
     }
 }
