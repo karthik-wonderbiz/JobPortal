@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model
 {
-    [Table("TrainInfos")]
-    [Index(nameof(TrainInfoName), IsUnique = true)]
-    public class TrainInfo : BaseEntity
+    [Table("TrainLines")]
+    [Index(nameof(TrainLineName), IsUnique = true)]
+    public class TrainLine : BaseEntity
     {
-        [Required(ErrorMessage ="Train Info Name is required.")]
+        [Required(ErrorMessage ="Train Line Name is required.")]
         [StringLength(100)]
-        public string TrainInfoName { get; set; } = string.Empty;
+        public string TrainLineName { get; set; } = string.Empty;
 
-        public string TrainInfoCode { get; set; } = string.Empty;
+        public string TrainLineCode { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
         public ICollection<LocationInfo> LocationInfos { get; set; }

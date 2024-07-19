@@ -9,6 +9,6 @@ namespace JobPortal.IRepository.Company
 {
     public interface ICompanyInfoRepository : IRepository<CompanyInfo>
     {
-        Task<IEnumerable<CompanyInfo>> GetCompanyInfoByUserId(long userId);
+        Task<CompanyInfo> GetCompanyInfoByUserId(long userId);
     }
 }

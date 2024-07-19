@@ -2,9 +2,11 @@
 using JobPortal.IServices;
 using JobPortal.IServices.Employee;
 using JobPortal.Model;
+using JobPortal.Services.Employee;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Employee.SkillInfoDto;
 
 namespace JobPortal.API.Controllers
 {
@@ -91,6 +93,22 @@ namespace JobPortal.API.Controllers
             catch (Exception ex)
             {
                 return NotFound(ex.Message);
+            }
+        }
+
+        // GET api/<SkillInfoController>/5
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<GetSkillInfoDto>>> GetByUserId(long userId)
+        {
+            try
+            {
+                var publication = await _publicationServices.GetPublicationByUserId(userId);
+
+                return Ok(publication);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
     }

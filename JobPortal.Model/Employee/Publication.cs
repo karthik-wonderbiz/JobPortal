@@ -13,6 +13,12 @@ namespace JobPortal.Model
     [Table("Publications")]
     public class Publication : BaseEntity
     {
+        [Required(ErrorMessage = "UserId is required")]
+        [ForeignKey("Users")]
+        public long UserId { get; set; }
+
+        public virtual User User { get; set; }
+
         [Required(ErrorMessage = "Publication Title is required")]
         [StringLength(100)]
         public string PublicationTitle { get; set; } = string.Empty;
@@ -33,11 +39,5 @@ namespace JobPortal.Model
         public string Description { get; set; } = string.Empty; 
 
         public bool IsActive { get; set; } = true;
-
-        [Required(ErrorMessage = "UserId is required")]
-        [ForeignKey("Users")]
-        public long UserId { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

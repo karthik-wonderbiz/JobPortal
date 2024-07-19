@@ -1,4 +1,5 @@
 ﻿using JobPortal.Model;
+using JobPortal.Model.Employee;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace JobPortal.IRepository.Employee
 {
     public interface IPublicationRepository : IRepository<Publication>
     {
+        Task<IEnumerable<Publication>> GetByUserId(long UserId);
     }
 }

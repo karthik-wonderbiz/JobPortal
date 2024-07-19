@@ -1,6 +1,5 @@
 ﻿using JobPortal.Data;
 using JobPortal.IRepository.Employee;
-using JobPortal.Model;
 using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Repository.Employee
 {
-    public class PublicationRepository : Repository<Publication>, IPublicationRepository
+    public class EducationRepository : Repository<Education>, IEducationRepository
     {
         private readonly JobPortalDbContext _dbcontext;
-
-        public PublicationRepository(JobPortalDbContext dbcontext) : base(dbcontext)
+        public EducationRepository(JobPortalDbContext dbcontext) : base(dbcontext)
         {
             _dbcontext = dbcontext;
         }
 
-        public async Task<IEnumerable<Publication>> GetByUserId(long UserId)
+        public async Task<IEnumerable<Education>> GetEducationByUserId(long userId)
         {
             try
             {
-                var publications = await _dbcontext.publications
+                var education = await _dbcontext.educations
                     .Include(li => li.User)
-                    .Where(li => li.UserId == UserId)
+                    .Include(li => li.Qualification)
+                    .Where(li => li.UserId == userId)
                     .ToListAsync();
 
-                return publications;
+                return education;
             }
             catch (Exception)
             {
@@ -37,15 +36,16 @@ namespace JobPortal.Repository.Employee
             }
         }
 
-        public async Task<IEnumerable<Publication>> GetAllAsync()
+        public async Task<IEnumerable<Education>> GetAllAsync()
         {
             try
             {
-                var publications = await _dbcontext.publications
+                var education = await _dbcontext.educations
                     .Include(li => li.User)
+                    .Include(li => li.Qualification)
                     .ToListAsync();
 
-                return publications;
+                return education;
             }
             catch (Exception)
             {
@@ -53,15 +53,16 @@ namespace JobPortal.Repository.Employee
             }
         }
 
-        public async Task<Publication> GetAsync(long id)
+        public async Task<Education> GetAsync(long id)
         {
             try
             {
-                var publication = await _dbcontext.publications
+                var education = await _dbcontext.educations
                     .Include(li => li.User)
-                    .FirstOrDefaultAsync(li => li.Id == id);
+                    .Include(li => li.Qualification)
+                    .FirstOrDefaultAsync(li => li.Id == id); ;
 
-                return publication;
+                return education;
             }
             catch (Exception)
             {
