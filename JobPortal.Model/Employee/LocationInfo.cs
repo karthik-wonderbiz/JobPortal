@@ -27,9 +27,9 @@ namespace JobPortal.Model.Employee
         [ForeignKey("Countries"), Required(ErrorMessage = "Country Id is Required")]
         public long CountryId { get; set; }
 
-        public virtual TrainInfo TrainInfo { get; set; }
-        [ForeignKey("TrainInfo"), Required(ErrorMessage = "Train Line Id is Required")]
-        public long TrainInfoId { get; set; }
+        public virtual TrainLine TrainLine { get; set; }
+        [ForeignKey("TrainLines"), Required(ErrorMessage = "Train Line Id is Required")]
+        public long TrainLineId { get; set; }
 
         [Required(ErrorMessage = "Address Line 1 is Required")]
         public string AddressLine1 { get; set; } = string.Empty;

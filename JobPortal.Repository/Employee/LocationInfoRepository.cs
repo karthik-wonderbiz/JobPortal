@@ -28,7 +28,7 @@ namespace JobPortal.Repository.Employee
                     .Include(li => li.City)
                     .Include(li => li.State)
                     .Include(li => li.Country)
-                    .Include(li => li.TrainInfo)
+                    .Include(li => li.TrainLine)
                     .Where(li => li.UserId == userId)
                     .ToListAsync();
 
@@ -49,7 +49,7 @@ namespace JobPortal.Repository.Employee
                     .Include(li => li.City)
                     .Include(li => li.State)
                     .Include(li => li.Country)
-                    .Include(li => li.TrainInfo)
+                    .Include(li => li.TrainLine)
                     .ToListAsync();
 
                 return locationInfos;
@@ -69,7 +69,7 @@ namespace JobPortal.Repository.Employee
                     .Include(li => li.City)
                     .Include(li => li.State)
                     .Include(li => li.Country)
-                    .Include(li => li.TrainInfo)
+                    .Include(li => li.TrainLine)
                     .FirstOrDefaultAsync(li => li.Id == id); ;
 
                 return locationInfo;
