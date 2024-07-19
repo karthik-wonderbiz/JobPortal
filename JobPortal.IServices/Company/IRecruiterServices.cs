@@ -15,5 +15,6 @@ namespace JobPortal.IServices.Company
         public Task<GetRecruiterDto> CreateRecruiterAsync(CreateRecruiterDto recruiterDto);
         public Task<GetRecruiterDto> UpdateRecruiterAsync(long id, UpdateRecruiterDto recruiterDto);
         public Task<bool> DeleteRecruiterAsync(long id);
+        public Task<IEnumerable<GetRecruiterDto>> GetRecruiterByCompanyId(long companyId);
     }
 }
