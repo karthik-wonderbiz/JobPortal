@@ -1,4 +1,5 @@
 ﻿using JobPortal.Model;
+using JobPortal.Model.Company;
 using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +33,8 @@ namespace JobPortal.Data
         public DbSet<SkillInfo> skillInfos { get; set; }
         public DbSet<LanguageInfo> languageInfos { get; set; }
         public DbSet<Publication> publications { get; set; }
+        public DbSet<CompanyInfo> companyInfos { get; set; }
+        public DbSet<LocationInfo> locationInfos { get; set; }
 
     }
 }
