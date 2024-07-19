@@ -46,17 +46,8 @@ namespace JobPortal.Services.Company
                     UpdatedAt = DateTime.Now,
                 });
 
-                var createdCompanyInfo = new GetCompanyInfoDto(companyInfo.Id, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours);
+                var createdCompanyInfo = new GetCompanyInfoDto(companyInfo.Id,companyInfo.UserId, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours);
                 return createdCompanyInfo;
-            }
-            catch (DbUpdateException ex)
-            {
-                if (ex.InnerException?.Message.Contains("Cannot insert duplicate key row") == true ||
-                    ex.InnerException?.Message.Contains("UNIQUE constraint failed") == true)
-                {
-                    throw new Exception("This company already exists.");
-                }
-                throw;
             }
             catch (Exception)
             {
@@ -71,7 +62,7 @@ namespace JobPortal.Services.Company
                 var companies = await _companyInfoRepository.GetAllAsync();
 
                 var companyInfoDtos = companies.Select(companyInfo => new GetCompanyInfoDto(
-                    companyInfo.Id, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours
+                    companyInfo.Id, companyInfo.UserId, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours
                 ));
 
                 return companyInfoDtos;
@@ -92,7 +83,7 @@ namespace JobPortal.Services.Company
                     throw new Exception($"Company not found for id : {id}");
                 }
 
-                var companyInfoDto = new GetCompanyInfoDto(companyInfo.Id, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours);
+                var companyInfoDto = new GetCompanyInfoDto(companyInfo.Id, companyInfo.UserId, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours);
                 return companyInfoDto;
             }
             catch (Exception)
@@ -101,15 +92,15 @@ namespace JobPortal.Services.Company
             }
         }
 
-        public async Task<IEnumerable<GetCompanyInfoDto>> GetCompanyInfoByUserIdAsync(long userId)
+        public async Task<GetCompanyInfoDto> GetCompanyInfoByUserIdAsync(long userId)
         {
             try
             {
                 var companies = await _companyInfoRepository.GetCompanyInfoByUserId(userId);
 
-                var companyInfoDto = companies.Select(companyInfo => new GetCompanyInfoDto(
-                    companyInfo.Id, companyInfo.CompanyDescription, companyInfo.CompanyName, companyInfo.CompanyPhone, companyInfo.CompanyEmail, companyInfo.CompanyLogo, companyInfo.CompanyWebsite, companyInfo.CompanyDomain, companyInfo.WorkingDays, companyInfo.OpenHours
-                ));
+                var companyInfoDto =  new GetCompanyInfoDto(
+                    companies.Id, companies.UserId, companies.CompanyDescription, companies.CompanyName, companies.CompanyPhone, companies.CompanyEmail, companies.CompanyLogo, companies.CompanyWebsite, companies.CompanyDomain, companies.WorkingDays, companies.OpenHours
+                );
 
                 return companyInfoDto;
             }
@@ -143,7 +134,7 @@ namespace JobPortal.Services.Company
 
                 await _companyInfoRepository.UpdateAsync(oldCompanyInfo);
 
-                var updatedCompanyInfo = new GetCompanyInfoDto(oldCompanyInfo.Id, oldCompanyInfo.CompanyDescription, oldCompanyInfo.CompanyName, oldCompanyInfo.CompanyPhone, oldCompanyInfo.CompanyEmail, oldCompanyInfo.CompanyLogo, oldCompanyInfo.CompanyWebsite, oldCompanyInfo.CompanyDomain, oldCompanyInfo.WorkingDays, oldCompanyInfo.OpenHours);
+                var updatedCompanyInfo = new GetCompanyInfoDto(oldCompanyInfo.Id, oldCompanyInfo.UserId, oldCompanyInfo.CompanyDescription, oldCompanyInfo.CompanyName, oldCompanyInfo.CompanyPhone, oldCompanyInfo.CompanyEmail, oldCompanyInfo.CompanyLogo, oldCompanyInfo.CompanyWebsite, oldCompanyInfo.CompanyDomain, oldCompanyInfo.WorkingDays, oldCompanyInfo.OpenHours);
                 return updatedCompanyInfo;
             }
             catch (DbUpdateException ex)

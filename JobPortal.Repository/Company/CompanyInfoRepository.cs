@@ -19,15 +19,14 @@ namespace JobPortal.Repository.Company
         {
             _dbcontext = dbcontext;
         }
-        public async Task<IEnumerable<CompanyInfo>> GetCompanyInfoByUserId(long userId)
+        public async Task<CompanyInfo> GetCompanyInfoByUserId(long UserId)
         {
             try
             {
-                var companies = await _dbcontext.companyInfo
+                var company = await _dbcontext.companies
                     .Include(li => li.User)
-                    .Include(li => li.Company)
-                    .ToListAsync();
-                return companies;
+                    .FirstOrDefaultAsync(li => li.UserId == UserId);
+                return company;
             }
             catch (Exception ex)
             {
