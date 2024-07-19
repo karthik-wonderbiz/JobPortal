@@ -44,6 +44,7 @@ namespace JobPortal.DTO.Company
         public record GetCompanyInfoDto
             (
             long Id,
+            long UserId,
             string CompanyDescription,
             string CompanyName,
             long CompanyPhone,

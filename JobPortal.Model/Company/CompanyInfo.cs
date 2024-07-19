@@ -17,7 +17,7 @@ namespace JobPortal.Model.Company
     {
         [ForeignKey("Users"), Required(ErrorMessage = "User Id is required!")]
         public long UserId { get; set; }
-        public virtual User User { get; set; } = new User();
+        public virtual User User { get; set; }
         public string CompanyLogo { get; set; } = string.Empty;
         [Required(ErrorMessage = "Company Description is required!")]
         [StringLength(100)]
