@@ -40,9 +40,14 @@ namespace JobPortal.Data
         public DbSet<CertificationInfo> certificationInfos { get; set; }
         public DbSet<UrlInfo> urlInfos { get; set; }
         public DbSet<Project> projects { get; set; }
+
+        public DbSet<Recruiter> recruiters { get; set; }
+        public DbSet<ContactPerson> contactPersons { get; set; }
+        public DbSet<JobPost> jobPosts { get; set; }
+        public DbSet<ApplyInfo> applyInfos { get; set; }
+
         public DbSet<PersonalInfo> personalInfos { get; set; }
 
         public DbSet<JobPost> jobPosts { get; set; }
-
     }
 }

@@ -85,8 +85,24 @@ builder.Services.AddScoped<IProjectServices, ProjectServices>();
 builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
 builder.Services.AddScoped<ICompanyInfoServices, CompanyInfoServices>();
 
+
+builder.Services.AddScoped<IRecruiterRepository, RecruiterRepository>();
+builder.Services.AddScoped<IRecruiterServices, RecruiterServices>();
+
+builder.Services.AddScoped<IContactPersonRepository, ContactPersonRepository>();
+builder.Services.AddScoped<IContactPersonServices, ContactPersonServices>();
+
 builder.Services.AddScoped<IWorkExperienceInfoRepository, WorkExperienceInfoRepository>();
 builder.Services.AddScoped<IWorkExperienceInfoServices, WorkExperienceInfoServices>();
+
+builder.Services.AddScoped<ICertificationInfoRepository, CertificationInfoRepository>();
+builder.Services.AddScoped<ICertificationInfoServices, CertificationInfoServices>();
+
+builder.Services.AddScoped<IPersonalInfoRepository, PersonalInfoRepository>();
+builder.Services.AddScoped<IPersonalInfoServices, PersonalInfoServices>();
+
+builder.Services.AddScoped<IUrlInfoRepository, UrlInfoRepository>();
+builder.Services.AddScoped<IUrlInfoServices, UrlInfoServices>();
 
 builder.Services.AddControllers();
 

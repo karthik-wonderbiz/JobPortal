@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.Model.Employee
 {
+    [Table("CertificationInfos")]
     public class CertificationInfo : BaseEntity
     {
         public virtual User User { get; set; }

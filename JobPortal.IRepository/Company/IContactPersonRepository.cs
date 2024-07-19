@@ -9,5 +9,6 @@ namespace JobPortal.IRepository.Company
 {
     public interface IContactPersonRepository : IRepository<ContactPerson>
     {
+        Task<ContactPerson> GetContactPersonByCompanyId(long companyId);
     }
 }

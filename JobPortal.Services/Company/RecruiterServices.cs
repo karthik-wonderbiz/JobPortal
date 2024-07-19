@@ -4,12 +4,14 @@ using JobPortal.IRepository.Company;
 using JobPortal.IServices.Company;
 using JobPortal.Model;
 using JobPortal.Model.Company;
+using JobPortal.Model.Employee;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Company.RecruiterDto;
 
 namespace JobPortal.Services.Company
 {
@@ -37,6 +39,12 @@ namespace JobPortal.Services.Company
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 });
+                var companyInfo = await _companyInfoRepository.GetAsync(recruiter.CompanyId);
+
+                if (companyInfo == null)
+                {
+                    throw new Exception("Invalid Company");
+                }
 
                 var res = new GetRecruiterDto(recruiter.Id, recruiter.RecruiterName, recruiter.RecruiterPhone, recruiter.RecruiterEmail);
                 return res;
@@ -96,6 +104,27 @@ namespace JobPortal.Services.Company
             }
         }
 
+        public async Task<IEnumerable<GetRecruiterDto>> GetRecruiterByCompanyId(long companyId)
+        {
+            try
+            {
+                var recruiters = await _recruiterRepository.GetRecruiterByCompanyId(companyId);
+
+                var recruiterDtos = recruiters.Select(recruiters => new GetRecruiterDto(
+                    recruiters.Id,
+                    recruiters.RecruiterName, 
+                    recruiters.RecruiterPhone,
+                    recruiters.RecruiterEmail
+                ));
+
+                return recruiterDtos.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<GetRecruiterDto> GetRecruiterByIdAsync(long id)
         {
             try
@@ -131,6 +160,13 @@ namespace JobPortal.Services.Company
                 oldRecruiter.UpdatedAt = DateTime.Now;
 
                 await _recruiterRepository.UpdateAsync(oldRecruiter);
+
+                var companyInfo = await _companyInfoRepository.GetAsync(oldRecruiter.CompanyId);
+
+                if (companyInfo == null)
+                {
+                    throw new Exception("Invalid Company");
+                }
 
                 var res = new GetRecruiterDto(oldRecruiter.Id, oldRecruiter.RecruiterName, oldRecruiter.RecruiterPhone, oldRecruiter.RecruiterEmail);
                 return res;
