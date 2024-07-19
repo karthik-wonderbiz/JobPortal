@@ -13,7 +13,7 @@ namespace JobPortal.Model.Company
     [Table("ContactPersons")]
     [Index(nameof(ContactPersonEmail), IsUnique = true)]
     [Index(nameof(ContactPersonPhone), IsUnique = true)]
-    public class ContactPersonInfo : BaseEntity
+    public class ContactPerson : BaseEntity
     {
         [ForeignKey("Companies"), Required(ErrorMessage = "Company Id is required!")]
         public long CompanyId { get; set; }
