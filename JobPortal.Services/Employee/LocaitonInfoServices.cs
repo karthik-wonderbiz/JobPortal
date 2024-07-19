@@ -21,17 +21,17 @@ namespace JobPortal.Services.Employee
         private readonly ICityRepository _cityRepository;
         private readonly IStateRepository _stateRepository;
         private readonly ICountryRepository _countryRepository;
-        private readonly ITrainInfoRepository _trainInfoRepository;
+        private readonly ITrainLineRepository _trainLineRepository;
 
         public LocationInfoServices(ILocationInfoRepository locationInfoRepository, IUserRepository userRepository, ICityRepository cityRepository, IStateRepository stateRepository,
         ICountryRepository countryRepository,
-        ITrainInfoRepository trainInfoRepository)
+        ITrainLineRepository trainLineRepository)
         {
             _locationInfoRepository = locationInfoRepository;
             _cityRepository = cityRepository;
             _stateRepository = stateRepository;
             _countryRepository = countryRepository;
-            _trainInfoRepository = trainInfoRepository;
+            _trainLineRepository = trainLineRepository;
             _userRepository = userRepository;
         }
 
@@ -45,7 +45,7 @@ namespace JobPortal.Services.Employee
                     CityId = createLocationInfoDto.CityId,
                     StateId = createLocationInfoDto.StateId,
                     CountryId = createLocationInfoDto.CountryId,
-                    TrainInfoId = createLocationInfoDto.TrainInfoId,
+                    TrainLineId = createLocationInfoDto.TrainLineId,
                     AddressLine1 = createLocationInfoDto.AddressLine1,
                     AddressLine2 = createLocationInfoDto.AddressLine2,
                     ZipCode = createLocationInfoDto.ZipCode,
@@ -57,7 +57,7 @@ namespace JobPortal.Services.Employee
                 var city = await _cityRepository.GetAsync(locationInfo.CityId);
                 var state = await _stateRepository.GetAsync(locationInfo.StateId);
                 var country = await _countryRepository.GetAsync(locationInfo.CountryId);
-                var trainInfo = await _trainInfoRepository.GetAsync(locationInfo.TrainInfoId);
+                var trainLine = await _trainLineRepository.GetAsync(locationInfo.TrainLineId);
 
                 if (city != null && user != null)
                 {
@@ -68,7 +68,7 @@ namespace JobPortal.Services.Employee
                         city.CityName,
                         state.StateName,
                         country.CountryName,
-                        trainInfo.TrainInfoName,
+                        trainLine.TrainLineName,
                         locationInfo.AddressLine1,
                         locationInfo.AddressLine2,
                         locationInfo.ZipCode
@@ -104,7 +104,7 @@ namespace JobPortal.Services.Employee
                     locationInfo.City.CityName,
                     locationInfo.State.StateName,
                     locationInfo.Country.CountryName,
-                    locationInfo.TrainInfo.TrainInfoName,
+                    locationInfo.TrainLine.TrainLineName,
                     locationInfo.AddressLine1,
                     locationInfo.AddressLine2,
                     locationInfo.ZipCode
@@ -131,7 +131,7 @@ namespace JobPortal.Services.Employee
                     locationInfo.City.CityName,
                     locationInfo.State.StateName,
                     locationInfo.Country.CountryName,
-                    locationInfo.TrainInfo.TrainInfoName,
+                    locationInfo.TrainLine.TrainLineName,
                     locationInfo.AddressLine1,
                     locationInfo.AddressLine2,
                     locationInfo.ZipCode
@@ -157,7 +157,7 @@ namespace JobPortal.Services.Employee
                     locationInfo.City.CityName,
                     locationInfo.State.StateName,
                     locationInfo.Country.CountryName,
-                    locationInfo.TrainInfo.TrainInfoName,
+                    locationInfo.TrainLine.TrainLineName,
                     locationInfo.AddressLine1,
                     locationInfo.AddressLine2,
                     locationInfo.ZipCode
@@ -185,7 +185,7 @@ namespace JobPortal.Services.Employee
                 oldLocationInfo.CityId = updateLocationInfoDto.CityId;
                 oldLocationInfo.StateId = updateLocationInfoDto.StateId;
                 oldLocationInfo.CountryId = updateLocationInfoDto.CountryId;
-                oldLocationInfo.TrainInfoId = updateLocationInfoDto.TrainInfoId;
+                oldLocationInfo.TrainLineId = updateLocationInfoDto.TrainLineId;
                 oldLocationInfo.AddressLine1 = updateLocationInfoDto.AddressLine1;
                 oldLocationInfo.AddressLine2 = updateLocationInfoDto.AddressLine2;
                 oldLocationInfo.ZipCode = updateLocationInfoDto.ZipCode;
@@ -197,7 +197,7 @@ namespace JobPortal.Services.Employee
                 var city = await _cityRepository.GetAsync(oldLocationInfo.CityId);
                 var state = await _stateRepository.GetAsync(oldLocationInfo.StateId);
                 var country = await _countryRepository.GetAsync(oldLocationInfo.CountryId);
-                var trainInfo = await _trainInfoRepository.GetAsync(oldLocationInfo.TrainInfoId);
+                var trainLine = await _trainLineRepository.GetAsync(oldLocationInfo.TrainLineId);
 
                 if (city != null && user != null)
                 {
@@ -208,7 +208,7 @@ namespace JobPortal.Services.Employee
                         city.CityName,
                         state.StateName,
                         country.CountryName,
-                        trainInfo.TrainInfoName,
+                        trainLine.TrainLineName,
                         oldLocationInfo.AddressLine1,
                         oldLocationInfo.AddressLine2,
                         oldLocationInfo.ZipCode

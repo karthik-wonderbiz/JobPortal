@@ -42,8 +42,8 @@ builder.Services.AddScoped<IWorkTypeServices, WorkTypeServices>();
 builder.Services.AddScoped<IEmploymentTypeRepository, EmploymentTypeRepository>();
 builder.Services.AddScoped<IEmploymentTypeServices, EmploymentTypeServices>();
 
-builder.Services.AddScoped<ITrainInfoRepository, TrainInfoRepository>();
-builder.Services.AddScoped<ITrainInfoServices, TrainInfoServices>();
+builder.Services.AddScoped<ITrainLineRepository, TrainLineRepository>();
+builder.Services.AddScoped<ITrainLineServices, TrainLineServices>();
 
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<ICityServices, CityServices>();

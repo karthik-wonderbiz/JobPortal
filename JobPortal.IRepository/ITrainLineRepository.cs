@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JobPortal.IRepository
 {
-    public interface ITrainInfoRepository : IRepository<TrainInfo>
+    public interface ITrainLineRepository : IRepository<TrainLine>
     {
     }
 }

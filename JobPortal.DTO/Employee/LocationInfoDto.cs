@@ -14,7 +14,7 @@ namespace JobPortal.DTO.Employee
             [Required] long CityId,
             [Required] long StateId,
             [Required] long CountryId,
-            [Required] long TrainInfoId,
+            [Required] long TrainLineId,
             [Required] string AddressLine1,
             string AddressLine2,
             long ZipCode
@@ -25,7 +25,7 @@ namespace JobPortal.DTO.Employee
             string City,
             string State,
             string Country,
-            string TrainInfo,
+            string TrainLine,
             string AddressLine1,
             string AddressLine2,
             long ZipCode
@@ -36,7 +36,7 @@ namespace JobPortal.DTO.Employee
             long CityId,
             long StateId,
             long CountryId,
-            long TrainInfoId,
+            long TrainLineId,
             string AddressLine1,
             string AddressLine2,
             long ZipCode
