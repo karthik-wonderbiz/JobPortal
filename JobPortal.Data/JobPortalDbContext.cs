@@ -39,6 +39,7 @@ namespace JobPortal.Data
         public DbSet<WorkExperienceInfo> workExperienceInfos { get; set; }
         public DbSet<CertificationInfo> certificationInfos { get; set; }
         public DbSet<UrlInfo> urlInfos { get; set; }
+        public DbSet<Project> projects { get; set; }
 
     }
 }

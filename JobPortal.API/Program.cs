@@ -79,6 +79,9 @@ builder.Services.AddScoped<IQualificationServices, QualificationServices>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
 builder.Services.AddScoped<IEducationServices, EducationServices>();
 
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProjectServices, ProjectServices>();
+
 builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
 builder.Services.AddScoped<ICompanyInfoServices, CompanyInfoServices>();
 
