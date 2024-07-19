@@ -37,6 +37,7 @@ namespace JobPortal.Data
         public DbSet<LocationInfo> locationInfos { get; set; }
         public DbSet<Education> educations { get; set; }
         public DbSet<Project> projects { get; set; }
+        public DbSet<PersonalInfo> personalInfos { get; set; }
 
     }
 }
