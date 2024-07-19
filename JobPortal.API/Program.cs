@@ -101,6 +101,9 @@ builder.Services.AddScoped<ICertificationInfoServices, CertificationInfoServices
 builder.Services.AddScoped<IPersonalInfoRepository, PersonalInfoRepository>();
 builder.Services.AddScoped<IPersonalInfoServices, PersonalInfoServices>();
 
+builder.Services.AddScoped<IUrlInfoRepository, UrlInfoRepository>();
+builder.Services.AddScoped<IUrlInfoServices, UrlInfoServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

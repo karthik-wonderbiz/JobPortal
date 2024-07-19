@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace JobPortal.DTO.Employee
 {
-    public class SkillInfoDto
+    public class UrlInfoDto
     {
-        public record CreateSkillInfoDto(
+        public record CreateUrlInfoDto(
             [Required] long UserId,
-            [Required] long SkillId,
-            [Required] int SkillExperience
+            [Required] long UrlNameId,
+            [Required] string UrlValue
         );
-        public record GetSkillInfoDto(
+        public record GetUrlInfoDto(
             long Id,
             string Email,
-            string SkillName,
-            int SkillExperience
+            string UrlName,
+            string UrlValue
         );
-        public record UpdateSkillInfoDto(
+        public record UpdateUrlInfoDto(
             long Id,
             long UserId,
-            long SkillId,
-            int SkillExperience
+            long UrlNameId,
+            string UrlValue
         );
     }
 }
