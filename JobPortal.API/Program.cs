@@ -85,6 +85,9 @@ builder.Services.AddScoped<IProjectServices, ProjectServices>();
 builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
 builder.Services.AddScoped<ICompanyInfoServices, CompanyInfoServices>();
 
+builder.Services.AddScoped<IWorkExperienceInfoRepository, WorkExperienceInfoRepository>();
+builder.Services.AddScoped<IWorkExperienceInfoServices, WorkExperienceInfoServices>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

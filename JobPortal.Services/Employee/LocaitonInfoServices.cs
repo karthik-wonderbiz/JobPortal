@@ -23,9 +23,14 @@ namespace JobPortal.Services.Employee
         private readonly ICountryRepository _countryRepository;
         private readonly ITrainLineRepository _trainLineRepository;
 
-        public LocationInfoServices(ILocationInfoRepository locationInfoRepository, IUserRepository userRepository, ICityRepository cityRepository, IStateRepository stateRepository,
-        ICountryRepository countryRepository,
-        ITrainLineRepository trainLineRepository)
+        public LocationInfoServices(
+            ILocationInfoRepository locationInfoRepository, 
+            IUserRepository userRepository, 
+            ICityRepository cityRepository, 
+            IStateRepository stateRepository, 
+            ICountryRepository countryRepository, 
+            ITrainLineRepository trainLineRepository
+            )
         {
             _locationInfoRepository = locationInfoRepository;
             _cityRepository = cityRepository;
