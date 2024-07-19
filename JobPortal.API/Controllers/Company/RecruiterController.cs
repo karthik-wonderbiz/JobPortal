@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static JobPortal.DTO.Employee.ProjectDto;
 
 namespace JobPortal.API.Controllers.Company
 {
@@ -44,6 +45,21 @@ namespace JobPortal.API.Controllers.Company
             {
                 var res = await _recruiterServices.GetRecruiterByIdAsync(id);
                 return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET api/<RecruiterController>/user/1
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<GetRecruiterDto>>> GetRecruiterByCompanyId(long userId)
+        {
+            try
+            {
+                var recruiters = await _recruiterServices.GetRecruiterByCompanyId(userId);
+                return Ok(recruiters);
             }
             catch (Exception ex)
             {

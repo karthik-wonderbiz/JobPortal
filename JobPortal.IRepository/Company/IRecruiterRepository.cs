@@ -9,5 +9,6 @@ namespace JobPortal.IRepository.Company
 {
     public interface IRecruiterRepository : IRepository<Recruiter>
     {
+        Task<IEnumerable<Recruiter>> GetRecruiterByCompanyId(long companyId);
     }
 }
