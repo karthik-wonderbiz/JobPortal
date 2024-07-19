@@ -15,6 +15,6 @@ namespace JobPortal.IServices.Company
         Task<GetCompanyInfoDto> CreateCompanyInfoAsync(CreateCompanyInfoDto companyInfoDto);
         Task<GetCompanyInfoDto> UpdateCompanyInfoAsync(long id, UpdateCompanyInfoDto companyInfoDto);
         Task<bool> DeleteCompanyInfoAsync(long id);
-        Task<IEnumerable<GetCompanyInfoDto>> GetCompanyInfoByUserIdAsync(long userId);
+        Task<GetCompanyInfoDto> GetCompanyInfoByUserIdAsync(long userId);
     }
 }

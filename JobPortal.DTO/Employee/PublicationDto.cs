@@ -34,7 +34,7 @@ namespace JobPortal.Data
         string PublisherName,
         DateTime PublishDate,
         string PublicationURL,
-        long UserId,
+        string Email,
         string Description,
         bool IsActive);
 }

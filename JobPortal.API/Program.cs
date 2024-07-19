@@ -1,11 +1,15 @@
 using JobPortal.Data;
 using JobPortal.IRepository;
+using JobPortal.IRepository.Company;
 using JobPortal.IRepository.Employee;
 using JobPortal.IServices;
+using JobPortal.IServices.Company;
 using JobPortal.IServices.Employee;
 using JobPortal.Repository;
+using JobPortal.Repository.Company;
 using JobPortal.Repository.Employee;
 using JobPortal.Services;
+using JobPortal.Services.Company;
 using JobPortal.Services.Employee;
 using Microsoft.EntityFrameworkCore;
 
@@ -74,6 +78,9 @@ builder.Services.AddScoped<IQualificationServices, QualificationServices>();
 
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
 builder.Services.AddScoped<IEducationServices, EducationServices>();
+
+builder.Services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
+builder.Services.AddScoped<ICompanyInfoServices, CompanyInfoServices>();
 
 builder.Services.AddControllers();
 
