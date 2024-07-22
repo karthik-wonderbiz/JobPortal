@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.API.Migrations
 {
     [DbContext(typeof(JobPortalDbContext))]
-    [Migration("20240719103255_Table")]
+    [Migration("20240722042314_Table")]
     partial class Table
     {
         /// <inheritdoc />
@@ -65,6 +65,38 @@ namespace JobPortal.API.Migrations
                         .IsUnique();
 
                     b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("JobPortal.Model.Company.ApplyInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ApplyInfos");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Company.CompanyInfo", b =>
@@ -145,6 +177,61 @@ namespace JobPortal.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("JobPortal.Model.Company.ContactPerson", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CompanyInfoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ContactPersonEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ContactPersonName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("ContactPersonPhone")
+                        .HasMaxLength(100)
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyInfoId");
+
+                    b.HasIndex("ContactPersonEmail")
+                        .IsUnique();
+
+                    b.HasIndex("ContactPersonPhone")
+                        .IsUnique();
+
+                    b.ToTable("ContactPersons");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Country", b =>
@@ -282,7 +369,7 @@ namespace JobPortal.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("certificationInfos");
+                    b.ToTable("CertificationInfos");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Employee.Education", b =>
@@ -461,8 +548,18 @@ namespace JobPortal.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<long>("GenderId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProfilePic")
                         .IsRequired()
@@ -623,7 +720,7 @@ namespace JobPortal.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("urlInfos");
+                    b.ToTable("UrlInfos");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Employee.WorkExperienceInfo", b =>
@@ -1212,6 +1309,17 @@ namespace JobPortal.API.Migrations
                     b.ToTable("WorkTypes");
                 });
 
+            modelBuilder.Entity("JobPortal.Model.Company.ApplyInfo", b =>
+                {
+                    b.HasOne("JobPortal.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("JobPortal.Model.Company.CompanyInfo", b =>
                 {
                     b.HasOne("JobPortal.Model.User", "User")
@@ -1221,6 +1329,17 @@ namespace JobPortal.API.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JobPortal.Model.Company.ContactPerson", b =>
+                {
+                    b.HasOne("JobPortal.Model.Company.CompanyInfo", "CompanyInfo")
+                        .WithMany()
+                        .HasForeignKey("CompanyInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CompanyInfo");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Employee.CertificationInfo", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.API.Migrations
 {
     [DbContext(typeof(JobPortalDbContext))]
-    [Migration("20240719131312_AddedJobPostTable")]
-    partial class AddedJobPostTable
+    [Migration("20240722042632_AddedRecruiter")]
+    partial class AddedRecruiter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -232,120 +232,6 @@ namespace JobPortal.API.Migrations
                         .IsUnique();
 
                     b.ToTable("ContactPersons");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Company.JobPost", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("ApplicationEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ApplicationStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Bond")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("CompanyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CompanyInfoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("DesignationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EmploymentTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("JobDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("LanguageId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("MaxExperience")
-                        .HasColumnType("int");
-
-                    b.Property<long>("MaxSalary")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("MinExperience")
-                        .HasColumnType("int");
-
-                    b.Property<long>("MinSalary")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("NoticePeriod")
-                        .HasColumnType("int");
-
-                    b.Property<long>("QualificationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RecruiterId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SkillId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TrainLineId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Vacancy")
-                        .HasColumnType("int");
-
-                    b.Property<long>("WorkTypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyInfoId");
-
-                    b.HasIndex("DesignationId");
-
-                    b.HasIndex("EmploymentTypeId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("QualificationId");
-
-                    b.HasIndex("RecruiterId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("SkillId");
-
-                    b.HasIndex("TrainLineId");
-
-                    b.HasIndex("WorkTypeId");
-
-                    b.ToTable("JobPosts");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Company.Recruiter", b =>
@@ -1509,89 +1395,6 @@ namespace JobPortal.API.Migrations
                         .IsRequired();
 
                     b.Navigation("CompanyInfo");
-                });
-
-            modelBuilder.Entity("JobPortal.Model.Company.JobPost", b =>
-                {
-                    b.HasOne("JobPortal.Model.Company.CompanyInfo", "CompanyInfo")
-                        .WithMany()
-                        .HasForeignKey("CompanyInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Designation", "Designation")
-                        .WithMany()
-                        .HasForeignKey("DesignationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.EmploymentType", "EmploymentType")
-                        .WithMany()
-                        .HasForeignKey("EmploymentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Qualification", "Qualification")
-                        .WithMany()
-                        .HasForeignKey("QualificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Company.Recruiter", "Recruiter")
-                        .WithMany()
-                        .HasForeignKey("RecruiterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.TrainLine", "TrainLine")
-                        .WithMany()
-                        .HasForeignKey("TrainLineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobPortal.Model.WorkType", "WorkType")
-                        .WithMany()
-                        .HasForeignKey("WorkTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CompanyInfo");
-
-                    b.Navigation("Designation");
-
-                    b.Navigation("EmploymentType");
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Qualification");
-
-                    b.Navigation("Recruiter");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Skill");
-
-                    b.Navigation("TrainLine");
-
-                    b.Navigation("WorkType");
                 });
 
             modelBuilder.Entity("JobPortal.Model.Company.Recruiter", b =>

@@ -1,4 +1,4 @@
-﻿using JobPortal.Data;
+﻿/*using JobPortal.Data;
 using JobPortal.DTO;
 using JobPortal.DTO.Company;
 using JobPortal.IServices;
@@ -121,3 +121,4 @@ namespace JobPortal.API.Controllers.Company
         }
     }
 }
+*/
