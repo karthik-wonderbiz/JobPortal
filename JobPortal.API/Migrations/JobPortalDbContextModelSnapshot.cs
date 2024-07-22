@@ -79,6 +79,9 @@ namespace JobPortal.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("JobPostId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -90,6 +93,8 @@ namespace JobPortal.API.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobPostId");
 
                     b.HasIndex("UserId");
 
@@ -1477,11 +1482,19 @@ namespace JobPortal.API.Migrations
 
             modelBuilder.Entity("JobPortal.Model.Company.ApplyInfo", b =>
                 {
+                    b.HasOne("JobPortal.Model.Company.JobPost", "JobPost")
+                        .WithMany()
+                        .HasForeignKey("JobPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JobPortal.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JobPost");
 
                     b.Navigation("User");
                 });

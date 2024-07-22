@@ -112,7 +112,7 @@ namespace JobPortal.Services.Company
 
                 var recruiterDtos = recruiters.Select(recruiters => new GetRecruiterDto(
                     recruiters.Id,
-                    recruiters.RecruiterName, 
+                    recruiters.RecruiterName,
                     recruiters.RecruiterPhone,
                     recruiters.RecruiterEmail
                 ));
